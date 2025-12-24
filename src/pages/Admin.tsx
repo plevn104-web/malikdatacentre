@@ -8,18 +8,21 @@ import {
   CheckCircle, 
   XCircle, 
   Clock, 
-  Eye,
   ArrowLeft,
   RefreshCw,
   DollarSign,
-  Image
+  Image,
+  ShieldCheck
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
+import { useAdminMFA } from "@/hooks/useAdminMFA";
 import { toast } from "sonner";
+import Admin2FASetup from "@/components/Admin2FASetup";
+import Admin2FAVerify from "@/components/Admin2FAVerify";
 
 interface PendingTransaction {
   id: string;
@@ -61,6 +64,17 @@ const Admin = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [processingId, setProcessingId] = useState<string | null>(null);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [mfaVerified, setMfaVerified] = useState(false);
+
+  // 2FA hook
+  const { 
+    isEnrolled, 
+    isVerified, 
+    isLoading: mfaLoading, 
+    needsSetup, 
+    needsVerification,
+    refreshStatus 
+  } = useAdminMFA(user?.id, isAdmin);
 
   useEffect(() => {
     // Small delay to let auth state settle
@@ -236,7 +250,7 @@ const Admin = () => {
     }
   };
 
-  if (authLoading || isCheckingRole) {
+  if (authLoading || isCheckingRole || mfaLoading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary border-t-transparent" />
@@ -246,6 +260,31 @@ const Admin = () => {
 
   if (!isAdmin) {
     return null;
+  }
+
+  // Show 2FA setup if admin hasn't enrolled
+  if (needsSetup && !mfaVerified) {
+    return (
+      <Admin2FASetup 
+        userId={user!.id} 
+        onComplete={() => {
+          setMfaVerified(true);
+          refreshStatus();
+        }}
+        onCancel={() => navigate('/')}
+      />
+    );
+  }
+
+  // Show 2FA verification if admin needs to verify
+  if (needsVerification && !mfaVerified) {
+    return (
+      <Admin2FAVerify 
+        userId={user!.id} 
+        onSuccess={() => setMfaVerified(true)}
+        onCancel={() => navigate('/')}
+      />
+    );
   }
 
   return (
@@ -262,11 +301,18 @@ const Admin = () => {
                 <Shield className="h-6 w-6 text-primary" />
                 <h1 className="text-xl font-bold text-foreground">Admin Panel</h1>
               </div>
+              {/* 2FA Status Badge */}
+              <Badge variant="outline" className="bg-green-500/10 text-green-500 border-green-500/30">
+                <ShieldCheck className="h-3 w-3 mr-1" />
+                2FA Verified
+              </Badge>
             </div>
-            <Button variant="outline" size="sm" onClick={fetchData} disabled={isLoading}>
-              <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
-              Refresh
-            </Button>
+            <div className="flex items-center gap-2">
+              <Button variant="outline" size="sm" onClick={fetchData} disabled={isLoading}>
+                <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
+                Refresh
+              </Button>
+            </div>
           </div>
         </div>
       </header>
