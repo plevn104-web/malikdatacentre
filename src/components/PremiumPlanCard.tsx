@@ -15,7 +15,7 @@ export const PremiumPlanCard = () => {
   const features = Array.isArray(plan.features) ? plan.features : [];
 
   return (
-    <section className="section-gradient relative py-24 overflow-hidden">
+    <section className="cgi-section relative py-24 overflow-hidden">
       {/* Background effects */}
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute top-20 left-1/4 h-64 w-64 rounded-full bg-primary/10 blur-3xl" />

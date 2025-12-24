@@ -8,7 +8,7 @@ const LINKEDIN_URL = "https://www.linkedin.com/in/malik-amir-usman-71ab54397";
 
 export const FounderSection = () => {
   return (
-    <section className="py-16 md:py-24 bg-muted/30">
+    <section className="cgi-section-alt py-16 md:py-24 overflow-hidden relative">
       <div className="container px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
