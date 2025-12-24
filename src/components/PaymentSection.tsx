@@ -1,8 +1,11 @@
-import { motion } from "framer-motion";
-import { Smartphone, Building2, Shield, Copy, Check, MessageSquare, Camera, Send, CheckCircle } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Smartphone, Building2, Shield, Copy, Check, MessageSquare, Camera, Send, CheckCircle, Lock, LogIn } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { WhatsAppButton } from "./WhatsAppButton";
 import { toast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/useAuth";
+import { Button } from "@/components/ui/button";
 
 const paymentMethods = [
   {
@@ -24,11 +27,10 @@ const paymentMethods = [
     ],
   },
   {
-    name: "Bank Transfer",
+    name: "Meezan Bank",
     icon: <Building2 className="h-8 w-8" />,
     color: "#0066B3",
     details: [
-      { label: "Bank Name", value: "Meezan Bank" },
       { label: "IBAN", value: "PK40MEZN0000300111059733" },
     ],
   },
@@ -76,7 +78,110 @@ const CopyButton = ({ text }: { text: string }) => {
   );
 };
 
+// Locked payment card for visitors
+const LockedPaymentCard = ({ method, index }: { method: typeof paymentMethods[0]; index: number }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 30 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.5, delay: index * 0.15 }}
+    viewport={{ once: true }}
+    className="glass-card group overflow-hidden p-6 relative"
+  >
+    {/* Header */}
+    <div className="mb-6 flex items-center gap-4">
+      <div
+        className="flex h-14 w-14 items-center justify-center rounded-xl transition-all duration-300 group-hover:scale-110"
+        style={{ backgroundColor: `${method.color}20`, color: method.color }}
+      >
+        {method.icon}
+      </div>
+      <h3 className="font-display text-xl font-bold text-foreground">{method.name}</h3>
+    </div>
+
+    {/* Locked overlay */}
+    <div className="relative">
+      <div className="space-y-4 blur-sm select-none pointer-events-none">
+        {method.details.map((detail) => (
+          <div key={detail.label} className="rounded-lg bg-background/50 p-3">
+            <p className="mb-1 text-xs font-medium uppercase tracking-wider text-muted-foreground">
+              {detail.label}
+            </p>
+            <div className="flex items-center justify-between">
+              <p className="font-mono text-sm font-semibold text-foreground">••••••••••</p>
+            </div>
+          </div>
+        ))}
+      </div>
+      
+      {/* Lock icon overlay */}
+      <div className="absolute inset-0 flex flex-col items-center justify-center">
+        <div className="rounded-full bg-muted/80 p-3 mb-2">
+          <Lock className="h-6 w-6 text-muted-foreground" />
+        </div>
+        <p className="text-xs text-muted-foreground font-medium">Login to view</p>
+      </div>
+    </div>
+
+    {/* Glow effect */}
+    <div
+      className="pointer-events-none absolute -bottom-20 -right-20 h-40 w-40 rounded-full opacity-10 blur-3xl transition-opacity group-hover:opacity-20"
+      style={{ backgroundColor: method.color }}
+    />
+  </motion.div>
+);
+
+// Full payment card for logged-in users
+const PaymentCard = ({ method, index }: { method: typeof paymentMethods[0]; index: number }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 30 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.5, delay: index * 0.15 }}
+    viewport={{ once: true }}
+    className="glass-card group overflow-hidden p-6 relative"
+  >
+    {/* Header */}
+    <div className="mb-6 flex items-center gap-4">
+      <div
+        className="flex h-14 w-14 items-center justify-center rounded-xl transition-all duration-300 group-hover:scale-110"
+        style={{ backgroundColor: `${method.color}20`, color: method.color }}
+      >
+        {method.icon}
+      </div>
+      <h3 className="font-display text-xl font-bold text-foreground">{method.name}</h3>
+    </div>
+
+    {/* Details */}
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5, delay: 0.2 }}
+      className="space-y-4"
+    >
+      {method.details.map((detail) => (
+        <div key={detail.label} className="rounded-lg bg-background/50 p-3">
+          <p className="mb-1 text-xs font-medium uppercase tracking-wider text-muted-foreground">
+            {detail.label}
+          </p>
+          <div className="flex items-center justify-between">
+            <p className="font-mono text-sm font-semibold text-foreground">{detail.value}</p>
+            <CopyButton text={detail.value} />
+          </div>
+        </div>
+      ))}
+    </motion.div>
+
+    {/* Glow effect */}
+    <div
+      className="pointer-events-none absolute -bottom-20 -right-20 h-40 w-40 rounded-full opacity-20 blur-3xl transition-opacity group-hover:opacity-40"
+      style={{ backgroundColor: method.color }}
+    />
+  </motion.div>
+);
+
 export const PaymentSection = () => {
+  const { user, loading } = useAuth();
+  const isLoggedIn = !!user;
+
   return (
     <section id="payment" className="section-gradient relative py-24">
       <div className="container px-4">
@@ -99,49 +204,44 @@ export const PaymentSection = () => {
           </p>
         </motion.div>
 
+        {/* Login prompt for visitors */}
+        <AnimatePresence>
+          {!loading && !isLoggedIn && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="mx-auto mb-10 max-w-2xl"
+            >
+              <div className="glass-card p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <div className="rounded-full bg-primary/20 p-3">
+                    <Lock className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <p className="font-medium text-foreground">Payment details are protected</p>
+                    <p className="text-sm text-muted-foreground">Please login or signup to view payment details.</p>
+                  </div>
+                </div>
+                <Link to="/auth">
+                  <Button className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2">
+                    <LogIn className="h-4 w-4" />
+                    Login / Signup
+                  </Button>
+                </Link>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         {/* Payment methods grid */}
         <div className="mx-auto mb-16 grid max-w-5xl gap-6 md:grid-cols-3">
           {paymentMethods.map((method, index) => (
-            <motion.div
-              key={method.name}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.15 }}
-              viewport={{ once: true }}
-              className="glass-card group overflow-hidden p-6"
-            >
-              {/* Header */}
-              <div className="mb-6 flex items-center gap-4">
-                <div
-                  className="flex h-14 w-14 items-center justify-center rounded-xl transition-all duration-300 group-hover:scale-110"
-                  style={{ backgroundColor: `${method.color}20`, color: method.color }}
-                >
-                  {method.icon}
-                </div>
-                <h3 className="font-display text-xl font-bold text-foreground">{method.name}</h3>
-              </div>
-
-              {/* Details */}
-              <div className="space-y-4">
-                {method.details.map((detail) => (
-                  <div key={detail.label} className="rounded-lg bg-background/50 p-3">
-                    <p className="mb-1 text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                      {detail.label}
-                    </p>
-                    <div className="flex items-center justify-between">
-                      <p className="font-mono text-sm font-semibold text-foreground">{detail.value}</p>
-                      <CopyButton text={detail.value} />
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Glow effect */}
-              <div
-                className="pointer-events-none absolute -bottom-20 -right-20 h-40 w-40 rounded-full opacity-20 blur-3xl transition-opacity group-hover:opacity-40"
-                style={{ backgroundColor: method.color }}
-              />
-            </motion.div>
+            isLoggedIn ? (
+              <PaymentCard key={method.name} method={method} index={index} />
+            ) : (
+              <LockedPaymentCard key={method.name} method={method} index={index} />
+            )
           ))}
         </div>
 
