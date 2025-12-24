@@ -14,6 +14,45 @@ export type Database = {
   }
   public: {
     Tables: {
+      admin_mfa_settings: {
+        Row: {
+          backup_codes_generated: boolean
+          created_at: string
+          enrolled_at: string | null
+          failed_attempts: number
+          id: string
+          is_enrolled: boolean
+          last_failed_attempt: string | null
+          locked_until: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          backup_codes_generated?: boolean
+          created_at?: string
+          enrolled_at?: string | null
+          failed_attempts?: number
+          id?: string
+          is_enrolled?: boolean
+          last_failed_attempt?: string | null
+          locked_until?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          backup_codes_generated?: boolean
+          created_at?: string
+          enrolled_at?: string | null
+          failed_attempts?: number
+          id?: string
+          is_enrolled?: boolean
+          last_failed_attempt?: string | null
+          locked_until?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       admin_wallet: {
         Row: {
           id: string
@@ -251,12 +290,36 @@ export type Database = {
         Args: { p_approved: boolean; p_transaction_id: string }
         Returns: undefined
       }
+      check_admin_lockout: {
+        Args: { p_user_id: string }
+        Returns: {
+          failed_attempts: number
+          is_locked: boolean
+          locked_until: string
+        }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
           _user_id: string
         }
         Returns: boolean
+      }
+      mark_admin_mfa_enrolled: {
+        Args: { p_user_id: string }
+        Returns: undefined
+      }
+      record_failed_2fa_attempt: {
+        Args: { p_user_id: string }
+        Returns: {
+          failed_attempts: number
+          is_locked: boolean
+          locked_until: string
+        }[]
+      }
+      reset_failed_2fa_attempts: {
+        Args: { p_user_id: string }
+        Returns: undefined
       }
     }
     Enums: {
