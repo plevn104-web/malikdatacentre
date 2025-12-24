@@ -240,20 +240,54 @@ export const ChatBot = () => {
 
   return (
     <>
-      {/* Floating Button */}
-      <motion.button
-        onClick={() => setIsOpen(true)}
-        className={`fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-primary to-secondary text-primary-foreground shadow-lg transition-all hover:scale-110 ${isOpen ? 'hidden' : ''}`}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-      >
-        <MessageCircle className="h-6 w-6" />
-        <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-green-500 text-[10px] font-bold">
-          AI
-        </span>
-      </motion.button>
+      {/* Premium CGI-Styled CTA Button */}
+      <AnimatePresence>
+        {!isOpen && (
+          <motion.button
+            onClick={() => setIsOpen(true)}
+            className="fixed bottom-6 right-6 z-50 group"
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0, opacity: 0 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            {/* Outer glow ring */}
+            <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-neon-blue via-neon-purple to-neon-cyan opacity-60 blur-xl animate-pulse-glow group-hover:opacity-80 transition-opacity duration-300" />
+            
+            {/* Glass container */}
+            <div className="relative flex items-center gap-3 px-5 py-3.5 rounded-2xl bg-background/20 backdrop-blur-xl border border-white/20 shadow-[0_0_30px_rgba(99,102,241,0.3),0_0_60px_rgba(139,92,246,0.2)] group-hover:shadow-[0_0_40px_rgba(99,102,241,0.5),0_0_80px_rgba(139,92,246,0.3)] transition-all duration-300">
+              {/* Animated border gradient */}
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-neon-blue via-neon-purple to-neon-cyan opacity-30 group-hover:opacity-50 transition-opacity duration-300" style={{ padding: '1px', WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)', WebkitMaskComposite: 'xor', maskComposite: 'exclude' }} />
+              
+              {/* AI Icon with glow */}
+              <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-neon-blue to-neon-purple shadow-[0_0_20px_rgba(99,102,241,0.5)]">
+                <Sparkles className="h-5 w-5 text-white" />
+                {/* Pulse indicator */}
+                <span className="absolute -top-1 -right-1 flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500" />
+                </span>
+              </div>
+              
+              {/* Text content */}
+              <div className="flex flex-col items-start">
+                <span className="text-sm font-semibold text-white whitespace-nowrap">Ask AI Assistant</span>
+                <span className="text-[10px] text-white/60 whitespace-nowrap">Tools • Courses • Support</span>
+              </div>
+              
+              {/* Arrow indicator */}
+              <motion.div
+                animate={{ x: [0, 4, 0] }}
+                transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+                className="ml-1"
+              >
+                <ExternalLink className="h-4 w-4 text-white/70 group-hover:text-white transition-colors" />
+              </motion.div>
+            </div>
+          </motion.button>
+        )}
+      </AnimatePresence>
 
       {/* Chat Window */}
       <AnimatePresence>
