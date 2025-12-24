@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Menu, X, MessageCircle } from "lucide-react";
+import { Menu, X, MessageCircle, LogIn, LogOut, User } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/hooks/useAuth";
 
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { user, signOut, loading } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,6 +25,11 @@ export const Navbar = () => {
     { href: "#contact", label: "Contact" },
   ];
 
+  const handleSignOut = async () => {
+    await signOut();
+    setIsMobileMenuOpen(false);
+  };
+
   return (
     <motion.nav
       initial={{ y: -100 }}
@@ -35,14 +43,14 @@ export const Navbar = () => {
     >
       <div className="container flex h-16 items-center justify-between px-4 md:h-20">
         {/* Logo */}
-        <a href="/" className="flex items-center gap-2">
+        <Link to="/" className="flex items-center gap-2">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-secondary">
             <span className="font-display text-lg font-bold text-primary-foreground">U</span>
           </div>
           <div className="hidden sm:block">
             <span className="font-display text-lg font-bold gradient-text">USMAN AI CENTRE</span>
           </div>
-        </a>
+        </Link>
 
         {/* Desktop Navigation */}
         <div className="hidden items-center gap-8 md:flex">
@@ -57,8 +65,36 @@ export const Navbar = () => {
           ))}
         </div>
 
-        {/* CTA Button */}
-        <div className="hidden md:block">
+        {/* CTA Buttons */}
+        <div className="hidden items-center gap-3 md:flex">
+          {!loading && (
+            user ? (
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1.5">
+                  <User className="h-4 w-4 text-primary" />
+                  <span className="text-sm font-medium text-primary truncate max-w-[120px]">
+                    {user.email?.split('@')[0]}
+                  </span>
+                </div>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={handleSignOut}
+                  className="gap-2"
+                >
+                  <LogOut className="h-4 w-4" />
+                  Logout
+                </Button>
+              </div>
+            ) : (
+              <Link to="/auth">
+                <Button variant="outline" size="sm" className="gap-2">
+                  <LogIn className="h-4 w-4" />
+                  Login
+                </Button>
+              </Link>
+            )
+          )}
           <Button variant="whatsapp" size="sm" asChild>
             <a href="https://wa.me/923489057646" target="_blank" rel="noopener noreferrer">
               <MessageCircle className="h-4 w-4" />
@@ -99,7 +135,35 @@ export const Navbar = () => {
                 {link.label}
               </a>
             ))}
-            <Button variant="whatsapp" className="mt-2 w-full" asChild>
+            
+            {/* Auth buttons for mobile */}
+            {!loading && (
+              user ? (
+                <div className="flex flex-col gap-3 pt-2 border-t border-border">
+                  <div className="flex items-center gap-2 text-primary">
+                    <User className="h-5 w-5" />
+                    <span className="font-medium">{user.email?.split('@')[0]}</span>
+                  </div>
+                  <Button 
+                    variant="outline" 
+                    onClick={handleSignOut}
+                    className="w-full gap-2"
+                  >
+                    <LogOut className="h-4 w-4" />
+                    Logout
+                  </Button>
+                </div>
+              ) : (
+                <Link to="/auth" onClick={() => setIsMobileMenuOpen(false)}>
+                  <Button variant="outline" className="w-full gap-2">
+                    <LogIn className="h-4 w-4" />
+                    Login / Signup
+                  </Button>
+                </Link>
+              )
+            )}
+            
+            <Button variant="whatsapp" className="w-full" asChild>
               <a href="https://wa.me/923489057646" target="_blank" rel="noopener noreferrer">
                 <MessageCircle className="h-4 w-4" />
                 Order on WhatsApp
