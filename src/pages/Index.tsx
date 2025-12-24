@@ -1,13 +1,38 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { Navbar } from "@/components/Navbar";
+import { HeroSection } from "@/components/HeroSection";
+import { AIToolsSection } from "@/components/AIToolsSection";
+import { YouTubeServicesSection } from "@/components/YouTubeServicesSection";
+import { WhyChooseUsSection } from "@/components/WhyChooseUsSection";
+import { ReviewsSection } from "@/components/ReviewsSection";
+import { PaymentSection } from "@/components/PaymentSection";
+import { CTASection } from "@/components/CTASection";
+import { Footer } from "@/components/Footer";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 
 const Index = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
-    </div>
+    <main className="min-h-screen bg-background">
+      <Navbar />
+      <HeroSection />
+      <section id="services">
+        <AIToolsSection />
+      </section>
+      <section id="youtube">
+        <YouTubeServicesSection />
+      </section>
+      <WhyChooseUsSection />
+      <section id="reviews">
+        <ReviewsSection />
+      </section>
+      <PaymentSection />
+      <section id="contact">
+        <CTASection />
+      </section>
+      <Footer />
+      
+      {/* Floating WhatsApp Button */}
+      <WhatsAppButton floating message="Hi! I'm interested in your AI tools and YouTube services." />
+    </main>
   );
 };
 
