@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Menu, X, MessageCircle, LogIn, LogOut, User } from "lucide-react";
+import { Menu, X, MessageCircle, LogIn, LogOut, User, LayoutDashboard } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
+import { WalletDropdown } from "@/components/WalletDropdown";
 
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -70,20 +71,19 @@ export const Navbar = () => {
           {!loading && (
             user ? (
               <div className="flex items-center gap-3">
-                <div className="flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1.5">
-                  <User className="h-4 w-4 text-primary" />
-                  <span className="text-sm font-medium text-primary truncate max-w-[120px]">
-                    {user.email?.split('@')[0]}
-                  </span>
-                </div>
+                <WalletDropdown />
+                <Link to="/dashboard">
+                  <Button variant="outline" size="sm" className="gap-2">
+                    <LayoutDashboard className="h-4 w-4" />
+                    Dashboard
+                  </Button>
+                </Link>
                 <Button 
-                  variant="outline" 
+                  variant="ghost" 
                   size="sm" 
                   onClick={handleSignOut}
-                  className="gap-2"
                 >
                   <LogOut className="h-4 w-4" />
-                  Logout
                 </Button>
               </div>
             ) : (

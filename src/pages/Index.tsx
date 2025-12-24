@@ -9,6 +9,7 @@ import { CTASection } from "@/components/CTASection";
 import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { ChatBot } from "@/components/ChatBot";
+import { PremiumPlanCard } from "@/components/PremiumPlanCard";
 
 const Index = () => {
   return (
@@ -18,6 +19,7 @@ const Index = () => {
       <section id="services">
         <AIToolsSection />
       </section>
+      <PremiumPlanCard />
       <section id="youtube">
         <YouTubeServicesSection />
       </section>
