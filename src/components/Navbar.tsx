@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Menu, X, MessageCircle, LogIn, LogOut, User, LayoutDashboard, GraduationCap } from "lucide-react";
+import { Menu, X, MessageCircle, LogIn, LogOut, User, LayoutDashboard, GraduationCap, UserCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
@@ -22,7 +22,8 @@ export const Navbar = () => {
   const navLinks = [
     { href: "#services", label: "AI Tools" },
     { href: "#youtube", label: "YouTube Services" },
-    { href: "/courses", label: "Courses", isRoute: true },
+    { href: "/courses", label: "Courses", isRoute: true, icon: GraduationCap },
+    { href: "/founder", label: "Founder", isRoute: true, icon: UserCircle },
     { href: "#reviews", label: "Reviews" },
     { href: "#contact", label: "Contact" },
   ];
