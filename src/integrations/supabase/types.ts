@@ -74,6 +74,105 @@ export type Database = {
         }
         Relationships: []
       }
+      course_enrollments: {
+        Row: {
+          completed_at: string | null
+          course_id: string
+          created_at: string
+          enrolled_at: string | null
+          id: string
+          progress: number | null
+          status: string
+          transaction_id: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          course_id: string
+          created_at?: string
+          enrolled_at?: string | null
+          id?: string
+          progress?: number | null
+          status?: string
+          transaction_id?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          course_id?: string
+          created_at?: string
+          enrolled_at?: string | null
+          id?: string
+          progress?: number | null
+          status?: string
+          transaction_id?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "course_enrollments_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "courses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "course_enrollments_transaction_id_fkey"
+            columns: ["transaction_id"]
+            isOneToOne: false
+            referencedRelation: "transactions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      courses: {
+        Row: {
+          created_at: string
+          description: string
+          display_order: number | null
+          duration_weeks: number
+          features: Json | null
+          id: string
+          is_active: boolean | null
+          is_bundle: boolean | null
+          price_pkr: number
+          slug: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description: string
+          display_order?: number | null
+          duration_weeks: number
+          features?: Json | null
+          id?: string
+          is_active?: boolean | null
+          is_bundle?: boolean | null
+          price_pkr: number
+          slug: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          display_order?: number | null
+          duration_weeks?: number
+          features?: Json | null
+          id?: string
+          is_active?: boolean | null
+          is_bundle?: boolean | null
+          price_pkr?: number
+          slug?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       premium_plans: {
         Row: {
           created_at: string
