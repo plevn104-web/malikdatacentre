@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Menu, X, MessageCircle, LogIn, LogOut, User, LayoutDashboard } from "lucide-react";
+import { Menu, X, MessageCircle, LogIn, LogOut, User, LayoutDashboard, GraduationCap } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
@@ -22,6 +22,7 @@ export const Navbar = () => {
   const navLinks = [
     { href: "#services", label: "AI Tools" },
     { href: "#youtube", label: "YouTube Services" },
+    { href: "/courses", label: "Courses", isRoute: true },
     { href: "#reviews", label: "Reviews" },
     { href: "#contact", label: "Contact" },
   ];
@@ -56,13 +57,24 @@ export const Navbar = () => {
         {/* Desktop Navigation */}
         <div className="hidden items-center gap-8 md:flex">
           {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-            >
-              {link.label}
-            </a>
+            link.isRoute ? (
+              <Link
+                key={link.href}
+                to={link.href}
+                className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary flex items-center gap-1"
+              >
+                <GraduationCap className="h-4 w-4" />
+                {link.label}
+              </Link>
+            ) : (
+              <a
+                key={link.href}
+                href={link.href}
+                className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+              >
+                {link.label}
+              </a>
+            )
           ))}
         </div>
 
@@ -125,16 +137,30 @@ export const Navbar = () => {
           className="border-b border-border bg-background/95 backdrop-blur-xl md:hidden"
         >
           <div className="container flex flex-col gap-4 px-4 py-6">
+          <div className="flex flex-col gap-4">
             {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="text-lg font-medium text-muted-foreground transition-colors hover:text-primary"
-              >
-                {link.label}
-              </a>
+              link.isRoute ? (
+                <Link
+                  key={link.href}
+                  to={link.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="text-lg font-medium text-muted-foreground transition-colors hover:text-primary flex items-center gap-2"
+                >
+                  <GraduationCap className="h-5 w-5" />
+                  {link.label}
+                </Link>
+              ) : (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="text-lg font-medium text-muted-foreground transition-colors hover:text-primary"
+                >
+                  {link.label}
+                </a>
+              )
             ))}
+          </div>
             
             {/* Auth buttons for mobile */}
             {!loading && (
