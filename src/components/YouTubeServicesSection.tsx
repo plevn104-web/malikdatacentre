@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
-import { MessageCircle, Clock, Users, DollarSign, Check, TrendingUp } from "lucide-react";
+import { MessageCircle, Clock, Users, DollarSign, Check, TrendingUp, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 interface YouTubeServiceCardProps {
   title: string;
@@ -21,7 +23,18 @@ const YouTubeServiceCard = ({
   featured = false,
   delay = 0,
 }: YouTubeServiceCardProps) => {
-  const handleOrder = () => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  const handleBuyWebsite = () => {
+    if (!user) {
+      navigate('/auth');
+    } else {
+      navigate('/dashboard?tab=wallet');
+    }
+  };
+
+  const handleBuyWhatsApp = () => {
     const message = encodeURIComponent(`Hi, I want to order ${title} - ${price}`);
     window.open(`https://wa.me/923489057646?text=${message}`, "_blank");
   };
@@ -61,7 +74,7 @@ const YouTubeServiceCard = ({
         </div>
 
         {/* Features */}
-        <ul className="mb-8 space-y-3">
+        <ul className="mb-6 space-y-3">
           {features.map((feature, index) => (
             <li key={index} className="flex items-center gap-3 text-sm text-muted-foreground">
               <Check className="h-5 w-5 flex-shrink-0 text-[#FF0000]" />
@@ -70,11 +83,30 @@ const YouTubeServiceCard = ({
           ))}
         </ul>
 
-        {/* CTA */}
-        <Button variant="youtube" size="lg" onClick={handleOrder} className="w-full">
-          <MessageCircle className="h-5 w-5" />
-          Start on WhatsApp
-        </Button>
+        {/* Purchase Options Label */}
+        <p className="text-xs text-muted-foreground mb-3 font-medium">Choose purchase method:</p>
+
+        {/* CTA Buttons */}
+        <div className="flex flex-col gap-2">
+          <Button 
+            variant="default" 
+            size="lg" 
+            onClick={handleBuyWebsite} 
+            className="w-full gap-2"
+          >
+            <ShoppingCart className="h-5 w-5" />
+            Buy on Website
+          </Button>
+          <Button 
+            variant="youtube" 
+            size="lg" 
+            onClick={handleBuyWhatsApp} 
+            className="w-full gap-2"
+          >
+            <MessageCircle className="h-5 w-5" />
+            Buy via WhatsApp
+          </Button>
+        </div>
       </div>
     </motion.div>
   );
@@ -150,6 +182,18 @@ export const YouTubeServicesSection = () => {
             Accelerate your YouTube journey with our trusted monetization services. 
             Get real watch time, subscribers, and full monetization packages.
           </p>
+          
+          {/* Purchase Options Info */}
+          <div className="mt-8 flex flex-wrap justify-center gap-4">
+            <div className="flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2">
+              <ShoppingCart className="h-4 w-4 text-primary" />
+              <span className="text-sm text-foreground">Buy on Website</span>
+            </div>
+            <div className="flex items-center gap-2 rounded-full bg-[#FF0000]/10 px-4 py-2">
+              <MessageCircle className="h-4 w-4 text-[#FF0000]" />
+              <span className="text-sm text-foreground">Buy via WhatsApp</span>
+            </div>
+          </div>
         </motion.div>
 
         {/* Progress animation */}
