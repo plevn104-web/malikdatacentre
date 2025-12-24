@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { 
   Wallet, CreditCard, Plus, ArrowUpRight, ArrowDownLeft, 
   Clock, CheckCircle, XCircle, Crown, DollarSign, TrendingUp,
-  Smartphone, Building2, Bitcoin, Globe, ArrowLeft
+  Smartphone, Building2, Bitcoin, Globe, ArrowLeft, Upload, MessageCircle
 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { useWallet, usePremiumPlan, useSubscription } from '@/hooks/useWallet';
@@ -13,13 +13,35 @@ import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from '@/hooks/use-toast';
 import { WhatsAppButton } from '@/components/WhatsAppButton';
+import { AddBalanceModal } from '@/components/AddBalanceModal';
+import { Badge } from '@/components/ui/badge';
+import { supabase } from '@/integrations/supabase/client';
 
-const paymentMethods = [
-  { id: 'easypaisa', name: 'EasyPaisa', icon: <Smartphone className="h-5 w-5" />, color: '#00A651' },
-  { id: 'jazzcash', name: 'JazzCash', icon: <Smartphone className="h-5 w-5" />, color: '#E31937' },
-  { id: 'bank_transfer', name: 'Bank Transfer', icon: <Building2 className="h-5 w-5" />, color: '#0066B3' },
-  { id: 'crypto', name: 'Crypto', icon: <Bitcoin className="h-5 w-5" />, color: '#F7931A' },
-  { id: 'card', name: 'Debit/Credit Card', icon: <CreditCard className="h-5 w-5" />, color: '#1A1F71' },
+const paymentDetails = [
+  { 
+    id: 'easypaisa', 
+    name: 'EasyPaisa', 
+    icon: <Smartphone className="h-5 w-5" />, 
+    color: 'from-green-500 to-green-600',
+    number: '03363337895',
+    holder: 'Malik Ameer Usman'
+  },
+  { 
+    id: 'jazzcash', 
+    name: 'JazzCash', 
+    icon: <Smartphone className="h-5 w-5" />, 
+    color: 'from-red-500 to-red-600',
+    number: '03075484104',
+    holder: 'Malik Ghulam Hussain'
+  },
+  { 
+    id: 'bank', 
+    name: 'Meezan Bank', 
+    icon: <Building2 className="h-5 w-5" />, 
+    color: 'from-blue-500 to-blue-600',
+    number: 'PK40MEZN0000300111059733',
+    holder: 'IBAN'
+  },
 ];
 
 export default function Dashboard() {
@@ -30,6 +52,7 @@ export default function Dashboard() {
   const [searchParams] = useSearchParams();
   
   const [activeTab, setActiveTab] = useState(searchParams.get('tab') || 'overview');
+  const [showAddBalanceModal, setShowAddBalanceModal] = useState(false);
   const [amount, setAmount] = useState('');
   const [currency, setCurrency] = useState<'USD' | 'PKR'>('USD');
   const [selectedMethod, setSelectedMethod] = useState<string | null>(null);
@@ -262,84 +285,47 @@ export default function Dashboard() {
 
           <TabsContent value="wallet">
             <div className="grid gap-6 md:grid-cols-2">
-              {/* Add Balance Form */}
+              {/* Payment Details */}
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 className="glass-card p-6"
               >
-                <h3 className="font-display text-xl font-bold text-foreground mb-6">Add Balance</h3>
+                <h3 className="font-display text-xl font-bold text-foreground mb-6">Payment Details</h3>
                 
-                {/* Currency Toggle */}
-                <div className="flex gap-2 mb-4">
-                  <Button
-                    variant={currency === 'USD' ? 'default' : 'outline'}
-                    size="sm"
-                    onClick={() => setCurrency('USD')}
-                  >
-                    USD
-                  </Button>
-                  <Button
-                    variant={currency === 'PKR' ? 'default' : 'outline'}
-                    size="sm"
-                    onClick={() => setCurrency('PKR')}
-                  >
-                    PKR
-                  </Button>
+                <div className="space-y-4">
+                  {paymentDetails.map((method) => (
+                    <div 
+                      key={method.id}
+                      className="p-4 rounded-xl border border-border bg-muted/30"
+                    >
+                      <div className="flex items-center gap-3 mb-2">
+                        <div className={`p-2 rounded-lg bg-gradient-to-br ${method.color}`}>
+                          <div className="text-white">{method.icon}</div>
+                        </div>
+                        <span className="font-semibold text-foreground">{method.name}</span>
+                      </div>
+                      <div className="ml-11 space-y-1">
+                        <p className="text-sm font-mono text-foreground">{method.number}</p>
+                        <p className="text-xs text-muted-foreground">{method.holder}</p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
 
-                {/* Amount Input */}
-                <div className="mb-4">
-                  <label className="text-sm font-medium text-foreground mb-2 block">Amount</label>
-                  <div className="relative">
-                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
-                      {currency === 'USD' ? '$' : 'PKR'}
-                    </span>
-                    <Input
-                      type="number"
-                      value={amount}
-                      onChange={(e) => setAmount(e.target.value)}
-                      placeholder="Enter amount"
-                      className="pl-12"
-                    />
-                  </div>
-                  {amount && (
-                    <p className="text-xs text-muted-foreground mt-1">
-                      ≈ {currency === 'USD' 
-                        ? `PKR ${(parseFloat(amount) * USD_TO_PKR_RATE).toLocaleString()}` 
-                        : `$${(parseFloat(amount) / USD_TO_PKR_RATE).toFixed(2)}`
-                      }
-                    </p>
-                  )}
-                </div>
-
-                {/* Payment Methods */}
-                <div className="mb-6">
-                  <label className="text-sm font-medium text-foreground mb-3 block">Payment Method</label>
-                  <div className="grid grid-cols-2 gap-3">
-                    {paymentMethods.map((method) => (
-                      <button
-                        key={method.id}
-                        onClick={() => setSelectedMethod(method.id)}
-                        className={`flex items-center gap-2 p-3 rounded-xl border transition-all ${
-                          selectedMethod === method.id 
-                            ? 'border-primary bg-primary/10' 
-                            : 'border-border bg-muted/50 hover:border-primary/50'
-                        }`}
-                      >
-                        <div style={{ color: method.color }}>{method.icon}</div>
-                        <span className="text-sm font-medium text-foreground">{method.name}</span>
-                      </button>
-                    ))}
-                  </div>
+                <div className="mt-6 p-4 bg-amber-500/10 border border-amber-500/30 rounded-lg">
+                  <p className="text-sm text-amber-500 font-medium">Manual Approval Required</p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Balance will be added after admin verifies your payment.
+                  </p>
                 </div>
 
                 <Button 
-                  onClick={handleAddBalance}
-                  disabled={isSubmitting || !amount || !selectedMethod}
-                  className="w-full"
+                  onClick={() => setShowAddBalanceModal(true)}
+                  className="w-full mt-6 gap-2"
                 >
-                  {isSubmitting ? 'Processing...' : 'Continue to Payment'}
+                  <Plus className="h-4 w-4" />
+                  Add Balance Request
                 </Button>
               </motion.div>
 
@@ -354,29 +340,29 @@ export default function Dashboard() {
                   <div className="flex gap-3">
                     <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/20 text-primary font-bold text-sm">1</div>
                     <div>
-                      <p className="font-medium text-foreground">Select Amount & Method</p>
-                      <p className="text-sm text-muted-foreground">Choose how much to add and your preferred payment method</p>
+                      <p className="font-medium text-foreground">Make Payment</p>
+                      <p className="text-sm text-muted-foreground">Send payment to any of the accounts listed</p>
                     </div>
                   </div>
                   <div className="flex gap-3">
                     <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/20 text-primary font-bold text-sm">2</div>
                     <div>
-                      <p className="font-medium text-foreground">Make Payment</p>
-                      <p className="text-sm text-muted-foreground">Complete payment using your selected method</p>
+                      <p className="font-medium text-foreground">Submit Request</p>
+                      <p className="text-sm text-muted-foreground">Click "Add Balance" and upload your payment screenshot</p>
                     </div>
                   </div>
                   <div className="flex gap-3">
                     <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/20 text-primary font-bold text-sm">3</div>
                     <div>
-                      <p className="font-medium text-foreground">Send Screenshot</p>
-                      <p className="text-sm text-muted-foreground">Send payment proof via WhatsApp</p>
+                      <p className="font-medium text-foreground">Wait for Approval</p>
+                      <p className="text-sm text-muted-foreground">Admin will verify and approve your balance</p>
                     </div>
                   </div>
                   <div className="flex gap-3">
                     <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-green-500/20 text-green-500 font-bold text-sm">✓</div>
                     <div>
                       <p className="font-medium text-foreground">Balance Added</p>
-                      <p className="text-sm text-muted-foreground">We'll verify and add balance to your wallet</p>
+                      <p className="text-sm text-muted-foreground">Your wallet balance will be updated</p>
                     </div>
                   </div>
                 </div>
@@ -386,7 +372,7 @@ export default function Dashboard() {
                     message="Hi, I want to add balance to my wallet. Here is my payment screenshot."
                     className="w-full"
                   >
-                    Send Payment Screenshot
+                    Send via WhatsApp Instead
                   </WhatsAppButton>
                 </div>
               </motion.div>
@@ -456,6 +442,17 @@ export default function Dashboard() {
           </TabsContent>
         </Tabs>
       </div>
+
+      {/* Add Balance Modal */}
+      <AddBalanceModal
+        isOpen={showAddBalanceModal}
+        onClose={() => setShowAddBalanceModal(false)}
+        userId={user.id}
+        onSuccess={() => {
+          // Refresh wallet data
+          window.location.reload();
+        }}
+      />
     </div>
   );
 }
