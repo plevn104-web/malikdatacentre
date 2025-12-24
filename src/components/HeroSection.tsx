@@ -37,7 +37,7 @@ export const HeroSection = () => {
         >
           <div className="glass-card inline-flex items-center gap-2 px-4 py-2">
             <Sparkles className="h-4 w-4 text-primary" />
-            <span className="text-sm text-muted-foreground">USMAN AI CENTRE</span>
+            <span className="text-sm text-muted-foreground">MALIK AI CENTRE</span>
           </div>
         </motion.div>
 

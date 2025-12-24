@@ -46,10 +46,10 @@ export const Navbar = () => {
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-secondary">
-            <span className="font-display text-lg font-bold text-primary-foreground">U</span>
+            <span className="font-display text-lg font-bold text-primary-foreground">M</span>
           </div>
           <div className="hidden sm:block">
-            <span className="font-display text-lg font-bold gradient-text">USMAN AI CENTRE</span>
+            <span className="font-display text-lg font-bold gradient-text">MALIK AI CENTRE</span>
           </div>
         </Link>
 
