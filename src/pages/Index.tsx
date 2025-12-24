@@ -8,6 +8,7 @@ import { PaymentSection } from "@/components/PaymentSection";
 import { CTASection } from "@/components/CTASection";
 import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { ChatBot } from "@/components/ChatBot";
 
 const Index = () => {
   return (
@@ -32,6 +33,9 @@ const Index = () => {
       
       {/* Floating WhatsApp Button */}
       <WhatsAppButton floating message="Hi! I'm interested in your AI tools and YouTube services." />
+      
+      {/* AI Chatbot */}
+      <ChatBot />
     </main>
   );
 };
