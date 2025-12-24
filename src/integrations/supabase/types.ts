@@ -14,6 +14,63 @@ export type Database = {
   }
   public: {
     Tables: {
+      admin_wallet: {
+        Row: {
+          id: string
+          total_balance_pkr: number
+          total_balance_usd: number
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          total_balance_pkr?: number
+          total_balance_usd?: number
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          total_balance_pkr?: number
+          total_balance_usd?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      premium_plans: {
+        Row: {
+          created_at: string
+          description: string | null
+          duration_months: number
+          features: Json | null
+          id: string
+          is_active: boolean | null
+          name: string
+          price_pkr: number
+          price_usd: number
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          duration_months?: number
+          features?: Json | null
+          id?: string
+          is_active?: boolean | null
+          name: string
+          price_pkr: number
+          price_usd: number
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          duration_months?: number
+          features?: Json | null
+          id?: string
+          is_active?: boolean | null
+          name?: string
+          price_pkr?: number
+          price_usd?: number
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -41,6 +98,54 @@ export type Database = {
         }
         Relationships: []
       }
+      transactions: {
+        Row: {
+          amount_pkr: number | null
+          amount_usd: number | null
+          created_at: string
+          currency: string
+          description: string | null
+          id: string
+          metadata: Json | null
+          payment_method: Database["public"]["Enums"]["payment_method"] | null
+          reference_id: string | null
+          status: Database["public"]["Enums"]["transaction_status"]
+          type: Database["public"]["Enums"]["transaction_type"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          amount_pkr?: number | null
+          amount_usd?: number | null
+          created_at?: string
+          currency?: string
+          description?: string | null
+          id?: string
+          metadata?: Json | null
+          payment_method?: Database["public"]["Enums"]["payment_method"] | null
+          reference_id?: string | null
+          status?: Database["public"]["Enums"]["transaction_status"]
+          type: Database["public"]["Enums"]["transaction_type"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          amount_pkr?: number | null
+          amount_usd?: number | null
+          created_at?: string
+          currency?: string
+          description?: string | null
+          id?: string
+          metadata?: Json | null
+          payment_method?: Database["public"]["Enums"]["payment_method"] | null
+          reference_id?: string | null
+          status?: Database["public"]["Enums"]["transaction_status"]
+          type?: Database["public"]["Enums"]["transaction_type"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           id: string
@@ -55,6 +160,81 @@ export type Database = {
         Update: {
           id?: string
           role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_subscriptions: {
+        Row: {
+          created_at: string
+          expires_at: string
+          id: string
+          plan_id: string | null
+          starts_at: string
+          status: string
+          transaction_id: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          expires_at: string
+          id?: string
+          plan_id?: string | null
+          starts_at?: string
+          status?: string
+          transaction_id?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          expires_at?: string
+          id?: string
+          plan_id?: string | null
+          starts_at?: string
+          status?: string
+          transaction_id?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_subscriptions_plan_id_fkey"
+            columns: ["plan_id"]
+            isOneToOne: false
+            referencedRelation: "premium_plans"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_subscriptions_transaction_id_fkey"
+            columns: ["transaction_id"]
+            isOneToOne: false
+            referencedRelation: "transactions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_wallets: {
+        Row: {
+          balance_pkr: number
+          balance_usd: number
+          created_at: string
+          id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          balance_pkr?: number
+          balance_usd?: number
+          created_at?: string
+          id?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          balance_pkr?: number
+          balance_usd?: number
+          created_at?: string
+          id?: string
+          updated_at?: string
           user_id?: string
         }
         Relationships: []
@@ -74,6 +254,15 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "user"
+      payment_method:
+        | "bank_transfer"
+        | "easypaisa"
+        | "jazzcash"
+        | "crypto"
+        | "card"
+        | "wallet"
+      transaction_status: "pending" | "completed" | "failed" | "cancelled"
+      transaction_type: "deposit" | "purchase" | "refund" | "withdrawal"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -202,6 +391,16 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "user"],
+      payment_method: [
+        "bank_transfer",
+        "easypaisa",
+        "jazzcash",
+        "crypto",
+        "card",
+        "wallet",
+      ],
+      transaction_status: ["pending", "completed", "failed", "cancelled"],
+      transaction_type: ["deposit", "purchase", "refund", "withdrawal"],
     },
   },
 } as const
