@@ -1,5 +1,7 @@
 import { motion } from "framer-motion";
-import { MessageCircle, Mail, MapPin, Clock, AlertCircle } from "lucide-react";
+import { MessageCircle, Mail, MapPin, Clock, AlertCircle, Linkedin } from "lucide-react";
+
+const LINKEDIN_URL = "https://www.linkedin.com/in/malik-amir-usman-71ab54397";
 
 export const Footer = () => {
   return (
@@ -18,8 +20,11 @@ export const Footer = () => {
               <br />
               <span className="text-foreground">CENTRE</span>
             </div>
-            <p className="mb-6 text-sm text-muted-foreground">
+            <p className="mb-4 text-sm text-muted-foreground">
               Premium AI tools, automation services, and YouTube growth solutions for creators and entrepreneurs.
+            </p>
+            <p className="mb-4 text-sm font-medium text-foreground">
+              Founder & Owner – Malik Amir Usman
             </p>
             <div className="flex items-center gap-3">
               <a
@@ -27,16 +32,27 @@ export const Footer = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex h-10 w-10 items-center justify-center rounded-full bg-[#25D366]/10 text-[#25D366] transition-colors hover:bg-[#25D366]/20"
+                title="WhatsApp"
               >
                 <MessageCircle className="h-5 w-5" />
               </a>
               <a
                 href="#"
                 className="flex h-10 w-10 items-center justify-center rounded-full bg-[#FF0000]/10 text-[#FF0000] transition-colors hover:bg-[#FF0000]/20"
+                title="YouTube"
               >
                 <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
                 </svg>
+              </a>
+              <a
+                href={LINKEDIN_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-[#0A66C2]/10 text-[#0A66C2] transition-colors hover:bg-[#0A66C2]/20"
+                title="Connect on LinkedIn"
+              >
+                <Linkedin className="h-5 w-5" />
               </a>
             </div>
           </motion.div>
