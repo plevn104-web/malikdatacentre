@@ -14,9 +14,9 @@ export const Footer = () => {
             viewport={{ once: true }}
           >
             <div className="mb-4 font-display text-2xl font-bold">
-              <span className="gradient-text">HAMZA AI</span>
+              <span className="gradient-text">USMAN AI</span>
               <br />
-              <span className="text-foreground">TOOLS & SERVICES</span>
+              <span className="text-foreground">CENTRE</span>
             </div>
             <p className="mb-6 text-sm text-muted-foreground">
               Premium AI tools, automation services, and YouTube growth solutions for creators and entrepreneurs.
@@ -114,7 +114,7 @@ export const Footer = () => {
         {/* Bottom bar */}
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 md:flex-row">
           <p className="text-sm text-muted-foreground">
-            © 2024 HAMZA AI TOOLS AND SERVICES. All rights reserved.
+            © 2024 USMAN AI CENTRE. All rights reserved.
           </p>
           <div className="flex items-center gap-4 text-sm text-muted-foreground">
             <span className="flex items-center gap-2">
