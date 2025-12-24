@@ -129,7 +129,7 @@ const youtubeServices = [
   {
     title: "YouTube Subscribers",
     description: "High-quality subscribers for channel growth",
-    price: "From PKR 500",
+    price: "From PKR 999",
     features: [
       "1,000 Subscribers Available",
       "High-Quality Subscribers",
