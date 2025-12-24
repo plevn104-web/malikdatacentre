@@ -10,6 +10,7 @@ import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { ChatBot } from "@/components/ChatBot";
 import { PremiumPlanCard } from "@/components/PremiumPlanCard";
+import { FounderSection } from "@/components/FounderSection";
 
 const Index = () => {
   return (
@@ -24,6 +25,7 @@ const Index = () => {
         <YouTubeServicesSection />
       </section>
       <WhyChooseUsSection />
+      <FounderSection />
       <section id="reviews">
         <ReviewsSection />
       </section>
