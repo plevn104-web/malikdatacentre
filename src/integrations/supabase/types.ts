@@ -109,6 +109,7 @@ export type Database = {
           metadata: Json | null
           payment_method: Database["public"]["Enums"]["payment_method"] | null
           reference_id: string | null
+          screenshot_url: string | null
           status: Database["public"]["Enums"]["transaction_status"]
           type: Database["public"]["Enums"]["transaction_type"]
           updated_at: string
@@ -124,6 +125,7 @@ export type Database = {
           metadata?: Json | null
           payment_method?: Database["public"]["Enums"]["payment_method"] | null
           reference_id?: string | null
+          screenshot_url?: string | null
           status?: Database["public"]["Enums"]["transaction_status"]
           type: Database["public"]["Enums"]["transaction_type"]
           updated_at?: string
@@ -139,6 +141,7 @@ export type Database = {
           metadata?: Json | null
           payment_method?: Database["public"]["Enums"]["payment_method"] | null
           reference_id?: string | null
+          screenshot_url?: string | null
           status?: Database["public"]["Enums"]["transaction_status"]
           type?: Database["public"]["Enums"]["transaction_type"]
           updated_at?: string
@@ -244,6 +247,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      approve_deposit: {
+        Args: { p_approved: boolean; p_transaction_id: string }
+        Returns: undefined
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
