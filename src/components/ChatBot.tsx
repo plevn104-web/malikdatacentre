@@ -234,8 +234,8 @@ export const ChatBot = () => {
   const quickActions = [
     { label: '🛠️ AI Tools', message: 'What AI tools do you offer and their prices?' },
     { label: '📺 YouTube', message: 'Tell me about your YouTube growth services' },
+    { label: '💻 Development', message: 'Do you provide website or app development services?' },
     { label: '💳 How to Buy', message: 'How can I purchase a service?' },
-    { label: '👤 Owner', message: 'Who is the owner of MALIK DATA CENTRE?' },
   ];
 
   return (
