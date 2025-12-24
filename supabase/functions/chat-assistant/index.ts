@@ -1,18 +1,22 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
 // Security: CORS configuration
-// Allow all lovableproject.com subdomains (preview and production)
+// Allow all lovableproject.com subdomains, preview, and production domains
 const isAllowedOrigin = (origin: string | null): boolean => {
   if (!origin) return false;
   
   // Allow localhost for development
   if (origin.startsWith('http://localhost:')) return true;
   
-  // Allow all lovableproject.com subdomains
+  // Allow all lovableproject.com subdomains (preview)
   if (origin.endsWith('.lovableproject.com')) return true;
   
-  // Allow the main domain if needed
+  // Allow the main lovable domain
   if (origin === 'https://lovableproject.com') return true;
+  
+  // Allow production domain - malikdatacentre.store
+  if (origin === 'https://malikdatacentre.store') return true;
+  if (origin === 'https://www.malikdatacentre.store') return true;
   
   return false;
 };
