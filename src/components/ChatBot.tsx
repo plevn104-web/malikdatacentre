@@ -32,13 +32,24 @@ const aspectRatios = [
 ];
 
 export const ChatBot = () => {
+  const { user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      role: 'assistant',
-      content: "👋 Hi! I'm your AI assistant at MALIK DATA CENTRE. I can help you with our AI tools, YouTube services, pricing, and how to purchase. I can also generate AI images for you! What would you like to know?"
+  
+  // Dynamic initial message based on login status
+  const getInitialMessage = (): Message => {
+    if (user) {
+      return {
+        role: 'assistant',
+        content: "👋 Welcome back! I'm your AI Expert Assistant at MALIK DATA CENTRE. I can provide detailed guidance on:\n\n🛠️ Your purchased AI tools & how to use them\n📚 Course recommendations & enrollment\n💰 Wallet balance & payment help\n🎨 AI Image Generation (try it!)\n💻 Dashboard navigation\n\nWhat would you like help with today?"
+      };
     }
-  ]);
+    return {
+      role: 'assistant',
+      content: "👋 Hi! Welcome to MALIK DATA CENTRE - Pakistan's premium AI platform!\n\nI can tell you about:\n🛠️ Our AI Tools (CapCut, ChatGPT, SORA, and more)\n📺 YouTube Growth Services\n🎓 AI & Automation Courses\n💻 Custom Development\n\n🔓 **Login or create a free account** to unlock:\n• Full pricing details\n• AI Image Generator\n• Personalized guidance\n• Dashboard access\n\nHow can I help you today?"
+    };
+  };
+
+  const [messages, setMessages] = useState<Message[]>([getInitialMessage()]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [showImageGen, setShowImageGen] = useState(false);
@@ -48,7 +59,11 @@ export const ChatBot = () => {
   const [isGeneratingImage, setIsGeneratingImage] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const { user } = useAuth();
+  
+  // Reset messages when login status changes
+  useEffect(() => {
+    setMessages([getInitialMessage()]);
+  }, [user]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
