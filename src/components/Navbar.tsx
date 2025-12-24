@@ -49,7 +49,7 @@ export const Navbar = () => {
             <span className="font-display text-lg font-bold text-primary-foreground">M</span>
           </div>
           <div className="hidden sm:block">
-            <span className="font-display text-lg font-bold gradient-text">MALIK AI CENTRE</span>
+            <span className="font-display text-lg font-bold gradient-text">MALIK DATA CENTRE</span>
           </div>
         </Link>
 
