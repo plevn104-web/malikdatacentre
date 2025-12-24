@@ -36,7 +36,7 @@ const features = [
 
 export const WhyChooseUsSection = () => {
   return (
-    <section className="section-gradient relative py-24">
+    <section className="cgi-section-alt relative py-24 overflow-hidden">
       <div className="container px-4">
         {/* Section header */}
         <motion.div

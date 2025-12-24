@@ -183,7 +183,7 @@ export const PaymentSection = () => {
   const isLoggedIn = !!user;
 
   return (
-    <section id="payment" className="section-gradient relative py-24">
+    <section id="payment" className="cgi-section relative py-24 overflow-hidden">
       <div className="container px-4">
         {/* Section header */}
         <motion.div

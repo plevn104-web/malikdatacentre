@@ -191,7 +191,7 @@ const tools = [
 
 export const AIToolsSection = () => {
   return (
-    <section id="services" className="section-gradient relative py-24">
+    <section id="services" className="cgi-section relative py-24 overflow-hidden">
       <div className="container px-4">
         {/* Section header */}
         <motion.div

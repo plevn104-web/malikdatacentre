@@ -5,10 +5,9 @@ import { Button } from "@/components/ui/button";
 
 export const CTASection = () => {
   return (
-    <section className="relative overflow-hidden py-24">
+    <section className="cgi-section-alt relative overflow-hidden py-24">
       {/* Animated background */}
       <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-secondary/5 to-primary/5" />
         <div className="floating absolute left-[20%] top-[30%] h-96 w-96 rounded-full bg-primary/10 blur-3xl" />
         <div className="floating-delayed absolute right-[20%] top-[40%] h-80 w-80 rounded-full bg-secondary/10 blur-3xl" />
       </div>

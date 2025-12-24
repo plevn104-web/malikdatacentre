@@ -42,9 +42,9 @@ const testimonials = [
 
 export const ReviewsSection = () => {
   return (
-    <section className="relative overflow-hidden py-24">
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-card/30 to-background" />
+    <section className="cgi-section relative overflow-hidden py-24">
+      {/* Background gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-transparent" />
       
       <div className="container relative z-10 px-4">
         {/* Section header */}
