@@ -10,6 +10,9 @@ import Dashboard from "./pages/Dashboard";
 import Admin from "./pages/Admin";
 import Courses from "./pages/Courses";
 import Founder from "./pages/Founder";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsConditions from "./pages/TermsConditions";
+import RefundPolicy from "./pages/RefundPolicy";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,6 +31,9 @@ const App = () => (
             <Route path="/admin" element={<Admin />} />
             <Route path="/courses" element={<Courses />} />
             <Route path="/founder" element={<Founder />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-conditions" element={<TermsConditions />} />
+            <Route path="/refund-policy" element={<RefundPolicy />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

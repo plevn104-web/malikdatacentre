@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { MessageCircle, Mail, MapPin, Clock, AlertCircle, Linkedin } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const LINKEDIN_URL = "https://www.linkedin.com/in/malik-amir-usman-71ab54397";
 
@@ -73,10 +74,31 @@ export const Footer = () => {
                 <a href="#youtube" className="transition-colors hover:text-primary">YouTube Services</a>
               </li>
               <li>
-                <a href="#" className="transition-colors hover:text-primary">Pricing</a>
+                <Link to="/courses" className="transition-colors hover:text-primary">Courses</Link>
               </li>
               <li>
-                <a href="#" className="transition-colors hover:text-primary">About Us</a>
+                <Link to="/founder" className="transition-colors hover:text-primary">About / Founder</Link>
+              </li>
+            </ul>
+          </motion.div>
+
+          {/* Legal Links */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.15 }}
+            viewport={{ once: true }}
+          >
+            <h3 className="mb-4 font-display font-semibold text-foreground">Legal</h3>
+            <ul className="space-y-3 text-sm text-muted-foreground">
+              <li>
+                <Link to="/privacy-policy" className="transition-colors hover:text-primary">Privacy Policy</Link>
+              </li>
+              <li>
+                <Link to="/terms-conditions" className="transition-colors hover:text-primary">Terms & Conditions</Link>
+              </li>
+              <li>
+                <Link to="/refund-policy" className="transition-colors hover:text-primary">Refund Policy</Link>
               </li>
             </ul>
           </motion.div>
