@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { WalletDropdown } from "@/components/WalletDropdown";
+import logo from "@/assets/logo.png";
 
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -47,9 +48,7 @@ export const Navbar = () => {
       <div className="container flex h-16 items-center justify-between px-4 md:h-20">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-secondary">
-            <span className="font-display text-lg font-bold text-primary-foreground">M</span>
-          </div>
+          <img src={logo} alt="MALIK DATA CENTRE" className="h-10 w-10 object-contain" />
           <div className="hidden sm:block">
             <span className="font-display text-lg font-bold gradient-text">MALIK DATA CENTRE</span>
           </div>
