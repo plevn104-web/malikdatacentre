@@ -1,17 +1,80 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+// Security: Restrict CORS to allowed origins only
+const ALLOWED_ORIGINS = [
+  'https://ivrwcmtjruvritolfpae.lovableproject.com',
+  'http://localhost:5173',
+  'http://localhost:8080',
+];
+
+const getCorsHeaders = (origin: string | null) => {
+  const allowedOrigin = origin && ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+  return {
+    "Access-Control-Allow-Origin": allowedOrigin,
+    "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  };
 };
 
+// Input validation constants
+const MAX_PROMPT_LENGTH = 1000;
+const ALLOWED_STYLES = ['default', 'realistic', 'cartoon', 'anime', '3d', 'artistic', 'minimal'];
+const ALLOWED_RATIOS = ['square', 'portrait', 'landscape'];
+
 serve(async (req) => {
+  const origin = req.headers.get("origin");
+  const corsHeaders = getCorsHeaders(origin);
+
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const { prompt, style, aspectRatio } = await req.json();
+    // Validate origin/referer
+    const referer = req.headers.get("referer");
+    if (!origin && !referer) {
+      console.warn("Request without origin or referer");
+    } else if (origin && !ALLOWED_ORIGINS.includes(origin)) {
+      console.warn("Request from unauthorized origin:", origin);
+      return new Response(JSON.stringify({ error: "Unauthorized origin" }), {
+        status: 403,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    const body = await req.json();
+    const { prompt, style, aspectRatio } = body;
+
+    // Input validation: prompt
+    if (!prompt || typeof prompt !== 'string' || prompt.trim().length === 0) {
+      return new Response(JSON.stringify({ error: "Prompt is required" }), {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    if (prompt.length > MAX_PROMPT_LENGTH) {
+      return new Response(JSON.stringify({ error: `Prompt too long (max ${MAX_PROMPT_LENGTH} characters)` }), {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    // Input validation: style
+    if (style && !ALLOWED_STYLES.includes(style)) {
+      return new Response(JSON.stringify({ error: "Invalid style. Allowed: " + ALLOWED_STYLES.join(", ") }), {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    // Input validation: aspectRatio
+    if (aspectRatio && !ALLOWED_RATIOS.includes(aspectRatio)) {
+      return new Response(JSON.stringify({ error: "Invalid aspect ratio. Allowed: " + ALLOWED_RATIOS.join(", ") }), {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     
     if (!LOVABLE_API_KEY) {
@@ -19,7 +82,7 @@ serve(async (req) => {
     }
 
     // Build enhanced prompt with style and aspect ratio
-    let enhancedPrompt = prompt;
+    let enhancedPrompt = prompt.trim();
     
     if (style && style !== "default") {
       const styleDescriptions: Record<string, string> = {
@@ -42,7 +105,7 @@ serve(async (req) => {
       enhancedPrompt += `. ${ratioDescriptions[aspectRatio] || ""}`;
     }
 
-    console.log("Generating image with prompt:", enhancedPrompt);
+    console.log("Generating image with prompt:", enhancedPrompt.substring(0, 100) + "...");
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",

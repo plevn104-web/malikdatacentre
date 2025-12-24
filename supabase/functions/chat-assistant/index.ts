@@ -1,9 +1,23 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+// Security: Restrict CORS to allowed origins only
+const ALLOWED_ORIGINS = [
+  'https://ivrwcmtjruvritolfpae.lovableproject.com',
+  'http://localhost:5173',
+  'http://localhost:8080',
+];
+
+const getCorsHeaders = (origin: string | null) => {
+  const allowedOrigin = origin && ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+  return {
+    "Access-Control-Allow-Origin": allowedOrigin,
+    "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  };
 };
+
+// Input validation constants
+const MAX_MESSAGE_LENGTH = 2000;
+const MAX_MESSAGES = 50;
 
 const SYSTEM_PROMPT = `You are the AI Support Assistant for MALIK DATA CENTRE - a premium platform offering AI tools, YouTube growth services, Professional AI & Automation Courses, and Custom Website & Application Development.
 
@@ -247,12 +261,66 @@ You will receive context about whether the user is logged in. Adjust accordingly
 - Logged-in: Provide full guidance, mention wallet feature, can discuss payment details, can use image generation`;
 
 serve(async (req) => {
+  const origin = req.headers.get("origin");
+  const corsHeaders = getCorsHeaders(origin);
+
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const { messages, isLoggedIn } = await req.json();
+    // Validate origin/referer
+    const referer = req.headers.get("referer");
+    if (!origin && !referer) {
+      console.warn("Request without origin or referer");
+    } else if (origin && !ALLOWED_ORIGINS.includes(origin)) {
+      console.warn("Request from unauthorized origin:", origin);
+      return new Response(JSON.stringify({ error: "Unauthorized origin" }), {
+        status: 403,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    const body = await req.json();
+    const { messages, isLoggedIn } = body;
+
+    // Input validation: messages array
+    if (!Array.isArray(messages) || messages.length === 0) {
+      return new Response(JSON.stringify({ error: "Messages array is required" }), {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    if (messages.length > MAX_MESSAGES) {
+      return new Response(JSON.stringify({ error: `Too many messages (max ${MAX_MESSAGES})` }), {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    // Validate each message
+    for (const msg of messages) {
+      if (!msg.role || !['user', 'assistant'].includes(msg.role)) {
+        return new Response(JSON.stringify({ error: "Invalid message role" }), {
+          status: 400,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      if (!msg.content || typeof msg.content !== 'string') {
+        return new Response(JSON.stringify({ error: "Invalid message content" }), {
+          status: 400,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      if (msg.content.length > MAX_MESSAGE_LENGTH) {
+        return new Response(JSON.stringify({ error: `Message too long (max ${MAX_MESSAGE_LENGTH} characters)` }), {
+          status: 400,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+    }
+
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     
     if (!LOVABLE_API_KEY) {
@@ -263,6 +331,8 @@ serve(async (req) => {
     const userContext = isLoggedIn 
       ? "\n\n[USER CONTEXT: User is LOGGED IN. You can discuss payment details, wallet feature, and guide them through both purchase options. Recommend the website purchase for faster processing.]"
       : "\n\n[USER CONTEXT: User is a VISITOR (not logged in). Present both purchase options. For website purchase, encourage them to create an account first. Do NOT reveal specific payment account numbers - tell them they need to login first to see payment details. For WhatsApp purchase, they can contact support directly.]";
+
+    console.log("Processing chat request with", messages.length, "messages, isLoggedIn:", isLoggedIn);
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
