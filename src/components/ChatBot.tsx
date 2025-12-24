@@ -36,7 +36,7 @@ export const ChatBot = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
-      content: "👋 Hi! I'm your AI assistant at MALIK AI CENTRE. I can help you with our AI tools, YouTube services, pricing, and how to purchase. I can also generate AI images for you! What would you like to know?"
+      content: "👋 Hi! I'm your AI assistant at MALIK DATA CENTRE. I can help you with our AI tools, YouTube services, pricing, and how to purchase. I can also generate AI images for you! What would you like to know?"
     }
   ]);
   const [input, setInput] = useState('');
@@ -235,7 +235,7 @@ export const ChatBot = () => {
     { label: '🛠️ AI Tools', message: 'What AI tools do you offer and their prices?' },
     { label: '📺 YouTube', message: 'Tell me about your YouTube growth services' },
     { label: '💳 How to Buy', message: 'How can I purchase a service?' },
-    { label: '👤 Owner', message: 'Who is the owner of MALIK AI CENTRE?' },
+    { label: '👤 Owner', message: 'Who is the owner of MALIK DATA CENTRE?' },
   ];
 
   return (

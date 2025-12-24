@@ -14,7 +14,7 @@ export const Footer = () => {
             viewport={{ once: true }}
           >
             <div className="mb-4 font-display text-2xl font-bold">
-              <span className="gradient-text">MALIK AI</span>
+              <span className="gradient-text">MALIK DATA</span>
               <br />
               <span className="text-foreground">CENTRE</span>
             </div>
@@ -114,7 +114,7 @@ export const Footer = () => {
         {/* Bottom bar */}
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 md:flex-row">
           <p className="text-sm text-muted-foreground">
-            © 2024 MALIK AI CENTRE. All rights reserved.
+            © 2024 MALIK DATA CENTRE. All rights reserved.
           </p>
           <div className="flex items-center gap-4 text-sm text-muted-foreground">
             <span className="flex items-center gap-2">
