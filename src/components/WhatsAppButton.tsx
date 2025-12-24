@@ -13,7 +13,7 @@ interface WhatsAppButtonProps {
 }
 
 export const WhatsAppButton = ({
-  message = "Hi, I'm interested in your services!",
+  message = "Hello, I have sent the payment. Here is the screenshot. Please process my order.",
   className = "",
   children,
   size = "default",
