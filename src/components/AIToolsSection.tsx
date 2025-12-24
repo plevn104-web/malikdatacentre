@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
-import { MessageCircle } from "lucide-react";
+import { MessageCircle, ShoppingCart, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 interface AIToolCardProps {
   name: string;
@@ -11,7 +13,18 @@ interface AIToolCardProps {
 }
 
 const AIToolCard = ({ name, description, price, icon, delay = 0 }: AIToolCardProps) => {
-  const handleOrder = () => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  const handleBuyWebsite = () => {
+    if (!user) {
+      navigate('/auth');
+    } else {
+      navigate('/dashboard?tab=wallet');
+    }
+  };
+
+  const handleBuyWhatsApp = () => {
     const message = encodeURIComponent(`Hi, I want to order ${name} - ${price}`);
     window.open(`https://wa.me/923489057646?text=${message}`, "_blank");
   };
@@ -42,16 +55,30 @@ const AIToolCard = ({ name, description, price, icon, delay = 0 }: AIToolCardPro
           <span className="text-2xl font-bold text-primary">{price}</span>
         </div>
 
-        {/* CTA */}
-        <Button
-          variant="whatsapp"
-          size="sm"
-          onClick={handleOrder}
-          className="w-full"
-        >
-          <MessageCircle className="h-4 w-4" />
-          Order Now
-        </Button>
+        {/* Purchase Options Label */}
+        <p className="text-xs text-muted-foreground mb-2 font-medium">Choose purchase method:</p>
+
+        {/* CTA Buttons */}
+        <div className="flex flex-col gap-2">
+          <Button
+            variant="default"
+            size="sm"
+            onClick={handleBuyWebsite}
+            className="w-full gap-2"
+          >
+            <ShoppingCart className="h-4 w-4" />
+            Buy on Website
+          </Button>
+          <Button
+            variant="whatsapp"
+            size="sm"
+            onClick={handleBuyWhatsApp}
+            className="w-full gap-2"
+          >
+            <MessageCircle className="h-4 w-4" />
+            Buy via WhatsApp
+          </Button>
+        </div>
       </div>
     </motion.div>
   );
@@ -184,6 +211,18 @@ export const AIToolsSection = () => {
             Access the world's most powerful AI tools at unbeatable prices. 
             Boost your productivity and creativity with premium subscriptions.
           </p>
+          
+          {/* Purchase Options Info */}
+          <div className="mt-8 flex flex-wrap justify-center gap-4">
+            <div className="flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2">
+              <ShoppingCart className="h-4 w-4 text-primary" />
+              <span className="text-sm text-foreground">Buy on Website</span>
+            </div>
+            <div className="flex items-center gap-2 rounded-full bg-[#25D366]/10 px-4 py-2">
+              <MessageCircle className="h-4 w-4 text-[#25D366]" />
+              <span className="text-sm text-foreground">Buy via WhatsApp</span>
+            </div>
+          </div>
         </motion.div>
 
         {/* Tools grid */}
