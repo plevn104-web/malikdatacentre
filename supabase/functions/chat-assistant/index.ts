@@ -1,16 +1,27 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
-// Security: Restrict CORS to allowed origins only
-const ALLOWED_ORIGINS = [
-  'https://ivrwcmtjruvritolfpae.lovableproject.com',
-  'http://localhost:5173',
-  'http://localhost:8080',
-];
+// Security: CORS configuration
+// Allow all lovableproject.com subdomains (preview and production)
+const isAllowedOrigin = (origin: string | null): boolean => {
+  if (!origin) return false;
+  
+  // Allow localhost for development
+  if (origin.startsWith('http://localhost:')) return true;
+  
+  // Allow all lovableproject.com subdomains
+  if (origin.endsWith('.lovableproject.com')) return true;
+  
+  // Allow the main domain if needed
+  if (origin === 'https://lovableproject.com') return true;
+  
+  return false;
+};
 
 const getCorsHeaders = (origin: string | null) => {
-  const allowedOrigin = origin && ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+  // If origin is allowed, return it; otherwise use wildcard for safety
+  const allowedOrigin = isAllowedOrigin(origin) ? origin : '*';
   return {
-    "Access-Control-Allow-Origin": allowedOrigin,
+    "Access-Control-Allow-Origin": allowedOrigin!,
     "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
   };
 };
@@ -412,7 +423,7 @@ serve(async (req) => {
     const referer = req.headers.get("referer");
     if (!origin && !referer) {
       console.warn("Request without origin or referer");
-    } else if (origin && !ALLOWED_ORIGINS.includes(origin)) {
+    } else if (origin && !isAllowedOrigin(origin)) {
       console.warn("Request from unauthorized origin:", origin);
       return new Response(JSON.stringify({ error: "Unauthorized origin" }), {
         status: 403,
