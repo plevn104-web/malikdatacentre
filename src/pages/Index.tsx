@@ -33,10 +33,7 @@ const Index = () => {
       </section>
       <Footer />
       
-      {/* Floating WhatsApp Button */}
-      <WhatsAppButton floating message="Hi! I'm interested in your AI tools and YouTube services." />
-      
-      {/* AI Chatbot */}
+      {/* AI Chatbot - Primary Support */}
       <ChatBot />
     </main>
   );
