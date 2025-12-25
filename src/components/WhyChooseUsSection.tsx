@@ -1,5 +1,7 @@
+import { memo } from "react";
 import { motion } from "framer-motion";
 import { Shield, Zap, HeadphonesIcon, DollarSign, CheckCircle, Award } from "lucide-react";
+import { useIsMobile } from "@/hooks/useReducedMotion";
 
 const features = [
   {
@@ -34,15 +36,17 @@ const features = [
   },
 ];
 
-export const WhyChooseUsSection = () => {
+const WhyChooseUsSectionComponent = () => {
+  const isMobile = useIsMobile();
+  
   return (
-    <section className="cgi-section-alt relative py-24 overflow-hidden">
+    <section className="cgi-section-alt lazy-section relative py-24 overflow-hidden">
       <div className="container px-4">
         {/* Section header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: isMobile ? 10 : 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: isMobile ? 0.3 : 0.6 }}
           viewport={{ once: true }}
           className="mb-16 text-center"
         >
@@ -62,13 +66,13 @@ export const WhyChooseUsSection = () => {
           {features.map((feature, index) => (
             <motion.div
               key={feature.title}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: isMobile ? 15 : 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              viewport={{ once: true }}
+              transition={{ duration: isMobile ? 0.3 : 0.5, delay: isMobile ? 0 : index * 0.1 }}
+              viewport={{ once: true, margin: "-50px" }}
               className="glass-card-hover group p-8 text-center"
             >
-              <div className="mx-auto mb-6 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary/20 to-secondary/20 text-primary transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_30px_hsl(var(--primary)/0.3)]">
+              <div className="mx-auto mb-6 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary/20 to-secondary/20 text-primary transition-transform duration-200 group-hover:scale-110">
                 {feature.icon}
               </div>
               <h3 className="mb-3 font-display text-xl font-semibold text-foreground">
@@ -81,32 +85,30 @@ export const WhyChooseUsSection = () => {
 
         {/* Stats counter */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: isMobile ? 10 : 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
+          transition={{ duration: isMobile ? 0.3 : 0.6, delay: isMobile ? 0 : 0.3 }}
           viewport={{ once: true }}
-          className="mt-20 grid gap-8 md:grid-cols-4"
+          className="mt-20 grid gap-4 md:gap-8 grid-cols-2 md:grid-cols-4"
         >
           {[
             { value: "500+", label: "Happy Clients" },
             { value: "1000+", label: "Orders Completed" },
             { value: "50+", label: "Channels Monetized" },
             { value: "4.9/5", label: "Client Rating" },
-          ].map((stat, index) => (
-            <motion.div
+          ].map((stat) => (
+            <div
               key={stat.label}
-              initial={{ scale: 0.8 }}
-              whileInView={{ scale: 1 }}
-              transition={{ duration: 0.4, delay: 0.1 * index }}
-              viewport={{ once: true }}
-              className="glass-card py-8 text-center"
+              className="glass-card py-6 md:py-8 text-center transition-transform duration-200 hover:scale-105"
             >
-              <div className="font-display text-4xl font-bold gradient-text">{stat.value}</div>
-              <div className="mt-2 text-sm text-muted-foreground">{stat.label}</div>
-            </motion.div>
+              <div className="font-display text-2xl md:text-4xl font-bold gradient-text">{stat.value}</div>
+              <div className="mt-2 text-xs md:text-sm text-muted-foreground">{stat.label}</div>
+            </div>
           ))}
         </motion.div>
       </div>
     </section>
   );
 };
+
+export const WhyChooseUsSection = memo(WhyChooseUsSectionComponent);

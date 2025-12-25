@@ -377,6 +377,57 @@
   animation: float-subtle 8s ease-in-out infinite;
 }
 
+/* Mobile performance optimizations */
+@media (max-width: 768px) {
+  /* Reduce animation complexity on mobile */
+  .floating,
+  .floating-slow,
+  .floating-delayed,
+  .pulse-glow,
+  .shimmer::after,
+  .animate-pulse-glow,
+  .animate-glow-pulse,
+  .animate-float-subtle,
+  .animate-rotate-slow {
+    animation: none !important;
+  }
+
+  /* Simplify glassmorphism for better performance */
+  .glass-card,
+  .glass-panel {
+    backdrop-filter: blur(8px) !important;
+  }
+
+  /* Reduce shadow complexity */
+  .glass-card-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px hsl(222 47% 0% / 0.3);
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Optimize transitions */
+  * {
+    transition-duration: 0.2s !important;
+  }
+}
+
+/* Respect user's reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 /* Premium scrollbar styling */
 ::-webkit-scrollbar {
   width: 10px;
@@ -400,4 +451,24 @@
 ::selection {
   background: hsl(var(--primary) / 0.3);
   color: hsl(var(--foreground));
+}
+
+/* GPU acceleration for smoother animations */
+.glass-card,
+.glass-panel,
+[class*="animate-"] {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Optimize images for mobile */
+img {
+  content-visibility: auto;
+}
+
+/* Lazy loading optimization */
+.lazy-section {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 500px;
 }

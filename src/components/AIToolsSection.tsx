@@ -1,8 +1,10 @@
+import { memo } from "react";
 import { motion } from "framer-motion";
 import { MessageCircle, ShoppingCart, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import { useIsMobile } from "@/hooks/useReducedMotion";
 
 interface AIToolCardProps {
   name: string;
@@ -29,12 +31,14 @@ const AIToolCard = ({ name, description, price, icon, delay = 0 }: AIToolCardPro
     window.open(`https://wa.me/923489057646?text=${message}`, "_blank");
   };
 
+  const isMobile = useIsMobile();
+  
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: isMobile ? 15 : 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay }}
-      viewport={{ once: true }}
+      transition={{ duration: isMobile ? 0.3 : 0.6, delay: isMobile ? 0 : delay }}
+      viewport={{ once: true, margin: "-50px" }}
       className="glass-card-hover group relative overflow-hidden p-6"
     >
       {/* Glow effect on hover */}
@@ -183,15 +187,17 @@ const tools = [
   },
 ];
 
-export const AIToolsSection = () => {
+const AIToolsSectionComponent = () => {
+  const isMobile = useIsMobile();
+  
   return (
-    <section id="services" className="cgi-section relative py-24 overflow-hidden">
+    <section id="services" className="cgi-section lazy-section relative py-24 overflow-hidden">
       <div className="container px-4">
         {/* Section header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: isMobile ? 10 : 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: isMobile ? 0.3 : 0.6 }}
           viewport={{ once: true }}
           className="mb-16 text-center"
         >
@@ -233,3 +239,5 @@ export const AIToolsSection = () => {
     </section>
   );
 };
+
+export const AIToolsSection = memo(AIToolsSectionComponent);

@@ -1,10 +1,18 @@
+import { memo } from "react";
 import { motion } from "framer-motion";
 import { Bot, Sparkles, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { CGIBackground } from "@/components/CGIBackground";
+import { useIsMobile } from "@/hooks/useReducedMotion";
 
-export const HeroSection = () => {
+const HeroSectionComponent = () => {
+  const isMobile = useIsMobile();
+  
+  // Simplified animations for mobile
+  const mobileTransition = { duration: 0.4 };
+  const desktopTransition = { duration: 0.8 };
+  
   return (
     <section className="relative min-h-screen overflow-hidden">
       {/* CGI Animated Background */}
@@ -13,22 +21,22 @@ export const HeroSection = () => {
       <div className="container relative z-10 flex min-h-screen flex-col items-center justify-center px-4 py-20">
         {/* Badge */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={isMobile ? mobileTransition : { duration: 0.6 }}
           className="mb-8"
         >
           <div className="glass-card inline-flex items-center gap-2 px-5 py-2.5">
-            <Sparkles className="h-4 w-4 text-primary animate-pulse" />
+            <Sparkles className="h-4 w-4 text-primary" />
             <span className="text-sm font-medium text-foreground/80">MALIK DATA CENTRE</span>
           </div>
         </motion.div>
 
         {/* Main heading */}
         <motion.h1
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          transition={isMobile ? { ...mobileTransition, delay: 0.1 } : { ...desktopTransition, delay: 0.2 }}
           className="mb-6 text-center font-display text-4xl font-bold leading-tight md:text-6xl lg:text-7xl"
         >
           <span className="text-foreground">Premium </span>
@@ -39,9 +47,9 @@ export const HeroSection = () => {
 
         {/* Subheading */}
         <motion.p
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          transition={isMobile ? { ...mobileTransition, delay: 0.15 } : { ...desktopTransition, delay: 0.4 }}
           className="mb-10 max-w-2xl text-center text-lg text-muted-foreground md:text-xl"
         >
           AI automation, premium content tools & YouTube monetization — all in one place. 
@@ -50,9 +58,9 @@ export const HeroSection = () => {
 
         {/* CTA Buttons */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
+          transition={isMobile ? { ...mobileTransition, delay: 0.2 } : { ...desktopTransition, delay: 0.6 }}
           className="flex flex-col gap-4 sm:flex-row"
         >
           <WhatsAppButton size="xl" message="Hi, I'm interested in your AI tools and services!" />
@@ -64,50 +72,54 @@ export const HeroSection = () => {
           </Button>
         </motion.div>
 
-        {/* Floating 3D elements */}
-        <div className="absolute left-[5%] top-[40%] hidden lg:block">
-          <motion.div
-            animate={{ 
-              y: [0, -15, 0],
-              rotate: [0, 5, 0]
-            }}
-            transition={{ 
-              duration: 6,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-            className="glass-card p-4 pulse-glow"
-          >
-            <Bot className="h-12 w-12 text-primary" />
-          </motion.div>
-        </div>
+        {/* Floating 3D elements - desktop only */}
+        {!isMobile && (
+          <>
+            <div className="absolute left-[5%] top-[40%] hidden lg:block">
+              <motion.div
+                animate={{ 
+                  y: [0, -15, 0],
+                  rotate: [0, 5, 0]
+                }}
+                transition={{ 
+                  duration: 6,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+                className="glass-card p-4 pulse-glow"
+              >
+                <Bot className="h-12 w-12 text-primary" />
+              </motion.div>
+            </div>
 
-        <div className="absolute right-[8%] top-[50%] hidden lg:block">
-          <motion.div
-            animate={{ 
-              y: [0, 20, 0],
-              rotate: [0, -5, 0]
-            }}
-            transition={{ 
-              duration: 7,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 1
-            }}
-            className="glass-card p-4"
-          >
-            <svg className="h-12 w-12 text-[#FF0000]" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
-            </svg>
-          </motion.div>
-        </div>
+            <div className="absolute right-[8%] top-[50%] hidden lg:block">
+              <motion.div
+                animate={{ 
+                  y: [0, 20, 0],
+                  rotate: [0, -5, 0]
+                }}
+                transition={{ 
+                  duration: 7,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 1
+                }}
+                className="glass-card p-4"
+              >
+                <svg className="h-12 w-12 text-[#FF0000]" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
+                </svg>
+              </motion.div>
+            </div>
+          </>
+        )}
 
         {/* Stats */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
-          className="mt-20 grid grid-cols-2 gap-8 md:grid-cols-4"
+          transition={isMobile ? { ...mobileTransition, delay: 0.25 } : { ...desktopTransition, delay: 0.8 }}
+          className="mt-20 grid grid-cols-2 gap-4 md:gap-8 md:grid-cols-4"
         >
           {[
             { value: "500+", label: "Happy Clients" },
@@ -115,15 +127,13 @@ export const HeroSection = () => {
             { value: "100%", label: "Trusted" },
             { value: "24/7", label: "Support" },
           ].map((stat, index) => (
-            <motion.div 
+            <div 
               key={index} 
-              className="text-center glass-card px-6 py-4"
-              whileHover={{ scale: 1.05 }}
-              transition={{ type: "spring", stiffness: 300 }}
+              className="text-center glass-card px-4 py-3 md:px-6 md:py-4 transition-transform duration-200 hover:scale-105"
             >
-              <div className="font-display text-3xl font-bold gradient-text md:text-4xl">{stat.value}</div>
-              <div className="mt-1 text-sm text-muted-foreground">{stat.label}</div>
-            </motion.div>
+              <div className="font-display text-2xl font-bold gradient-text md:text-4xl">{stat.value}</div>
+              <div className="mt-1 text-xs md:text-sm text-muted-foreground">{stat.label}</div>
+            </div>
           ))}
         </motion.div>
       </div>
@@ -133,3 +143,5 @@ export const HeroSection = () => {
     </section>
   );
 };
+
+export const HeroSection = memo(HeroSectionComponent);

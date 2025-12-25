@@ -1,5 +1,7 @@
+import { memo } from "react";
 import { motion } from "framer-motion";
 import { Star, Quote } from "lucide-react";
+import { useIsMobile } from "@/hooks/useReducedMotion";
 
 const testimonials = [
   {
@@ -40,18 +42,20 @@ const testimonials = [
   },
 ];
 
-export const ReviewsSection = () => {
+const ReviewsSectionComponent = () => {
+  const isMobile = useIsMobile();
+  
   return (
-    <section className="cgi-section relative overflow-hidden py-24">
+    <section className="cgi-section lazy-section relative overflow-hidden py-24">
       {/* Background gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-transparent" />
       
       <div className="container relative z-10 px-4">
         {/* Section header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: isMobile ? 10 : 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: isMobile ? 0.3 : 0.6 }}
           viewport={{ once: true }}
           className="mb-16 text-center"
         >
@@ -71,10 +75,10 @@ export const ReviewsSection = () => {
           {testimonials.map((testimonial, index) => (
             <motion.div
               key={testimonial.name}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: isMobile ? 15 : 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              viewport={{ once: true }}
+              transition={{ duration: isMobile ? 0.3 : 0.5, delay: isMobile ? 0 : index * 0.1 }}
+              viewport={{ once: true, margin: "-50px" }}
               className="glass-card-hover group relative p-6"
             >
               {/* Quote icon */}
@@ -107,3 +111,5 @@ export const ReviewsSection = () => {
     </section>
   );
 };
+
+export const ReviewsSection = memo(ReviewsSectionComponent);
