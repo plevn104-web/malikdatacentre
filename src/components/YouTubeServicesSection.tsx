@@ -1,8 +1,10 @@
+import { memo } from "react";
 import { motion } from "framer-motion";
 import { MessageCircle, Clock, Users, DollarSign, Check, TrendingUp, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import { useIsMobile } from "@/hooks/useReducedMotion";
 
 interface YouTubeServiceCardProps {
   title: string;
@@ -39,12 +41,14 @@ const YouTubeServiceCard = ({
     window.open(`https://wa.me/923489057646?text=${message}`, "_blank");
   };
 
+  const isMobile = useIsMobile();
+  
   return (
     <motion.div
-      initial={{ opacity: 0, y: 40 }}
+      initial={{ opacity: 0, y: isMobile ? 15 : 40 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay }}
-      viewport={{ once: true }}
+      transition={{ duration: isMobile ? 0.3 : 0.6, delay: isMobile ? 0 : delay }}
+      viewport={{ once: true, margin: "-50px" }}
       className={`glass-card-hover group relative overflow-hidden p-8 ${
         featured ? "border-[#FF0000]/30 lg:scale-105" : ""
       }`}
@@ -155,15 +159,17 @@ const youtubeServices = [
   },
 ];
 
-export const YouTubeServicesSection = () => {
+const YouTubeServicesSectionComponent = () => {
+  const isMobile = useIsMobile();
+  
   return (
-    <section className="youtube-gradient relative py-24 overflow-hidden">
+    <section className="youtube-gradient lazy-section relative py-24 overflow-hidden">
       <div className="container px-4">
         {/* Section header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: isMobile ? 10 : 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: isMobile ? 0.3 : 0.6 }}
           viewport={{ once: true }}
           className="mb-16 text-center"
         >
@@ -198,9 +204,9 @@ export const YouTubeServicesSection = () => {
 
         {/* Progress animation */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
+          initial={{ opacity: 0, scale: 0.98 }}
           whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: isMobile ? 0.3 : 0.6 }}
           viewport={{ once: true }}
           className="glass-card mb-16 p-8"
         >
@@ -243,3 +249,5 @@ export const YouTubeServicesSection = () => {
     </section>
   );
 };
+
+export const YouTubeServicesSection = memo(YouTubeServicesSectionComponent);

@@ -1,6 +1,8 @@
+import { memo } from "react";
 import { motion } from "framer-motion";
 import { Globe, Smartphone, Code, ShoppingCart, LayoutDashboard, Brain, MessageCircle, Sparkles } from "lucide-react";
 import { CGIBackground } from "./CGIBackground";
+import { useIsMobile } from "@/hooks/useReducedMotion";
 
 const websiteServices = [
   {
@@ -53,53 +55,57 @@ const appServices = [
   },
 ];
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.5,
-    },
-  },
-};
-
-export const DevelopmentServicesSection = () => {
+const DevelopmentServicesSectionComponent = () => {
+  const isMobile = useIsMobile();
   const whatsappNumber = "923489057646";
   const whatsappMessage = encodeURIComponent("Hello! I'm interested in your Website/Application Development services. Please share more details about requirements, pricing, and timelines.");
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
 
+  // Simplified animation variants for mobile
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: isMobile ? 0 : 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: isMobile ? 10 : 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: isMobile ? 0.3 : 0.5,
+      },
+    },
+  };
+
   return (
-    <section className="relative py-20 overflow-hidden cgi-section">
-      <CGIBackground variant="section" />
+    <section className="relative py-20 overflow-hidden cgi-section lazy-section">
+      {/* Only render CGIBackground on desktop */}
+      {!isMobile && <CGIBackground variant="section" />}
+      
+      {/* Simple gradient for mobile */}
+      {isMobile && (
+        <div className="absolute inset-0 bg-gradient-to-b from-[#030712] via-[#0a0f1e] to-[#030712]" />
+      )}
       
       <div className="container relative z-10 mx-auto px-4">
         {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: isMobile ? 10 : 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
+          transition={{ duration: isMobile ? 0.3 : 0.5 }}
           className="text-center mb-16"
         >
-          <motion.div
-            initial={{ scale: 0 }}
-            whileInView={{ scale: 1 }}
-            viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-neon-blue/20 to-neon-purple/20 border border-neon-blue/30 mb-6"
-          >
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-neon-blue/20 to-neon-purple/20 border border-neon-blue/30 mb-6">
             <Code className="h-4 w-4 text-neon-blue" />
             <span className="text-sm font-medium text-neon-blue">Development Services</span>
-          </motion.div>
+          </div>
           
           <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">
             <span className="bg-gradient-to-r from-neon-blue via-neon-purple to-neon-cyan bg-clip-text text-transparent">
@@ -126,18 +132,18 @@ export const DevelopmentServicesSection = () => {
             className="glass-card p-6 rounded-2xl"
           >
             <div className="flex items-center gap-3 mb-6">
-              <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-neon-blue to-neon-purple shadow-[0_0_20px_rgba(99,102,241,0.4)]">
+              <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-neon-blue to-neon-purple">
                 <Globe className="h-6 w-6 text-white" />
               </div>
               <h3 className="text-2xl font-display font-bold text-foreground">Website Development</h3>
             </div>
             
             <div className="space-y-4">
-              {websiteServices.map((service, index) => (
+              {websiteServices.map((service) => (
                 <motion.div
                   key={service.title}
                   variants={itemVariants}
-                  className="flex items-start gap-4 p-4 rounded-xl bg-background/30 backdrop-blur-sm border border-white/5 hover:border-neon-blue/30 transition-all duration-300 group"
+                  className="flex items-start gap-4 p-4 rounded-xl bg-background/30 border border-white/5 hover:border-neon-blue/30 transition-colors duration-200 group"
                 >
                   <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-neon-blue/10 group-hover:bg-neon-blue/20 transition-colors">
                     <service.icon className="h-5 w-5 text-neon-blue" />
@@ -162,18 +168,18 @@ export const DevelopmentServicesSection = () => {
             className="glass-card p-6 rounded-2xl"
           >
             <div className="flex items-center gap-3 mb-6">
-              <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-neon-purple to-neon-cyan shadow-[0_0_20px_rgba(139,92,246,0.4)]">
+              <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-neon-purple to-neon-cyan">
                 <Smartphone className="h-6 w-6 text-white" />
               </div>
               <h3 className="text-2xl font-display font-bold text-foreground">Application Development</h3>
             </div>
             
             <div className="space-y-4">
-              {appServices.map((service, index) => (
+              {appServices.map((service) => (
                 <motion.div
                   key={service.title}
                   variants={itemVariants}
-                  className="flex items-start gap-4 p-4 rounded-xl bg-background/30 backdrop-blur-sm border border-white/5 hover:border-neon-purple/30 transition-all duration-300 group"
+                  className="flex items-start gap-4 p-4 rounded-xl bg-background/30 border border-white/5 hover:border-neon-purple/30 transition-colors duration-200 group"
                 >
                   <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-neon-purple/10 group-hover:bg-neon-purple/20 transition-colors">
                     <service.icon className="h-5 w-5 text-neon-purple" />
@@ -192,13 +198,16 @@ export const DevelopmentServicesSection = () => {
 
         {/* CTA Section */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: isMobile ? 10 : 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
+          transition={{ duration: isMobile ? 0.3 : 0.5 }}
           className="relative overflow-hidden rounded-2xl"
         >
-          {/* Glowing border effect */}
-          <div className="absolute inset-0 bg-gradient-to-r from-neon-blue via-neon-purple to-neon-cyan opacity-20 blur-xl" />
+          {/* Glowing border effect - only on desktop */}
+          {!isMobile && (
+            <div className="absolute inset-0 bg-gradient-to-r from-neon-blue via-neon-purple to-neon-cyan opacity-20 blur-xl" />
+          )}
           
           <div className="relative glass-panel p-8 md:p-12 text-center">
             <Sparkles className="h-12 w-12 text-neon-purple mx-auto mb-4" />
@@ -212,17 +221,15 @@ export const DevelopmentServicesSection = () => {
               custom pricing, and project timelines.
             </p>
             
-            <motion.a
+            <a
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.98 }}
-              className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold text-lg shadow-[0_0_30px_rgba(34,197,94,0.4)] hover:shadow-[0_0_40px_rgba(34,197,94,0.6)] transition-all duration-300"
+              className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105 active:scale-100"
             >
               <MessageCircle className="h-6 w-6" />
               Contact on WhatsApp
-            </motion.a>
+            </a>
             
             <p className="text-sm text-muted-foreground mt-4">
               📞 +92 348 9057646 • Available 24/7
@@ -233,3 +240,5 @@ export const DevelopmentServicesSection = () => {
     </section>
   );
 };
+
+export const DevelopmentServicesSection = memo(DevelopmentServicesSectionComponent);
