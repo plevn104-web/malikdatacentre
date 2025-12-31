@@ -6,6 +6,7 @@ import { WhyChooseSection } from "@/components/home/WhyChooseSection";
 import { ServicesPreview } from "@/components/home/ServicesPreview";
 import { PortfolioPreview } from "@/components/home/PortfolioPreview";
 import { PricingPreview } from "@/components/home/PricingPreview";
+import { YouTubeServicesSection } from "@/components/home/YouTubeServicesSection";
 import { ReviewsSection } from "@/components/home/ReviewsSection";
 import { FounderSection } from "@/components/home/FounderSection";
 import { CTASection } from "@/components/home/CTASection";
@@ -21,6 +22,7 @@ const Index = () => {
       <WhyChooseSection />
       <ServicesPreview />
       <PortfolioPreview />
+      <YouTubeServicesSection />
       <PricingPreview />
       <ReviewsSection />
       <FounderSection />
