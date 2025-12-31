@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, MessageCircle, LogIn, LogOut, LayoutDashboard } from "lucide-react";
+import { Menu, X, MessageCircle } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { useAuth } from "@/hooks/useAuth";
 
 const WHATSAPP_URL = "https://wa.me/923489057646";
 
@@ -20,7 +19,6 @@ const navLinks = [
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { user, signOut, loading } = useAuth();
   const location = useLocation();
 
   useEffect(() => {
@@ -30,11 +28,6 @@ export const Navbar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  const handleSignOut = async () => {
-    await signOut();
-    setIsMobileMenuOpen(false);
-  };
 
   return (
     <motion.nav
@@ -75,30 +68,8 @@ export const Navbar = () => {
           ))}
         </div>
 
-        {/* CTA Buttons */}
+        {/* CTA Button */}
         <div className="hidden items-center gap-3 lg:flex">
-          {!loading && (
-            user ? (
-              <div className="flex items-center gap-3">
-                <Link to="/dashboard">
-                  <Button variant="ghost" size="sm" className="gap-2">
-                    <LayoutDashboard className="h-4 w-4" />
-                    Dashboard
-                  </Button>
-                </Link>
-                <Button variant="ghost" size="sm" onClick={handleSignOut}>
-                  <LogOut className="h-4 w-4" />
-                </Button>
-              </div>
-            ) : (
-              <Link to="/auth">
-                <Button variant="ghost" size="sm" className="gap-2">
-                  <LogIn className="h-4 w-4" />
-                  Login
-                </Button>
-              </Link>
-            )
-          )}
           <Button className="btn-jelly bg-[#25D366] hover:bg-[#25D366]/90 text-white" size="sm" asChild>
             <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
               <MessageCircle className="h-4 w-4 mr-2" />
@@ -145,31 +116,7 @@ export const Navbar = () => {
                 </Link>
               ))}
               
-              {!loading && (
-                user ? (
-                  <div className="flex flex-col gap-3 pt-4 border-t border-border">
-                    <Link to="/dashboard" onClick={() => setIsMobileMenuOpen(false)}>
-                      <Button variant="outline" className="w-full gap-2">
-                        <LayoutDashboard className="h-4 w-4" />
-                        Dashboard
-                      </Button>
-                    </Link>
-                    <Button variant="ghost" onClick={handleSignOut} className="w-full gap-2">
-                      <LogOut className="h-4 w-4" />
-                      Logout
-                    </Button>
-                  </div>
-                ) : (
-                  <Link to="/auth" onClick={() => setIsMobileMenuOpen(false)}>
-                    <Button variant="outline" className="w-full gap-2">
-                      <LogIn className="h-4 w-4" />
-                      Login / Signup
-                    </Button>
-                  </Link>
-                )
-              )}
-              
-              <Button className="w-full bg-[#25D366] hover:bg-[#25D366]/90 text-white" asChild>
+              <Button className="w-full mt-4 bg-[#25D366] hover:bg-[#25D366]/90 text-white" asChild>
                 <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
                   <MessageCircle className="h-4 w-4 mr-2" />
                   Get Free Demo
