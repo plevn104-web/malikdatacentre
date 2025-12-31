@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { MessageCircle, Linkedin, Mail, MapPin } from "lucide-react";
+import { MessageCircle, Linkedin, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const WHATSAPP_URL = "https://wa.me/923489057646";
@@ -11,12 +11,13 @@ export const Footer = () => {
   return (
     <footer className="border-t border-border bg-card/30">
       <div className="container px-4 py-16">
-        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-5">
           {/* Brand */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+            className="lg:col-span-2"
           >
             <div className="flex items-center gap-2 mb-4">
               <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
@@ -64,14 +65,20 @@ export const Footer = () => {
             </ul>
           </motion.div>
 
-          {/* Legal */}
+          {/* More Services */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
+            transition={{ delay: 0.15 }}
           >
-            <h3 className="mb-4 font-display font-semibold text-foreground">Legal</h3>
+            <h3 className="mb-4 font-display font-semibold text-foreground">More Services</h3>
+            <ul className="space-y-3 text-sm text-muted-foreground">
+              <li><Link to="/youtube-monetization" className="hover:text-primary transition-colors">YouTube Monetization</Link></li>
+              <li><Link to="/contact" className="hover:text-primary transition-colors">Contact Us</Link></li>
+            </ul>
+            
+            <h3 className="mb-4 mt-6 font-display font-semibold text-foreground">Legal</h3>
             <ul className="space-y-3 text-sm text-muted-foreground">
               <li><Link to="/privacy-policy" className="hover:text-primary transition-colors">Privacy Policy</Link></li>
               <li><Link to="/terms-conditions" className="hover:text-primary transition-colors">Terms & Conditions</Link></li>
@@ -84,7 +91,7 @@ export const Footer = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.3 }}
+            transition={{ delay: 0.2 }}
           >
             <h3 className="mb-4 font-display font-semibold text-foreground">Contact</h3>
             <ul className="space-y-3 text-sm text-muted-foreground">
