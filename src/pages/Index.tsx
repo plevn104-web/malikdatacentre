@@ -29,7 +29,6 @@ const Index = () => {
       <CTASection />
       <Footer />
       <ChatBot />
-      <WhatsAppButton floating />
     </main>
   );
 };
