@@ -4,7 +4,6 @@ import {
   GraduationCap, 
   Clock, 
   BookOpen, 
-  Star, 
   CheckCircle,
   ArrowRight,
   Sparkles,
@@ -16,12 +15,10 @@ import {
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
-import { useAuth } from '@/hooks/useAuth';
 import { toast } from 'sonner';
-import { Navbar } from '@/components/Navbar';
-import { Footer } from '@/components/Footer';
+import { Navbar } from '@/components/layout/Navbar';
+import { Footer } from '@/components/layout/Footer';
 import { Json } from '@/integrations/supabase/types';
 
 interface Course {
@@ -36,15 +33,13 @@ interface Course {
   display_order: number;
 }
 
-const USD_RATE = 278; // PKR to USD conversion rate
+const USD_RATE = 278;
+const WHATSAPP_NUMBER = "923489057646";
 
 export default function Courses() {
   const [courses, setCourses] = useState<Course[]>([]);
   const [bundleCourse, setBundleCourse] = useState<Course | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [enrollingId, setEnrollingId] = useState<string | null>(null);
-  const { user } = useAuth();
-  const navigate = useNavigate();
 
   useEffect(() => {
     fetchCourses();
@@ -102,56 +97,9 @@ export default function Courses() {
     return `$${usd}`;
   };
 
-  const handleEnroll = async (course: Course) => {
-    if (!user) {
-      toast.info('Please login to enroll in courses');
-      navigate('/auth');
-      return;
-    }
-
-    setEnrollingId(course.id);
-    try {
-      // Check if already enrolled
-      const { data: existing } = await supabase
-        .from('course_enrollments')
-        .select('id, status')
-        .eq('user_id', user.id)
-        .eq('course_id', course.id)
-        .maybeSingle();
-
-      if (existing) {
-        if (existing.status === 'active') {
-          toast.info('You are already enrolled in this course');
-          navigate('/dashboard');
-          return;
-        } else if (existing.status === 'pending') {
-          toast.info('Your enrollment is pending approval');
-          return;
-        }
-      }
-
-      // Create enrollment request
-      const { error } = await supabase
-        .from('course_enrollments')
-        .insert({
-          user_id: user.id,
-          course_id: course.id,
-          status: 'pending'
-        });
-
-      if (error) throw error;
-
-      toast.success('Enrollment request submitted! Please complete payment via wallet or WhatsApp.');
-      
-      // Open WhatsApp with enrollment message
-      const message = `Hi! I want to enroll in: ${course.title}\nPrice: ${formatPKR(course.price_pkr)} (${formatUSD(course.price_pkr)})\n\nPlease share payment details.`;
-      window.open(`https://wa.me/923489057646?text=${encodeURIComponent(message)}`, '_blank');
-    } catch (error: any) {
-      console.error('Enrollment error:', error);
-      toast.error('Failed to process enrollment');
-    } finally {
-      setEnrollingId(null);
-    }
+  const handleEnroll = (course: Course) => {
+    const message = `Hi! I want to enroll in: ${course.title}\nPrice: ${formatPKR(course.price_pkr)} (${formatUSD(course.price_pkr)})\n\nPlease share payment details.`;
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank');
   };
 
   const CourseCard = ({ course, featured = false }: { course: Course; featured?: boolean }) => (
@@ -165,11 +113,11 @@ export default function Courses() {
       <Card className={`h-full relative overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1 ${
         featured 
           ? 'bg-gradient-to-br from-primary/20 via-primary/10 to-background border-primary/50' 
-          : 'bg-card border-border hover:border-primary/50'
+          : 'glass-card'
       }`}>
         {featured && (
           <div className="absolute top-0 right-0">
-            <div className="bg-primary text-primary-foreground px-4 py-1 text-sm font-bold rounded-bl-lg flex items-center gap-1">
+            <div className="bg-gradient-to-r from-primary to-secondary text-primary-foreground px-4 py-1 text-sm font-bold rounded-bl-lg flex items-center gap-1">
               <Crown className="h-4 w-4" />
               BEST VALUE
             </div>
@@ -185,11 +133,11 @@ export default function Courses() {
                     <Sparkles className="h-5 w-5 text-primary" />
                   </div>
                 ) : (
-                  <div className="p-2 rounded-lg bg-secondary/50">
-                    <BookOpen className="h-5 w-5 text-secondary-foreground" />
+                  <div className="p-2 rounded-lg bg-secondary/20">
+                    <BookOpen className="h-5 w-5 text-secondary" />
                   </div>
                 )}
-                <Badge variant="outline" className="text-xs">
+                <Badge variant="outline" className="text-xs border-border">
                   <Clock className="h-3 w-3 mr-1" />
                   {course.duration_weeks} Weeks
                 </Badge>
@@ -232,18 +180,12 @@ export default function Courses() {
               </div>
               <Button 
                 onClick={() => handleEnroll(course)}
-                disabled={enrollingId === course.id}
-                className={featured ? 'bg-primary hover:bg-primary/90' : ''}
+                className={`btn-jelly ${featured ? 'bg-gradient-to-r from-primary to-secondary text-primary-foreground' : ''}`}
                 size={featured ? 'lg' : 'default'}
               >
-                {enrollingId === course.id ? (
-                  <div className="h-5 w-5 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
-                ) : (
-                  <>
-                    Enroll Now
-                    <ArrowRight className="h-4 w-4 ml-2" />
-                  </>
-                )}
+                <MessageCircle className="h-4 w-4 mr-2" />
+                Enroll Now
+                <ArrowRight className="h-4 w-4 ml-2" />
               </Button>
             </div>
           </div>
@@ -257,7 +199,7 @@ export default function Courses() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative pt-24 pb-16 overflow-hidden">
+      <section className="relative pt-32 pb-16 overflow-hidden">
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute -top-40 -right-40 h-80 w-80 rounded-full bg-primary/10 blur-3xl" />
           <div className="absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-secondary/10 blur-3xl" />
@@ -269,15 +211,13 @@ export default function Courses() {
             animate={{ opacity: 1, y: 0 }}
             className="text-center max-w-3xl mx-auto"
           >
-            <Badge className="mb-4 bg-primary/20 text-primary border-primary/30">
+            <Badge className="mb-4 bg-primary/10 text-primary border-primary/30">
               <GraduationCap className="h-3 w-3 mr-1" />
               Professional Training
             </Badge>
             <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">
               Professional AI & Automation{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
-                Courses
-              </span>
+              <span className="gradient-text">Courses</span>
             </h1>
             <p className="text-lg text-muted-foreground mb-8">
               Learn cutting-edge AI skills from industry experts. Master ChatGPT, automation, 
@@ -351,86 +291,30 @@ export default function Courses() {
         </div>
       </section>
 
-      {/* Payment Methods */}
-      <section className="py-16 px-4 bg-muted/30">
-        <div className="container mx-auto max-w-4xl">
+      {/* Contact CTA */}
+      <section className="py-16 px-4">
+        <div className="container mx-auto max-w-2xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-8"
+            className="glass-card p-8 text-center"
           >
-            <h2 className="font-display text-2xl font-bold text-foreground mb-4">
-              How to Enroll
-            </h2>
+            <h3 className="font-display text-2xl font-bold text-foreground mb-4">
+              Ready to Start Learning?
+            </h3>
+            <p className="text-muted-foreground mb-6">
+              Contact us on WhatsApp to enroll in any course or get more information.
+            </p>
+            <Button 
+              size="lg"
+              className="btn-jelly bg-[#25D366] hover:bg-[#25D366]/90 text-white"
+              onClick={() => window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=Hi! I'm interested in your courses. Please share more details.`, '_blank')}
+            >
+              <MessageCircle className="h-5 w-5 mr-2" />
+              Contact on WhatsApp
+            </Button>
           </motion.div>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            <Card className="bg-card border-border">
-              <CardContent className="p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="p-3 rounded-xl bg-primary/20">
-                    <Star className="h-6 w-6 text-primary" />
-                  </div>
-                  <h3 className="font-bold text-lg text-foreground">Via Wallet Balance</h3>
-                </div>
-                <ol className="space-y-2 text-sm text-muted-foreground">
-                  <li className="flex items-start gap-2">
-                    <span className="font-bold text-primary">1.</span>
-                    Add balance to your wallet
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="font-bold text-primary">2.</span>
-                    Wait for admin approval
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="font-bold text-primary">3.</span>
-                    Enroll in your chosen course
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="font-bold text-primary">4.</span>
-                    Access course in your dashboard
-                  </li>
-                </ol>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-card border-border">
-              <CardContent className="p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="p-3 rounded-xl bg-green-500/20">
-                    <MessageCircle className="h-6 w-6 text-green-500" />
-                  </div>
-                  <h3 className="font-bold text-lg text-foreground">Via WhatsApp</h3>
-                </div>
-                <ol className="space-y-2 text-sm text-muted-foreground">
-                  <li className="flex items-start gap-2">
-                    <span className="font-bold text-green-500">1.</span>
-                    Click "Enroll Now" on any course
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="font-bold text-green-500">2.</span>
-                    Contact us on WhatsApp
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="font-bold text-green-500">3.</span>
-                    Complete payment
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="font-bold text-green-500">4.</span>
-                    Get instant access
-                  </li>
-                </ol>
-                <Button 
-                  className="w-full mt-4 bg-green-600 hover:bg-green-700"
-                  onClick={() => window.open('https://wa.me/923489057646?text=Hi! I want to enroll in a course. Please share details.', '_blank')}
-                >
-                  <MessageCircle className="h-4 w-4 mr-2" />
-                  Contact on WhatsApp
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
         </div>
       </section>
 
