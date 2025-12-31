@@ -10,6 +10,13 @@ import { ReviewsSection } from "@/components/home/ReviewsSection";
 import { FounderSection } from "@/components/home/FounderSection";
 import { CTASection } from "@/components/home/CTASection";
 import { ChatBot } from "@/components/ChatBot";
+import { FreeHomepageDemoSection } from "@/components/home/FreeHomepageDemoSection";
+import { WhoWeWorkWithSection } from "@/components/home/WhoWeWorkWithSection";
+import { WhatYouGetSection } from "@/components/home/WhatYouGetSection";
+import { AfterDeliverySupportSection } from "@/components/home/AfterDeliverySupportSection";
+import { WhyClientsChooseUsSection } from "@/components/home/WhyClientsChooseUsSection";
+import { DemoGuaranteeSection } from "@/components/home/DemoGuaranteeSection";
+import { FinalMicroCTASection } from "@/components/home/FinalMicroCTASection";
 
 const Index = () => {
   return (
@@ -17,13 +24,20 @@ const Index = () => {
       <Navbar />
       <HeroSection />
       <TrustSection />
+      <FreeHomepageDemoSection />
       <WhyChooseSection />
+      <WhoWeWorkWithSection />
       <ServicesPreview />
+      <WhatYouGetSection />
       <PortfolioPreview />
       <PricingPreview />
+      <DemoGuaranteeSection />
+      <WhyClientsChooseUsSection />
+      <AfterDeliverySupportSection />
       <ReviewsSection />
       <FounderSection />
       <CTASection />
+      <FinalMicroCTASection />
       <Footer />
       <ChatBot />
     </main>
