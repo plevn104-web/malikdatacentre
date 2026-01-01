@@ -17,13 +17,13 @@ const notFit = [
 
 export const WhoWeWorkWithSection = () => {
   return (
-    <section className="py-20 md:py-28 relative overflow-hidden bg-muted/30">
+    <section className="py-20 md:py-28 relative overflow-hidden bg-muted/20">
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
+          transition={{ duration: 0.4 }}
+          viewport={{ once: true, margin: "-50px" }}
           className="text-center mb-12"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
@@ -37,11 +37,11 @@ export const WhoWeWorkWithSection = () => {
         <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {/* Good Fit */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            viewport={{ once: true }}
-            className="glass-card p-8 rounded-2xl border border-primary/20 bg-card/50"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.05 }}
+            viewport={{ once: true, margin: "-30px" }}
+            className="glass-card p-8 rounded-2xl border border-primary/20"
           >
             <div className="flex items-center gap-3 mb-6">
               <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
@@ -62,11 +62,11 @@ export const WhoWeWorkWithSection = () => {
 
           {/* Not Fit */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="glass-card p-8 rounded-2xl border border-muted/40 bg-card/30"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
+            viewport={{ once: true, margin: "-30px" }}
+            className="glass-card p-8 rounded-2xl border border-muted/40"
           >
             <div className="flex items-center gap-3 mb-6">
               <div className="w-10 h-10 rounded-lg bg-muted/30 flex items-center justify-center">

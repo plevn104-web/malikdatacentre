@@ -9,14 +9,14 @@ const supportPoints = [
 
 export const AfterDeliverySupportSection = () => {
   return (
-    <section className="py-20 md:py-28 relative overflow-hidden bg-muted/30">
+    <section className="py-20 md:py-28 relative overflow-hidden bg-muted/20">
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-3xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
+            transition={{ duration: 0.4 }}
+            viewport={{ once: true, margin: "-50px" }}
             className="text-center mb-10"
           >
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-6">
@@ -36,9 +36,9 @@ export const AfterDeliverySupportSection = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="glass-card p-8 rounded-2xl border border-primary/20 bg-card/50"
+            transition={{ duration: 0.4, delay: 0.1 }}
+            viewport={{ once: true, margin: "-30px" }}
+            className="glass-card p-8 rounded-2xl border border-primary/20"
           >
             <ul className="space-y-4">
               {supportPoints.map((point, index) => (
