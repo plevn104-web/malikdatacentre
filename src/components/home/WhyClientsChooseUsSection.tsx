@@ -22,8 +22,8 @@ export const WhyClientsChooseUsSection = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
+          transition={{ duration: 0.4 }}
+          viewport={{ once: true, margin: "-50px" }}
           className="text-center mb-12"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
@@ -37,11 +37,11 @@ export const WhyClientsChooseUsSection = () => {
         <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {/* Our Approach */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            viewport={{ once: true }}
-            className="glass-card p-8 rounded-2xl border border-primary/30 bg-gradient-to-br from-primary/10 to-transparent"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.05 }}
+            viewport={{ once: true, margin: "-30px" }}
+            className="glass-card p-8 rounded-2xl border border-primary/30 bg-gradient-to-br from-primary/5 to-transparent"
           >
             <h3 className="text-xl font-semibold text-foreground mb-6 flex items-center gap-2">
               <span className="text-primary">Malik Data Centre</span>
@@ -61,11 +61,11 @@ export const WhyClientsChooseUsSection = () => {
 
           {/* Others */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="glass-card p-8 rounded-2xl border border-muted/40 bg-card/30"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
+            viewport={{ once: true, margin: "-30px" }}
+            className="glass-card p-8 rounded-2xl border border-muted/40"
           >
             <h3 className="text-xl font-semibold text-muted-foreground mb-6">
               Common Challenges Elsewhere
@@ -87,4 +87,3 @@ export const WhyClientsChooseUsSection = () => {
     </section>
   );
 };
-

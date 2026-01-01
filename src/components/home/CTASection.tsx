@@ -7,17 +7,18 @@ const WHATSAPP_URL = "https://wa.me/923489057646?text=Hi! I want a free homepage
 export const CTASection = () => {
   return (
     <section className="py-24 relative overflow-hidden">
-      {/* Background effects */}
+      {/* Static background - no animation */}
       <div className="absolute inset-0">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[150px]" />
-        <div className="absolute top-1/4 right-1/4 w-80 h-80 bg-secondary/10 rounded-full blur-[100px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/8 rounded-full blur-[120px]" />
+        <div className="absolute top-1/4 right-1/4 w-64 h-64 bg-secondary/8 rounded-full blur-[80px]" />
       </div>
 
       <div className="container px-4 relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.4 }}
           className="max-w-3xl mx-auto text-center"
         >
           <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
@@ -31,7 +32,7 @@ export const CTASection = () => {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Button
               size="lg"
-              className="btn-jelly bg-gradient-to-r from-primary to-secondary text-primary-foreground px-8 py-6 text-lg font-semibold rounded-xl shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 animate-gradient-shift"
+              className="bg-gradient-to-r from-primary to-secondary text-primary-foreground px-8 py-6 text-lg font-semibold rounded-xl shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/25 transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]"
               asChild
             >
               <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">

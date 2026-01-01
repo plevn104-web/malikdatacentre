@@ -48,7 +48,8 @@ const ReviewsSectionComponent = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.4 }}
           className="text-center mb-16"
         >
           <span className="inline-block px-4 py-1.5 rounded-full bg-secondary/10 text-secondary text-sm font-medium mb-4">
@@ -66,28 +67,24 @@ const ReviewsSectionComponent = () => {
           {testimonials.map((testimonial, index) => (
             <motion.div
               key={testimonial.name}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.05 }}
+              viewport={{ once: true, margin: "-30px" }}
+              transition={{ duration: 0.4, delay: Math.min(index * 0.03, 0.15) }}
               className="glass-card p-6 relative"
             >
-              {/* Quote icon */}
               <Quote className="absolute top-4 right-4 h-8 w-8 text-primary/10" />
               
-              {/* Stars */}
               <div className="flex gap-1 mb-4">
                 {Array.from({ length: testimonial.rating }).map((_, i) => (
                   <Star key={i} className="h-4 w-4 fill-primary text-primary" />
                 ))}
               </div>
 
-              {/* Content */}
               <p className="text-foreground/90 text-sm leading-relaxed mb-6">
                 "{testimonial.content}"
               </p>
 
-              {/* Author */}
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
                   <span className="text-primary-foreground font-semibold text-sm">

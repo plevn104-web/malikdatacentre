@@ -24,8 +24,8 @@ export const WhatYouGetSection = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
+          transition={{ duration: 0.4 }}
+          viewport={{ once: true, margin: "-50px" }}
           className="text-center mb-12"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
@@ -42,12 +42,12 @@ export const WhatYouGetSection = () => {
               key={index}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: index * 0.1 }}
-              viewport={{ once: true }}
-              className="glass-card p-6 rounded-xl border border-border/50 bg-card/30 hover:bg-card/50 transition-colors group"
+              transition={{ duration: 0.4, delay: Math.min(index * 0.03, 0.1) }}
+              viewport={{ once: true, margin: "-30px" }}
+              className="glass-card p-6 rounded-xl border border-border/50 hover:border-primary/30 transition-colors duration-200 group"
             >
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary/15 transition-colors duration-200">
                   <feature.icon className="w-6 h-6 text-primary" />
                 </div>
                 <span className="text-foreground font-medium">{feature.text}</span>

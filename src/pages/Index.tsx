@@ -1,3 +1,4 @@
+import { lazy, Suspense, useEffect, useState } from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { HeroSection } from "@/components/home/HeroSection";
@@ -9,7 +10,6 @@ import { PricingPreview } from "@/components/home/PricingPreview";
 import { ReviewsSection } from "@/components/home/ReviewsSection";
 import { FounderSection } from "@/components/home/FounderSection";
 import { CTASection } from "@/components/home/CTASection";
-import { ChatBot } from "@/components/ChatBot";
 import { FreeHomepageDemoSection } from "@/components/home/FreeHomepageDemoSection";
 import { WhoWeWorkWithSection } from "@/components/home/WhoWeWorkWithSection";
 import { WhatYouGetSection } from "@/components/home/WhatYouGetSection";
@@ -18,7 +18,19 @@ import { WhyClientsChooseUsSection } from "@/components/home/WhyClientsChooseUsS
 import { DemoGuaranteeSection } from "@/components/home/DemoGuaranteeSection";
 import { FinalMicroCTASection } from "@/components/home/FinalMicroCTASection";
 
+// Lazy load ChatBot to avoid blocking initial render
+const ChatBot = lazy(() => import("@/components/ChatBot").then(m => ({ default: m.ChatBot })));
+
 const Index = () => {
+  // Delay chatbot loading until page is interactive
+  const [showChatbot, setShowChatbot] = useState(false);
+
+  useEffect(() => {
+    // Load chatbot after page has rendered
+    const timer = setTimeout(() => setShowChatbot(true), 1500);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <main className="min-h-screen bg-background">
       <Navbar />
@@ -39,7 +51,13 @@ const Index = () => {
       <CTASection />
       <FinalMicroCTASection />
       <Footer />
-      <ChatBot />
+      
+      {/* ChatBot - lazy loaded after page render */}
+      {showChatbot && (
+        <Suspense fallback={null}>
+          <ChatBot />
+        </Suspense>
+      )}
     </main>
   );
 };
