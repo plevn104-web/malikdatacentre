@@ -2,8 +2,8 @@ import { motion } from "framer-motion";
 import { ArrowLeft, RefreshCcw, Ban, CheckCircle, XCircle, Clock } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
+import { Navbar } from "@/components/layout/Navbar";
+import { Footer } from "@/components/layout/Footer";
 
 const sections = [
   {
