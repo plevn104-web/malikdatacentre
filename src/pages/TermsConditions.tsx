@@ -2,8 +2,8 @@ import { motion } from "framer-motion";
 import { ArrowLeft, FileText, User, CreditCard, ShieldAlert, Server, Ban } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
+import { Navbar } from "@/components/layout/Navbar";
+import { Footer } from "@/components/layout/Footer";
 
 const sections = [
   {

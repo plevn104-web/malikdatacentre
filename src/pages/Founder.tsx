@@ -2,8 +2,8 @@ import { motion } from "framer-motion";
 import { Linkedin, Brain, Bot, Youtube, Briefcase, Shield, GraduationCap, Target, Rocket, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
+import { Navbar } from "@/components/layout/Navbar";
+import { Footer } from "@/components/layout/Footer";
 import founderImage from "@/assets/founder-malik-amir-usman.png";
 
 const LINKEDIN_URL = "https://www.linkedin.com/in/malik-amir-usman-71ab54397";

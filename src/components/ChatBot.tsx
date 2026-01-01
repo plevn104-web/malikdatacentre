@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, X, Send, Bot, User, Loader2, ExternalLink, Image, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { useAuth } from '@/hooks/useAuth';
 import { toast } from 'sonner';
 
 interface Message {
@@ -32,20 +31,12 @@ const aspectRatios = [
 ];
 
 export const ChatBot = () => {
-  const { user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   
-  // Dynamic initial message based on login status
   const getInitialMessage = (): Message => {
-    if (user) {
-      return {
-        role: 'assistant',
-        content: "👋 Welcome back! I'm your AI Expert Assistant at MALIK DATA CENTRE. I can provide detailed guidance on:\n\n🛠️ Your purchased AI tools & how to use them\n📚 Course recommendations & enrollment\n💰 Wallet balance & payment help\n🎨 AI Image Generation (try it!)\n💻 Dashboard navigation\n\nWhat would you like help with today?"
-      };
-    }
     return {
       role: 'assistant',
-      content: "👋 Hi! Welcome to MALIK DATA CENTRE - Pakistan's premium AI platform!\n\nI can tell you about:\n🛠️ Our AI Tools (CapCut, ChatGPT, SORA, and more)\n📺 YouTube Growth Services\n🎓 AI & Automation Courses\n💻 Custom Development\n\n🔓 **Login or create a free account** to unlock:\n• Full pricing details\n• AI Image Generator\n• Personalized guidance\n• Dashboard access\n\nHow can I help you today?"
+      content: "👋 Hi! Welcome to MALIK DATA CENTRE - Pakistan's premium web development agency!\n\nI can tell you about:\n🌐 Website Development Services\n🛠️ Our AI Tools & Services\n📺 YouTube Growth Services\n🎓 Courses\n💼 Portfolio & Pricing\n\nHow can I help you today?"
     };
   };
 
@@ -59,11 +50,6 @@ export const ChatBot = () => {
   const [isGeneratingImage, setIsGeneratingImage] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  
-  // Reset messages when login status changes
-  useEffect(() => {
-    setMessages([getInitialMessage()]);
-  }, [user]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -80,14 +66,6 @@ export const ChatBot = () => {
   }, [isOpen]);
 
   const generateImage = async () => {
-    if (!user) {
-      toast.error('Please login to generate images');
-      setMessages(prev => [...prev, {
-        role: 'assistant',
-        content: '🔒 Image generation is available for logged-in users only. Please login or create an account to use this feature!'
-      }]);
-      return;
-    }
 
     if (!imagePrompt.trim()) {
       toast.error('Please enter an image description');
@@ -157,8 +135,7 @@ export const ChatBot = () => {
         Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
       },
       body: JSON.stringify({ 
-        messages: userMessages.map(m => ({ role: m.role, content: m.content })),
-        isLoggedIn: !!user 
+        messages: userMessages.map(m => ({ role: m.role, content: m.content }))
       }),
     });
 
@@ -213,7 +190,7 @@ export const ChatBot = () => {
         }
       }
     }
-  }, [user]);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -323,7 +300,7 @@ export const ChatBot = () => {
                 <div>
                   <h3 className="font-display font-semibold text-foreground">AI Assistant</h3>
                   <p className="text-xs text-muted-foreground">
-                    {user ? '🟢 Logged in • Image Gen Ready' : '🔵 Visitor mode'}
+                    🟢 Online • Ready to help
                   </p>
                 </div>
               </div>
@@ -416,9 +393,6 @@ export const ChatBot = () => {
                     <div className="flex items-center gap-2">
                       <Sparkles className="h-4 w-4 text-primary" />
                       <span className="text-sm font-medium text-foreground">AI Image Generator</span>
-                      {!user && (
-                        <span className="text-xs bg-amber-500/20 text-amber-500 px-2 py-0.5 rounded-full">Login Required</span>
-                      )}
                     </div>
                     
                     <Input
