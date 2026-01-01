@@ -74,6 +74,7 @@ export const Footer = () => {
           >
             <h3 className="mb-4 font-display font-semibold text-foreground">More Services</h3>
             <ul className="space-y-3 text-sm text-muted-foreground">
+              <li><Link to="/ai-tools-services" className="hover:text-primary transition-colors">AI Tools & Services</Link></li>
               <li><Link to="/youtube-monetization" className="hover:text-primary transition-colors">YouTube Monetization</Link></li>
               <li><Link to="/contact" className="hover:text-primary transition-colors">Contact Us</Link></li>
             </ul>

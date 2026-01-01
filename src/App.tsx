@@ -15,6 +15,7 @@ import Founder from "./pages/Founder";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsConditions from "./pages/TermsConditions";
 import RefundPolicy from "./pages/RefundPolicy";
+import AIToolsServices from "./pages/AIToolsServices";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -38,6 +39,7 @@ const App = () => (
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-conditions" element={<TermsConditions />} />
           <Route path="/refund-policy" element={<RefundPolicy />} />
+          <Route path="/ai-tools-services" element={<AIToolsServices />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
