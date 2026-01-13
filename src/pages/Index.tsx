@@ -2,6 +2,7 @@ import { lazy, Suspense, useEffect, useState } from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { HeroSection } from "@/components/home/HeroSection";
+import { AIToolsSection } from "@/components/home/AIToolsSection";
 import { TrustSection } from "@/components/home/TrustSection";
 import { WhyChooseSection } from "@/components/home/WhyChooseSection";
 import { ServicesPreview } from "@/components/home/ServicesPreview";
@@ -35,6 +36,7 @@ const Index = () => {
     <main className="min-h-screen bg-background">
       <Navbar />
       <HeroSection />
+      <AIToolsSection />
       <TrustSection />
       <FreeHomepageDemoSection />
       <WhyChooseSection />
