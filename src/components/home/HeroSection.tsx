@@ -49,17 +49,26 @@ export const HeroSection = () => {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="font-display text-4xl md:text-5xl lg:text-7xl font-bold text-foreground leading-tight mb-6"
           >
-            Websites That Make{" "}
-            <span className="gradient-text">Businesses Look Powerful</span>
+            Pakistan's Most Trusted{" "}
+            <span className="gradient-text">AI Tools & Digital Services Provider</span>
           </motion.h1>
 
           {/* Subheadline */}
           <motion.p
             {...fadeIn}
             transition={{ duration: 0.5, delay: 0.15 }}
-            className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10"
+            className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-4"
           >
-            High-converting, AI-powered & visually stunning websites designed to elevate your brand and drive results.
+            Premium AI tools, private accounts, and digital solutions, delivering reliability, value, and instant access across Pakistan.
+          </motion.p>
+
+          {/* Supporting Line */}
+          <motion.p
+            {...fadeIn}
+            transition={{ duration: 0.5, delay: 0.18 }}
+            className="text-sm text-muted-foreground/80 mb-10"
+          >
+            Instant Delivery • Private Accounts • Trusted Nationwide
           </motion.p>
 
           {/* CTA Buttons */}
