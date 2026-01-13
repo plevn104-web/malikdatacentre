@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import LiveVisitorsIndicator from "./LiveVisitorsIndicator";
+import PurchaseNotification from "./PurchaseNotification";
 
 const WHATSAPP_URL = "https://wa.me/923489057646?text=Hi! I'd like to get a free website demo for my business.";
 
@@ -77,7 +79,7 @@ export const HeroSection = () => {
           <motion.div
             {...fadeIn}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4"
+            className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6"
           >
             <Button
               size="lg"
@@ -101,6 +103,9 @@ export const HeroSection = () => {
               View Portfolio
             </Button>
           </motion.div>
+
+          {/* Live Visitors Indicator */}
+          <LiveVisitorsIndicator />
 
           {/* Stats */}
           <motion.div
@@ -129,6 +134,9 @@ export const HeroSection = () => {
       <div className="absolute top-40 right-16 hidden lg:block">
         <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-secondary/20 to-primary/20 backdrop-blur-sm border border-white/10 shadow-lg" />
       </div>
+
+      {/* Purchase Notification Popup */}
+      <PurchaseNotification />
     </section>
   );
 };
