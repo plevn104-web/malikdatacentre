@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { MessageCircle, Zap, Lock, Clock } from "lucide-react";
 
+const SECTION_ID = "ai-tools-section";
+
 const tools = [
   { name: "CapCut Pro", price: "499/-", badge: "Popular", type: "instant" },
   { name: "Sora AI Pro", price: "1499/-", badge: "Best Seller", type: "instant" },
@@ -42,7 +44,7 @@ const getTypeLabel = (type: string) => {
 
 export const AIToolsSection = () => {
   return (
-    <section className="py-16 md:py-24 bg-gradient-to-b from-background via-muted/20 to-background">
+    <section id={SECTION_ID} className="py-16 md:py-24 bg-gradient-to-b from-background via-muted/20 to-background scroll-mt-20">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

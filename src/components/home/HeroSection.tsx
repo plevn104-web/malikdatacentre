@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Play } from "lucide-react";
-import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
 const WHATSAPP_URL = "https://wa.me/923489057646?text=Hi! I'd like to get a free website demo for my business.";
@@ -83,7 +82,7 @@ export const HeroSection = () => {
               asChild
             >
               <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
-                Get Free Website Demo
+                Get Instant Access
                 <ArrowRight className="ml-2 h-5 w-5" />
               </a>
             </Button>
@@ -91,12 +90,12 @@ export const HeroSection = () => {
               size="lg"
               variant="outline"
               className="px-8 py-6 text-lg font-semibold rounded-xl border-border hover:border-primary/50 transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]"
-              asChild
+              onClick={() => {
+                document.getElementById('ai-tools-section')?.scrollIntoView({ behavior: 'smooth' });
+              }}
             >
-              <Link to="/portfolio">
-                <Play className="mr-2 h-5 w-5" />
-                View Portfolio
-              </Link>
+              <Play className="mr-2 h-5 w-5" />
+              View Portfolio
             </Button>
           </motion.div>
 
@@ -107,7 +106,7 @@ export const HeroSection = () => {
             className="mt-16 grid grid-cols-3 gap-8 max-w-lg mx-auto"
           >
             {[
-              { value: "500+", label: "Projects Delivered" },
+              { value: "5000+", label: "Happy Clients" },
               { value: "100%", label: "Client Satisfaction" },
               { value: "24/7", label: "Support Available" },
             ].map((stat, index) => (
