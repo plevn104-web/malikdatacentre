@@ -10,7 +10,7 @@ const tools = [
   { name: "CapCut Pro", price: "499/-", badge: "Popular", type: "instant" },
   { name: "Sora AI Pro", price: "2999/-", badge: "Best Seller", type: "instant" },
   { name: "Gemini Veo 3 Ultra", price: "3499/-", badge: null, type: "instant" },
-  { name: "ChatGPT Business", price: "2999/- / Month", badge: null, type: "instant" },
+  { name: "ChatGPT Business", price: "2999/- / Month", badge: "Best Seller", type: "instant" },
   { name: "HeyGen AI", price: "7300/-", badge: null, type: "private" },
   { name: "Hailuo AI", price: "4500/-", badge: null, type: "private" },
   { name: "One Time OTP Number", price: "200/-", badge: null, type: "instant" },
