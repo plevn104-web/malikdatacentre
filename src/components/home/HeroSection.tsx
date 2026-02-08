@@ -114,7 +114,7 @@ export const HeroSection = () => {
             className="mt-16 grid grid-cols-3 gap-8 max-w-lg mx-auto"
           >
             {[
-              { value: "5000+", label: "Happy Clients" },
+              { value: "50000+", label: "Happy Clients" },
               { value: "100%", label: "Client Satisfaction" },
               { value: "24/7", label: "Support Available" },
             ].map((stat, index) => (
