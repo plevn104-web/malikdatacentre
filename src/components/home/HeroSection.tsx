@@ -53,7 +53,7 @@ export const HeroSection = () => {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="font-display text-4xl md:text-5xl lg:text-7xl font-bold text-foreground leading-tight mb-6"
           >
-            Pakistan's Most Trusted{" "}
+            World's Most Trusted{" "}
             <span className="gradient-text">AI Tools & Digital Services Provider</span>
           </motion.h1>
 
