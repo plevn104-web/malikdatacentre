@@ -33,6 +33,7 @@ const tools = [
   { name: "1K TikTok Followers", price: "799/-", badge: null, type: "demand" },
   { name: "1K Facebook Followers", price: "799/-", badge: null, type: "demand" },
   { name: "1K Instagram Followers", price: "799/-", badge: null, type: "demand" },
+  { name: "SMM Panel", price: "19,999/-", badge: null, type: "demand" },
   { name: "YouTube Channels", price: "On Demand", badge: null, type: "demand" },
   { name: "Google / Gmail Accounts", price: "150/-", badge: null, type: "instant" },
 ];
