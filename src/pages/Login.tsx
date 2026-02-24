@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Navbar } from "@/components/layout/Navbar";
@@ -7,7 +7,9 @@ import { SEOHead } from "@/components/SEOHead";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
-import { Eye, EyeOff, Loader2 } from "lucide-react";
+import { Eye, EyeOff, Loader2, MailWarning } from "lucide-react";
+
+const COOLDOWN_SECONDS = 60;
 
 const Login = () => {
   const navigate = useNavigate();
@@ -18,18 +20,54 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [unverifiedEmail, setUnverifiedEmail] = useState<string | null>(null);
+  const [resending, setResending] = useState(false);
+  const [cooldown, setCooldown] = useState(0);
+
+  // Cooldown timer
+  useEffect(() => {
+    if (cooldown <= 0) return;
+    const t = setInterval(() => setCooldown((c) => Math.max(0, c - 1)), 1000);
+    return () => clearInterval(t);
+  }, [cooldown]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    setUnverifiedEmail(null);
+
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+
     if (error) {
-      toast({ title: "Login failed", description: error.message, variant: "destructive" });
+      // Check if error is about unverified email
+      if (error.message?.toLowerCase().includes("email not confirmed")) {
+        setUnverifiedEmail(email);
+        toast({ title: "Email not verified", description: "Please verify your email before logging in.", variant: "destructive" });
+      } else {
+        toast({ title: "Login failed", description: error.message, variant: "destructive" });
+      }
+    } else if (data.user && !data.user.email_confirmed_at) {
+      // Logged in but not verified
+      setUnverifiedEmail(email);
+      toast({ title: "Email not verified", description: "Please verify your email to access tools.", variant: "destructive" });
     } else {
       toast({ title: "Welcome back!" });
       navigate(from, { replace: true });
     }
     setLoading(false);
+  };
+
+  const handleResendVerification = async () => {
+    if (!unverifiedEmail || cooldown > 0) return;
+    setResending(true);
+    const { error } = await supabase.auth.resend({ type: "signup", email: unverifiedEmail });
+    if (error) {
+      toast({ title: "Failed to resend", description: error.message, variant: "destructive" });
+    } else {
+      toast({ title: "Verification email sent!", description: "Check your inbox and spam folder." });
+      setCooldown(COOLDOWN_SECONDS);
+    }
+    setResending(false);
   };
 
   return (
@@ -44,6 +82,31 @@ const Login = () => {
               <p className="text-sm text-muted-foreground">{message}</p>
             </div>
           )}
+
+          {/* Unverified email banner */}
+          {unverifiedEmail && (
+            <div className="mb-6 p-4 bg-destructive/10 border border-destructive/30 rounded-xl">
+              <div className="flex items-start gap-3">
+                <MailWarning className="h-5 w-5 text-destructive mt-0.5 shrink-0" />
+                <div className="flex-1">
+                  <p className="text-sm font-medium text-foreground mb-1">Email not verified</p>
+                  <p className="text-xs text-muted-foreground mb-3">
+                    A verification link was sent to <strong>{unverifiedEmail}</strong>. Check your inbox and spam folder.
+                  </p>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={handleResendVerification}
+                    disabled={resending || cooldown > 0}
+                    className="text-xs"
+                  >
+                    {resending ? "Sending..." : cooldown > 0 ? `Resend in ${cooldown}s` : "Resend Verification Email"}
+                  </Button>
+                </div>
+              </div>
+            </div>
+          )}
+
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
               <label className="text-sm font-medium text-foreground mb-1 block">Email</label>

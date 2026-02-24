@@ -23,10 +23,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (_event, session) => {
+      (event, session) => {
         setSession(session);
         setUser(session?.user ?? null);
         setLoading(false);
+
+        // Handle successful email verification
+        if (event === "USER_UPDATED" && session?.user?.email_confirmed_at) {
+          // User just verified — session is now fresh
+        }
       }
     );
 
