@@ -3,7 +3,8 @@ import { CreatorStudioLayout } from "@/components/creator-studio/CreatorStudioLa
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useCreatorStudioGenerator } from "@/hooks/useCreatorStudioGenerator";
-import { Copy, Loader2 } from "lucide-react";
+import { generateContentPlanLocally } from "@/lib/youtubeToolLogic";
+import { Copy, Loader2, Zap, Sparkles } from "lucide-react";
 
 interface PlannerResult {
   weeks: {
@@ -17,9 +18,17 @@ const CreatorContentPlanner = () => {
   const [niche, setNiche] = useState("");
   const [frequency, setFrequency] = useState("3");
   const [goal, setGoal] = useState("");
-  const { result, isLoading, generate, copyToClipboard } = useCreatorStudioGenerator<PlannerResult>("content-planner");
+  const [localResult, setLocalResult] = useState<PlannerResult | null>(null);
+  const { result: aiResult, isLoading, generate, copyToClipboard } = useCreatorStudioGenerator<PlannerResult>("content-planner");
 
-  const handleGenerate = () => {
+  const result = aiResult || localResult;
+
+  const handleGenerateLocal = () => {
+    if (!niche.trim()) return;
+    setLocalResult(generateContentPlanLocally(niche.trim(), parseInt(frequency) || 3));
+  };
+
+  const handleGenerateAI = () => {
     if (!niche.trim()) return;
     generate({ niche: niche.trim(), frequency: `${frequency} times per week`, goal: goal.trim() });
   };
@@ -69,9 +78,14 @@ const CreatorContentPlanner = () => {
               <Input type="number" min="1" max="7" placeholder="3" value={frequency} onChange={(e) => setFrequency(e.target.value)} />
             </div>
             <Input placeholder="Growth goal (optional, e.g., 'reach 1000 subscribers')" value={goal} onChange={(e) => setGoal(e.target.value)} />
-            <Button onClick={handleGenerate} disabled={isLoading || !niche.trim()} className="w-full">
-              {isLoading ? <><Loader2 className="h-4 w-4 mr-2 animate-spin" /> Planning...</> : "Generate 30-Day Plan"}
-            </Button>
+            <div className="flex gap-2">
+              <Button onClick={handleGenerateLocal} disabled={!niche.trim()} className="flex-1">
+                <Zap className="h-4 w-4 mr-2" /> Generate Instantly
+              </Button>
+              <Button onClick={handleGenerateAI} disabled={isLoading || !niche.trim()} variant="outline" className="flex-1">
+                {isLoading ? <><Loader2 className="h-4 w-4 mr-2 animate-spin" /> Planning...</> : <><Sparkles className="h-4 w-4 mr-2" /> AI Enhanced</>}
+              </Button>
+            </div>
           </div>
 
           {isLoading && <div className="mt-8 space-y-3">{Array.from({ length: 4 }).map((_, i) => <div key={i} className="h-32 bg-muted/30 rounded-lg animate-pulse" />)}</div>}

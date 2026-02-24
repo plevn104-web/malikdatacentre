@@ -2,9 +2,10 @@ import { useState } from "react";
 import { YouTubeToolLayout } from "@/components/youtube-tools/YouTubeToolLayout";
 import { ResultsList } from "@/components/youtube-tools/ResultsList";
 import { useYouTubeToolGenerator } from "@/hooks/useYouTubeToolGenerator";
+import { generateTitlesLocally } from "@/lib/youtubeToolLogic";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Sparkles } from "lucide-react";
+import { Sparkles, Zap } from "lucide-react";
 
 const faqItems = [
   {
@@ -24,11 +25,24 @@ const faqItems = [
 const YouTubeTitleGenerator = () => {
   const [keyword, setKeyword] = useState("");
   const [niche, setNiche] = useState("");
-  const { results, isLoading, generate, copyToClipboard, copyAll } = useYouTubeToolGenerator("title-generator");
+  const [localResults, setLocalResults] = useState<string[]>([]);
+  const { results: aiResults, isLoading, generate, copyToClipboard, copyAll } = useYouTubeToolGenerator("title-generator");
 
-  const handleGenerate = () => {
+  const results = aiResults.length > 0 ? aiResults : localResults;
+
+  const handleGenerateLocal = () => {
+    if (!keyword.trim()) return;
+    setLocalResults(generateTitlesLocally(keyword.trim()));
+  };
+
+  const handleGenerateAI = () => {
     if (!keyword.trim()) return;
     generate({ keyword: keyword.trim(), niche: niche.trim() });
+  };
+
+  const handleCopyAll = () => {
+    const allText = results.join("\n");
+    navigator.clipboard.writeText(allText);
   };
 
   return (
@@ -59,7 +73,7 @@ const YouTubeTitleGenerator = () => {
                   value={keyword}
                   onChange={(e) => setKeyword(e.target.value)}
                   maxLength={200}
-                  onKeyDown={(e) => e.key === "Enter" && handleGenerate()}
+                  onKeyDown={(e) => e.key === "Enter" && handleGenerateLocal()}
                 />
               </div>
               <div>
@@ -71,22 +85,33 @@ const YouTubeTitleGenerator = () => {
                   maxLength={100}
                 />
               </div>
-              <Button
-                onClick={handleGenerate}
-                disabled={!keyword.trim() || isLoading}
-                className="w-full bg-[#FF0000] hover:bg-[#FF0000]/90 text-white"
-              >
-                <Sparkles className="h-4 w-4 mr-2" />
-                {isLoading ? "Generating..." : "Generate 15 Titles"}
-              </Button>
+              <div className="flex gap-2">
+                <Button
+                  onClick={handleGenerateLocal}
+                  disabled={!keyword.trim()}
+                  className="flex-1 bg-[#FF0000] hover:bg-[#FF0000]/90 text-white"
+                >
+                  <Zap className="h-4 w-4 mr-2" />
+                  Generate Instantly
+                </Button>
+                <Button
+                  onClick={handleGenerateAI}
+                  disabled={!keyword.trim() || isLoading}
+                  variant="outline"
+                  className="flex-1"
+                >
+                  <Sparkles className="h-4 w-4 mr-2" />
+                  {isLoading ? "Generating..." : "AI Enhanced"}
+                </Button>
+              </div>
             </div>
 
             <ResultsList
               results={results}
               isLoading={isLoading}
               onCopy={copyToClipboard}
-              onCopyAll={copyAll}
-              onRegenerate={handleGenerate}
+              onCopyAll={aiResults.length > 0 ? copyAll : handleCopyAll}
+              onRegenerate={handleGenerateLocal}
             />
           </div>
 

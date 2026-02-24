@@ -2,17 +2,30 @@ import { useState } from "react";
 import { YouTubeToolLayout } from "@/components/youtube-tools/YouTubeToolLayout";
 import { ResultsList } from "@/components/youtube-tools/ResultsList";
 import { useYouTubeToolGenerator } from "@/hooks/useYouTubeToolGenerator";
+import { generateTagsLocally } from "@/lib/youtubeToolLogic";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Sparkles } from "lucide-react";
+import { Sparkles, Zap } from "lucide-react";
 
 const YouTubeTagGenerator = () => {
   const [keyword, setKeyword] = useState("");
-  const { results, isLoading, generate, copyToClipboard, copyAll } = useYouTubeToolGenerator("tag-generator");
+  const [localResults, setLocalResults] = useState<string[]>([]);
+  const { results: aiResults, isLoading, generate, copyToClipboard, copyAll } = useYouTubeToolGenerator("tag-generator");
 
-  const handleGenerate = () => {
+  const results = aiResults.length > 0 ? aiResults : localResults;
+
+  const handleGenerateLocal = () => {
+    if (!keyword.trim()) return;
+    setLocalResults(generateTagsLocally(keyword.trim()));
+  };
+
+  const handleGenerateAI = () => {
     if (!keyword.trim()) return;
     generate({ keyword: keyword.trim() });
+  };
+
+  const handleCopyAll = () => {
+    navigator.clipboard.writeText(results.join(", "));
   };
 
   return (
@@ -40,14 +53,20 @@ const YouTubeTagGenerator = () => {
             <div className="space-y-4">
               <div>
                 <label className="text-sm font-medium text-foreground mb-1.5 block">Main Keyword *</label>
-                <Input placeholder="e.g., react tutorial for beginners" value={keyword} onChange={(e) => setKeyword(e.target.value)} maxLength={200} onKeyDown={(e) => e.key === "Enter" && handleGenerate()} />
+                <Input placeholder="e.g., react tutorial for beginners" value={keyword} onChange={(e) => setKeyword(e.target.value)} maxLength={200} onKeyDown={(e) => e.key === "Enter" && handleGenerateLocal()} />
               </div>
-              <Button onClick={handleGenerate} disabled={!keyword.trim() || isLoading} className="w-full bg-[#FF0000] hover:bg-[#FF0000]/90 text-white">
-                <Sparkles className="h-4 w-4 mr-2" />
-                {isLoading ? "Generating..." : "Generate 30 Tags"}
-              </Button>
+              <div className="flex gap-2">
+                <Button onClick={handleGenerateLocal} disabled={!keyword.trim()} className="flex-1 bg-[#FF0000] hover:bg-[#FF0000]/90 text-white">
+                  <Zap className="h-4 w-4 mr-2" />
+                  Generate Instantly
+                </Button>
+                <Button onClick={handleGenerateAI} disabled={!keyword.trim() || isLoading} variant="outline" className="flex-1">
+                  <Sparkles className="h-4 w-4 mr-2" />
+                  {isLoading ? "Generating..." : "AI Enhanced"}
+                </Button>
+              </div>
             </div>
-            <ResultsList results={results} isLoading={isLoading} onCopy={copyToClipboard} onCopyAll={copyAll} onRegenerate={handleGenerate} format="tags" />
+            <ResultsList results={results} isLoading={isLoading} onCopy={copyToClipboard} onCopyAll={aiResults.length > 0 ? copyAll : handleCopyAll} onRegenerate={handleGenerateLocal} format="tags" />
           </div>
 
           <div className="mt-8 p-5 bg-muted/20 rounded-lg border border-border/30">
