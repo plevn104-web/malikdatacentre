@@ -8,6 +8,68 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, ArrowRight, Calendar, Clock } from "lucide-react";
+import React from "react";
+
+// Internal link map: phrase → route
+const internalLinks: Record<string, string> = {
+  "our AI Tools Library": "/ai-tools",
+  "AI Tools Library": "/ai-tools",
+  "our YouTube Growth Services": "/youtube-growth",
+  "YouTube Growth Services": "/youtube-growth",
+  "our free YouTube tools": "/free-youtube-tools",
+  "Free YouTube Tools": "/free-youtube-tools",
+  "free YouTube tools": "/free-youtube-tools",
+  "our services page": "/services",
+  "services page": "/services",
+  "explore our blog": "/blog",
+  "our blog": "/blog",
+  "our courses": "/courses",
+  "contact us": "/contact",
+  "Contact Us": "/contact",
+  "About Us": "/about",
+  "Success Stories": "/success-stories",
+  "Support & FAQ": "/support",
+};
+
+const sortedLinkKeys = Object.keys(internalLinks).sort((a, b) => b.length - a.length);
+
+const renderTextWithLinks = (text: string): React.ReactNode[] => {
+  const parts: React.ReactNode[] = [];
+  let remaining = text;
+  let keyIndex = 0;
+
+  while (remaining.length > 0) {
+    let earliestIndex = -1;
+    let matchedKey = "";
+
+    for (const key of sortedLinkKeys) {
+      const idx = remaining.indexOf(key);
+      if (idx !== -1 && (earliestIndex === -1 || idx < earliestIndex)) {
+        earliestIndex = idx;
+        matchedKey = key;
+      }
+    }
+
+    if (earliestIndex === -1) {
+      parts.push(remaining);
+      break;
+    }
+
+    if (earliestIndex > 0) {
+      parts.push(remaining.slice(0, earliestIndex));
+    }
+
+    parts.push(
+      <Link key={`il-${keyIndex++}`} to={internalLinks[matchedKey]} className="text-primary hover:underline font-medium">
+        {matchedKey}
+      </Link>
+    );
+
+    remaining = remaining.slice(earliestIndex + matchedKey.length);
+  }
+
+  return parts;
+};
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -16,7 +78,6 @@ const BlogPost = () => {
   const prevPost = postIndex > 0 ? blogPosts[postIndex - 1] : null;
   const nextPost = postIndex < blogPosts.length - 1 ? blogPosts[postIndex + 1] : null;
 
-  // Related posts from same category
   const related = post
     ? blogPosts.filter((p) => p.category === post.category && p.slug !== post.slug).slice(0, 3)
     : [];
@@ -42,7 +103,7 @@ const BlogPost = () => {
     if (block.startsWith("### ")) {
       return <h3 className="font-display text-xl font-semibold text-foreground mt-6 mb-3">{block.slice(4)}</h3>;
     }
-    return <p className="text-muted-foreground leading-relaxed mb-4">{block}</p>;
+    return <p className="text-muted-foreground leading-relaxed mb-4">{renderTextWithLinks(block)}</p>;
   };
 
   const midpoint = Math.floor(post.content.length / 2);
