@@ -21,6 +21,7 @@ import YouTubeGrowth from "./pages/YouTubeGrowth";
 import AIToolsLibrary from "./pages/AIToolsLibrary";
 import FreeYouTubeTools from "./pages/FreeYouTubeTools";
 import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
 import SuccessStories from "./pages/SuccessStories";
 import SupportFAQ from "./pages/SupportFAQ";
 import YouTubeGrowthGuide from "./pages/YouTubeGrowthGuide";
@@ -53,6 +54,7 @@ const App = () => (
           <Route path="/ai-tools-library" element={<AIToolsLibrary />} />
           <Route path="/free-youtube-tools" element={<FreeYouTubeTools />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/success-stories" element={<SuccessStories />} />
           <Route path="/support" element={<SupportFAQ />} />
           <Route path="/youtube-growth-guide" element={<YouTubeGrowthGuide />} />
