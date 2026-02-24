@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -7,20 +7,42 @@ import { SEOHead } from "@/components/SEOHead";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
-import { Loader2 } from "lucide-react";
+import { Loader2, AlertCircle } from "lucide-react";
 
 const ResetPassword = () => {
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [checking, setChecking] = useState(true);
   const [isRecovery, setIsRecovery] = useState(false);
 
   useEffect(() => {
+    // Check hash for recovery type (Supabase appends #access_token=...&type=recovery)
     const hash = window.location.hash;
     if (hash.includes("type=recovery")) {
       setIsRecovery(true);
+      setChecking(false);
+      return;
     }
+
+    // Also listen for PASSWORD_RECOVERY event from auth state change
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
+      if (event === "PASSWORD_RECOVERY") {
+        setIsRecovery(true);
+        setChecking(false);
+      }
+    });
+
+    // Give Supabase a moment to process the token exchange
+    const timeout = setTimeout(() => {
+      setChecking(false);
+    }, 2000);
+
+    return () => {
+      subscription.unsubscribe();
+      clearTimeout(timeout);
+    };
   }, []);
 
   const handleReset = async (e: React.FormEvent) => {
@@ -38,11 +60,27 @@ const ResetPassword = () => {
     if (error) {
       toast({ title: "Error", description: error.message, variant: "destructive" });
     } else {
-      toast({ title: "Password updated!", description: "You can now log in with your new password." });
+      toast({ title: "Password updated successfully!", description: "Please log in with your new password." });
+      await supabase.auth.signOut();
       navigate("/login");
     }
     setLoading(false);
   };
+
+  if (checking) {
+    return (
+      <main className="min-h-screen bg-background">
+        <SEOHead title="Reset Password" description="Set a new password for your account." canonical="/reset-password" noindex />
+        <Navbar />
+        <section className="pt-24 pb-16">
+          <div className="container px-4 max-w-md mx-auto flex justify-center">
+            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+          </div>
+        </section>
+        <Footer />
+      </main>
+    );
+  }
 
   if (!isRecovery) {
     return (
@@ -50,9 +88,13 @@ const ResetPassword = () => {
         <SEOHead title="Reset Password" description="Set a new password for your account." canonical="/reset-password" noindex />
         <Navbar />
         <section className="pt-24 pb-16">
-          <div className="container px-4 max-w-md mx-auto text-center">
-            <h1 className="font-display text-3xl font-bold text-foreground mb-4">Invalid Link</h1>
-            <p className="text-muted-foreground">This password reset link is invalid or has expired. Please request a new one.</p>
+          <div className="container px-4 max-w-md mx-auto text-center space-y-4">
+            <AlertCircle className="h-12 w-12 text-destructive mx-auto" />
+            <h1 className="font-display text-3xl font-bold text-foreground">Invalid or Expired Link</h1>
+            <p className="text-muted-foreground">This reset link is invalid or has expired. Please request a new one.</p>
+            <Link to="/forgot-password">
+              <Button className="mt-4">Request New Reset Link</Button>
+            </Link>
           </div>
         </section>
         <Footer />
