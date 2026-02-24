@@ -236,6 +236,30 @@ export type Database = {
         }
         Relationships: []
       }
+      tool_usage: {
+        Row: {
+          id: string
+          month_year: string
+          tool_name: string
+          used_at: string
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          month_year: string
+          tool_name: string
+          used_at?: string
+          user_id: string
+        }
+        Update: {
+          id?: string
+          month_year?: string
+          tool_name?: string
+          used_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       transactions: {
         Row: {
           amount_pkr: number | null
