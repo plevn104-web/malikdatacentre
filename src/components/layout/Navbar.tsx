@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, MessageCircle, ChevronDown } from "lucide-react";
+import { Menu, X, MessageCircle, ChevronDown, User, LogOut } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/hooks/useAuth";
 
 const WHATSAPP_URL = "https://wa.me/923489057646";
 
@@ -49,6 +50,7 @@ const navLinks = [
 ];
 
 export const Navbar = () => {
+  const { user, signOut } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isYTDropdownOpen, setIsYTDropdownOpen] = useState(false);
@@ -180,14 +182,27 @@ export const Navbar = () => {
           </div>
         </div>
 
-        {/* CTA Button */}
-        <div className="hidden items-center gap-3 xl:flex">
-          <Button className="btn-jelly bg-[#25D366] hover:bg-[#25D366]/90 text-white" size="sm" asChild>
-            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
-              <MessageCircle className="h-4 w-4 mr-2" />
-              Get Free Demo
-            </a>
-          </Button>
+        {/* CTA + Auth Buttons */}
+        <div className="hidden items-center gap-2 xl:flex">
+          {user ? (
+            <>
+              <Button variant="ghost" size="sm" asChild>
+                <Link to="/account"><User className="h-4 w-4 mr-1" /> My Account</Link>
+              </Button>
+              <Button variant="outline" size="sm" onClick={signOut}>
+                <LogOut className="h-4 w-4 mr-1" /> Log Out
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button variant="ghost" size="sm" asChild>
+                <Link to="/login">Log In</Link>
+              </Button>
+              <Button size="sm" asChild>
+                <Link to="/signup">Sign Up</Link>
+              </Button>
+            </>
+          )}
         </div>
 
         {/* Mobile Menu Button */}
@@ -275,12 +290,25 @@ export const Navbar = () => {
                 )}
               </div>
               
-              <Button className="w-full mt-4 bg-[#25D366] hover:bg-[#25D366]/90 text-white" asChild>
-                <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
-                  <MessageCircle className="h-4 w-4 mr-2" />
-                  Get Free Demo
-                </a>
-              </Button>
+              {user ? (
+                <div className="flex flex-col gap-2 mt-4">
+                  <Button className="w-full" variant="outline" asChild>
+                    <Link to="/account" onClick={() => setIsMobileMenuOpen(false)}><User className="h-4 w-4 mr-2" /> My Account</Link>
+                  </Button>
+                  <Button className="w-full" variant="outline" onClick={() => { signOut(); setIsMobileMenuOpen(false); }}>
+                    <LogOut className="h-4 w-4 mr-2" /> Log Out
+                  </Button>
+                </div>
+              ) : (
+                <div className="flex flex-col gap-2 mt-4">
+                  <Button className="w-full" asChild>
+                    <Link to="/signup" onClick={() => setIsMobileMenuOpen(false)}>Sign Up</Link>
+                  </Button>
+                  <Button className="w-full" variant="outline" asChild>
+                    <Link to="/login" onClick={() => setIsMobileMenuOpen(false)}>Log In</Link>
+                  </Button>
+                </div>
+              )}
             </div>
           </motion.div>
         )}

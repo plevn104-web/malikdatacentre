@@ -2,6 +2,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { SEOHead } from "@/components/SEOHead";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
+import { UsageBar } from "@/components/auth/UsageBar";
 import { Link } from "react-router-dom";
 import { ReactNode } from "react";
 
@@ -59,6 +60,10 @@ export const YouTubeToolLayout = ({
       <Navbar />
 
       <Breadcrumbs items={breadcrumbs} />
+
+      <div className="container px-4 max-w-3xl mx-auto pt-4">
+        <UsageBar />
+      </div>
 
       {children}
 

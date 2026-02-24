@@ -3,6 +3,8 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "@/hooks/useAuth";
+import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import Index from "./pages/Index";
 import Courses from "./pages/Courses";
 import Portfolio from "./pages/Portfolio";
@@ -45,62 +47,82 @@ import CreatorCTRAssistant from "./pages/CreatorCTRAssistant";
 import CreatorScriptBuilder from "./pages/CreatorScriptBuilder";
 import CreatorContentRepurposing from "./pages/CreatorContentRepurposing";
 import CreatorContentPlanner from "./pages/CreatorContentPlanner";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
+import Account from "./pages/Account";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
+const P = ({ children }: { children: React.ReactNode }) => (
+  <ProtectedRoute>{children}</ProtectedRoute>
+);
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/courses" element={<Courses />} />
-          <Route path="/portfolio" element={<Portfolio />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/pricing" element={<Pricing />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/youtube-monetization" element={<YouTubeMonetization />} />
-          <Route path="/founder" element={<Founder />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/terms-conditions" element={<TermsConditions />} />
-          <Route path="/refund-policy" element={<RefundPolicy />} />
-          <Route path="/ai-tools-services" element={<AIToolsServices />} />
-          <Route path="/disclaimer" element={<Disclaimer />} />
-          <Route path="/youtube-growth" element={<YouTubeGrowth />} />
-          <Route path="/ai-tools-library" element={<AIToolsLibrary />} />
-          <Route path="/free-youtube-tools" element={<FreeYouTubeTools />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/blog/:slug" element={<BlogPost />} />
-          <Route path="/success-stories" element={<SuccessStories />} />
-          <Route path="/support" element={<SupportFAQ />} />
-          <Route path="/youtube-growth-guide" element={<YouTubeGrowthGuide />} />
-          <Route path="/youtube-tools" element={<YouTubeToolsHub />} />
-          <Route path="/youtube-tools/title-generator" element={<YouTubeTitleGenerator />} />
-          <Route path="/youtube-tools/description-generator" element={<YouTubeDescriptionGenerator />} />
-          <Route path="/youtube-tools/tag-generator" element={<YouTubeTagGenerator />} />
-          <Route path="/youtube-tools/thumbnail-headline-generator" element={<YouTubeThumbnailHeadlineGenerator />} />
-          <Route path="/youtube-tools/hashtag-generator" element={<YouTubeHashtagGenerator />} />
-          <Route path="/youtube-tools/revenue-estimator" element={<YouTubeRevenueEstimator />} />
-          <Route path="/youtube-tools/watch-time-calculator" element={<YouTubeWatchTimeCalculator />} />
-          <Route path="/youtube-tools/seo-score-checker" element={<YouTubeSEOScoreChecker />} />
-          <Route path="/creator-studio" element={<CreatorStudioHub />} />
-          <Route path="/creator-studio/keyword-explorer" element={<CreatorKeywordExplorer />} />
-          <Route path="/creator-studio/seo-analyzer" element={<CreatorSEOAnalyzer />} />
-          <Route path="/creator-studio/tag-optimization" element={<CreatorTagOptimization />} />
-          <Route path="/creator-studio/competitor-breakdown" element={<CreatorCompetitorBreakdown />} />
-          <Route path="/creator-studio/monetization-estimator" element={<CreatorMonetizationEstimator />} />
-          <Route path="/creator-studio/watch-time-simulator" element={<CreatorWatchTimeSimulator />} />
-          <Route path="/creator-studio/ctr-assistant" element={<CreatorCTRAssistant />} />
-          <Route path="/creator-studio/script-builder" element={<CreatorScriptBuilder />} />
-          <Route path="/creator-studio/content-repurposing" element={<CreatorContentRepurposing />} />
-          <Route path="/creator-studio/content-planner" element={<CreatorContentPlanner />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
+      <AuthProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            {/* Public routes */}
+            <Route path="/" element={<Index />} />
+            <Route path="/courses" element={<Courses />} />
+            <Route path="/portfolio" element={<Portfolio />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/pricing" element={<Pricing />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/youtube-monetization" element={<YouTubeMonetization />} />
+            <Route path="/founder" element={<Founder />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-conditions" element={<TermsConditions />} />
+            <Route path="/refund-policy" element={<RefundPolicy />} />
+            <Route path="/ai-tools-services" element={<AIToolsServices />} />
+            <Route path="/disclaimer" element={<Disclaimer />} />
+            <Route path="/youtube-growth" element={<YouTubeGrowth />} />
+            <Route path="/ai-tools-library" element={<AIToolsLibrary />} />
+            <Route path="/free-youtube-tools" element={<FreeYouTubeTools />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:slug" element={<BlogPost />} />
+            <Route path="/success-stories" element={<SuccessStories />} />
+            <Route path="/support" element={<SupportFAQ />} />
+            <Route path="/youtube-growth-guide" element={<YouTubeGrowthGuide />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/account" element={<Account />} />
+            {/* Hub pages - public preview */}
+            <Route path="/youtube-tools" element={<YouTubeToolsHub />} />
+            <Route path="/creator-studio" element={<CreatorStudioHub />} />
+            {/* Protected YouTube Tools */}
+            <Route path="/youtube-tools/title-generator" element={<P><YouTubeTitleGenerator /></P>} />
+            <Route path="/youtube-tools/description-generator" element={<P><YouTubeDescriptionGenerator /></P>} />
+            <Route path="/youtube-tools/tag-generator" element={<P><YouTubeTagGenerator /></P>} />
+            <Route path="/youtube-tools/thumbnail-headline-generator" element={<P><YouTubeThumbnailHeadlineGenerator /></P>} />
+            <Route path="/youtube-tools/hashtag-generator" element={<P><YouTubeHashtagGenerator /></P>} />
+            <Route path="/youtube-tools/revenue-estimator" element={<P><YouTubeRevenueEstimator /></P>} />
+            <Route path="/youtube-tools/watch-time-calculator" element={<P><YouTubeWatchTimeCalculator /></P>} />
+            <Route path="/youtube-tools/seo-score-checker" element={<P><YouTubeSEOScoreChecker /></P>} />
+            {/* Protected Creator Studio Tools */}
+            <Route path="/creator-studio/keyword-explorer" element={<P><CreatorKeywordExplorer /></P>} />
+            <Route path="/creator-studio/seo-analyzer" element={<P><CreatorSEOAnalyzer /></P>} />
+            <Route path="/creator-studio/tag-optimization" element={<P><CreatorTagOptimization /></P>} />
+            <Route path="/creator-studio/competitor-breakdown" element={<P><CreatorCompetitorBreakdown /></P>} />
+            <Route path="/creator-studio/monetization-estimator" element={<P><CreatorMonetizationEstimator /></P>} />
+            <Route path="/creator-studio/watch-time-simulator" element={<P><CreatorWatchTimeSimulator /></P>} />
+            <Route path="/creator-studio/ctr-assistant" element={<P><CreatorCTRAssistant /></P>} />
+            <Route path="/creator-studio/script-builder" element={<P><CreatorScriptBuilder /></P>} />
+            <Route path="/creator-studio/content-repurposing" element={<P><CreatorContentRepurposing /></P>} />
+            <Route path="/creator-studio/content-planner" element={<P><CreatorContentPlanner /></P>} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );
