@@ -10,6 +10,7 @@ const toolsDropdown = [
   { href: "/ai-tools-library", label: "AI Tools Library" },
   { href: "/everyday-ai", label: "Everyday AI Tools" },
   { href: "/dev-tools", label: "Developer Tools" },
+  { href: "/video-tools/veo3-ultra", label: "VEO 3 Ultra Plan" },
   { href: "/free-youtube-tools", label: "Free Tools" },
   { href: "/youtube-tools", label: "YouTube Tools" },
 ];
@@ -49,7 +50,7 @@ export const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const isToolsActive = ["/creator-studio", "/ai-tools-library", "/everyday-ai", "/dev-tools", "/free-youtube-tools", "/youtube-tools"].some(p => location.pathname.startsWith(p));
+  const isToolsActive = ["/creator-studio", "/ai-tools-library", "/everyday-ai", "/dev-tools", "/video-tools", "/free-youtube-tools", "/youtube-tools"].some(p => location.pathname.startsWith(p));
   const isServicesActive = ["/youtube-growth", "/ai-tools-services", "/courses"].some(p => location.pathname.startsWith(p));
 
   const toggleDropdown = (name: string) => setOpenDropdown(prev => prev === name ? null : name);

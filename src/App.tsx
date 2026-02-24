@@ -80,6 +80,7 @@ const UrlEncoderDecoder = lazy(() => import("./pages/dev-tools/UrlEncoderDecoder
 const ColorConverter = lazy(() => import("./pages/dev-tools/ColorConverter"));
 const TimestampConverter = lazy(() => import("./pages/dev-tools/TimestampConverter"));
 const UuidGenerator = lazy(() => import("./pages/dev-tools/UuidGenerator"));
+const Veo3UltraPlan = lazy(() => import("./pages/Veo3UltraPlan"));
 const FreeYouTubeTools = lazy(() => import("./pages/FreeYouTubeTools"));
 const Blog = lazy(() => import("./pages/Blog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
@@ -264,6 +265,8 @@ const App = () => (
               <Route path="/dev-tools/color-converter" element={<ColorConverter />} />
               <Route path="/dev-tools/timestamp-converter" element={<TimestampConverter />} />
               <Route path="/dev-tools/uuid-generator" element={<UuidGenerator />} />
+              {/* AI Video Tools */}
+              <Route path="/video-tools/veo3-ultra" element={<P><Veo3UltraPlan /></P>} />
               {/* Admin routes */}
               <Route path="/admin-login" element={<AdminLogin />} />
               <Route path="/admin" element={<A><AdminDashboard /></A>} />
