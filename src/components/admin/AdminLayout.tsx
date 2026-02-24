@@ -4,7 +4,7 @@ import { SEOHead } from "@/components/SEOHead";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import {
-  LayoutDashboard, Users, BarChart3, CreditCard, Settings, LogOut, ChevronLeft,
+  LayoutDashboard, Users, BarChart3, CreditCard, Mail, Settings, LogOut, ChevronLeft,
 } from "lucide-react";
 
 const navItems = [
@@ -12,6 +12,7 @@ const navItems = [
   { href: "/admin/users", label: "Users", icon: Users },
   { href: "/admin/analytics", label: "Analytics", icon: BarChart3 },
   { href: "/admin/subscriptions", label: "Subscriptions", icon: CreditCard },
+  { href: "/admin/emails", label: "Emails", icon: Mail },
   { href: "/admin/settings", label: "Settings", icon: Settings },
 ];
 
