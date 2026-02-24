@@ -1,73 +1,40 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, MessageCircle, ChevronDown, User, LogOut } from "lucide-react";
+import { Menu, X, ChevronDown, User, LogOut } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 
-const WHATSAPP_URL = "https://wa.me/923489057646";
-
-const youtubeToolsDropdown = [
-  { href: "/youtube-tools/title-generator", label: "Title Generator" },
-  { href: "/youtube-tools/description-generator", label: "Description Generator" },
-  { href: "/youtube-tools/tag-generator", label: "Tag Generator" },
-  { href: "/youtube-tools/thumbnail-headline-generator", label: "Thumbnail Headline Generator" },
-  { href: "/youtube-tools/hashtag-generator", label: "Hashtag Generator" },
-  { href: "/youtube-tools/revenue-estimator", label: "Revenue Estimator" },
-  { href: "/youtube-tools/watch-time-calculator", label: "Watch Time Calculator" },
-  { href: "/youtube-tools/seo-score-checker", label: "SEO Score Checker" },
-];
-
-const creatorStudioDropdown = [
-  { href: "/creator-studio/keyword-explorer", label: "Keyword Explorer" },
-  { href: "/creator-studio/seo-analyzer", label: "SEO Score Analyzer" },
-  { href: "/creator-studio/tag-optimization", label: "Tag Optimization" },
-  { href: "/creator-studio/competitor-breakdown", label: "Competitor Breakdown" },
-  { href: "/creator-studio/monetization-estimator", label: "Monetization Estimator" },
-  { href: "/creator-studio/watch-time-simulator", label: "Watch Time Simulator" },
-  { href: "/creator-studio/ctr-assistant", label: "CTR Assistant" },
-  { href: "/creator-studio/script-builder", label: "AI Script Builder" },
-  { href: "/creator-studio/content-repurposing", label: "Content Repurposing" },
-  { href: "/creator-studio/content-planner", label: "30-Day Planner" },
-];
-
-const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/portfolio", label: "Portfolio" },
-  { href: "/services", label: "Services" },
-  { href: "/pricing", label: "Pricing" },
-  { href: "/ai-tools-services", label: "AI Tools & Services" },
+const toolsDropdown = [
+  { href: "/creator-studio", label: "Creator Studio" },
   { href: "/ai-tools-library", label: "AI Tools Library" },
-  { href: "/youtube-growth", label: "YouTube Growth" },
   { href: "/free-youtube-tools", label: "Free Tools" },
-  { href: "/blog", label: "Blog" },
-  { href: "/success-stories", label: "Success Stories" },
+  { href: "/youtube-tools", label: "YouTube Tools" },
+];
+
+const servicesDropdown = [
+  { href: "/youtube-growth", label: "YouTube Growth" },
+  { href: "/ai-tools-services", label: "AI Tools & Services" },
   { href: "/courses", label: "Courses" },
-  { href: "/support", label: "Support" },
-  { href: "/youtube-growth-guide", label: "Free Guide" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
 ];
 
 export const Navbar = () => {
   const { user, signOut } = useAuth();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isYTDropdownOpen, setIsYTDropdownOpen] = useState(false);
-  const [isCSDropdownOpen, setIsCSDropdownOpen] = useState(false);
-  const [isMobileYTOpen, setIsMobileYTOpen] = useState(false);
-  const [isMobileCSOpen, setIsMobileCSOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  const csDropdownRef = useRef<HTMLDivElement>(null);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [mobileOpen, setMobileOpen] = useState<string | null>(null);
+  const toolsRef = useRef<HTMLDivElement>(null);
+  const servicesRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        setIsYTDropdownOpen(false);
-      }
-      if (csDropdownRef.current && !csDropdownRef.current.contains(e.target as Node)) {
-        setIsCSDropdownOpen(false);
+      if (
+        toolsRef.current && !toolsRef.current.contains(e.target as Node) &&
+        servicesRef.current && !servicesRef.current.contains(e.target as Node)
+      ) {
+        setOpenDropdown(null);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -75,12 +42,42 @@ export const Navbar = () => {
   }, []);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const isToolsActive = ["/creator-studio", "/ai-tools-library", "/free-youtube-tools", "/youtube-tools"].some(p => location.pathname.startsWith(p));
+  const isServicesActive = ["/youtube-growth", "/ai-tools-services", "/courses"].some(p => location.pathname.startsWith(p));
+
+  const toggleDropdown = (name: string) => setOpenDropdown(prev => prev === name ? null : name);
+  const toggleMobile = (name: string) => setMobileOpen(prev => prev === name ? null : name);
+
+  const DropdownMenu = ({ name, label, items, isActive, ref }: { name: string; label: string; items: typeof toolsDropdown; isActive: boolean; ref: React.RefObject<HTMLDivElement | null> }) => (
+    <div className="relative" ref={ref}>
+      <button
+        onClick={() => toggleDropdown(name)}
+        className={`text-sm font-medium transition-colors hover:text-primary px-3 py-2 rounded-md flex items-center gap-1 ${isActive ? "text-primary bg-primary/10" : "text-muted-foreground"}`}
+      >
+        {label}
+        <ChevronDown className={`h-3 w-3 transition-transform ${openDropdown === name ? "rotate-180" : ""}`} />
+      </button>
+      {openDropdown === name && (
+        <div className="absolute top-full left-0 mt-1 w-52 bg-background border border-border/50 rounded-lg shadow-lg py-1 z-50">
+          {items.map((item) => (
+            <Link
+              key={item.href}
+              to={item.href}
+              onClick={() => setOpenDropdown(null)}
+              className={`block px-4 py-2 text-sm transition-colors hover:bg-muted/50 ${location.pathname.startsWith(item.href) ? "text-primary" : "text-muted-foreground"}`}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </div>
+      )}
+    </div>
+  );
 
   return (
     <motion.nav
@@ -88,9 +85,7 @@ export const Navbar = () => {
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
       className={`fixed left-0 right-0 top-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-background/90 backdrop-blur-xl border-b border-border/50"
-          : "bg-transparent"
+        isScrolled ? "bg-background/90 backdrop-blur-xl border-b border-border/50" : "bg-transparent"
       }`}
     >
       <div className="container flex h-16 items-center justify-between px-4 md:h-20">
@@ -106,83 +101,29 @@ export const Navbar = () => {
 
         {/* Desktop Navigation */}
         <div className="hidden items-center gap-1 xl:flex">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              to={link.href}
-              className={`text-xs font-medium transition-colors hover:text-primary px-2 py-1 rounded-md ${
-                location.pathname === link.href
-                  ? "text-primary bg-primary/10"
-                  : "text-muted-foreground"
-              }`}
-            >
-              {link.label}
-            </Link>
-          ))}
-          {/* YouTube Tools Dropdown */}
-          <div className="relative" ref={dropdownRef}>
-            <button
-              onClick={() => setIsYTDropdownOpen(!isYTDropdownOpen)}
-              className={`text-xs font-medium transition-colors hover:text-primary px-2 py-1 rounded-md flex items-center gap-0.5 ${
-                location.pathname.startsWith("/youtube-tools")
-                  ? "text-primary bg-primary/10"
-                  : "text-muted-foreground"
-              }`}
-            >
-              YouTube Tools
-              <ChevronDown className={`h-3 w-3 transition-transform ${isYTDropdownOpen ? "rotate-180" : ""}`} />
-            </button>
-            {isYTDropdownOpen && (
-              <div className="absolute top-full left-0 mt-1 w-56 bg-background border border-border/50 rounded-lg shadow-lg py-1 z-50">
-                <Link
-                  to="/youtube-tools"
-                  onClick={() => setIsYTDropdownOpen(false)}
-                  className="block px-4 py-2 text-xs font-semibold text-foreground hover:bg-muted/50 transition-colors"
-                >
-                  All YouTube Tools
-                </Link>
-                <div className="border-t border-border/30 my-1" />
-                {youtubeToolsDropdown.map((item) => (
-                  <Link
-                    key={item.href}
-                    to={item.href}
-                    onClick={() => setIsYTDropdownOpen(false)}
-                    className={`block px-4 py-2 text-xs transition-colors hover:bg-muted/50 ${
-                      location.pathname === item.href ? "text-primary" : "text-muted-foreground"
-                    }`}
-                  >
-                    {item.label}
-                  </Link>
-                ))}
-              </div>
-            )}
-          </div>
-          {/* Creator Studio Dropdown */}
-          <div className="relative" ref={csDropdownRef}>
-            <button
-              onClick={() => setIsCSDropdownOpen(!isCSDropdownOpen)}
-              className={`text-xs font-medium transition-colors hover:text-primary px-2 py-1 rounded-md flex items-center gap-0.5 ${
-                location.pathname.startsWith("/creator-studio")
-                  ? "text-primary bg-primary/10"
-                  : "text-muted-foreground"
-              }`}
-            >
-              Creator Studio
-              <ChevronDown className={`h-3 w-3 transition-transform ${isCSDropdownOpen ? "rotate-180" : ""}`} />
-            </button>
-            {isCSDropdownOpen && (
-              <div className="absolute top-full right-0 mt-1 w-56 bg-background border border-border/50 rounded-lg shadow-lg py-1 z-50">
-                <Link to="/creator-studio" onClick={() => setIsCSDropdownOpen(false)} className="block px-4 py-2 text-xs font-semibold text-foreground hover:bg-muted/50 transition-colors">All Creator Tools</Link>
-                <div className="border-t border-border/30 my-1" />
-                {creatorStudioDropdown.map((item) => (
-                  <Link key={item.href} to={item.href} onClick={() => setIsCSDropdownOpen(false)} className={`block px-4 py-2 text-xs transition-colors hover:bg-muted/50 ${location.pathname === item.href ? "text-primary" : "text-muted-foreground"}`}>{item.label}</Link>
-                ))}
-              </div>
-            )}
-          </div>
+          <Link
+            to="/"
+            className={`text-sm font-medium transition-colors hover:text-primary px-3 py-2 rounded-md ${location.pathname === "/" ? "text-primary bg-primary/10" : "text-muted-foreground"}`}
+          >
+            Home
+          </Link>
+          <DropdownMenu name="tools" label="Tools" items={toolsDropdown} isActive={isToolsActive} ref={toolsRef} />
+          <DropdownMenu name="services" label="Services" items={servicesDropdown} isActive={isServicesActive} ref={servicesRef} />
+          <Link
+            to="/pricing"
+            className={`text-sm font-medium transition-colors hover:text-primary px-3 py-2 rounded-md ${location.pathname === "/pricing" ? "text-primary bg-primary/10" : "text-muted-foreground"}`}
+          >
+            Pricing
+          </Link>
+          <Link
+            to="/blog"
+            className={`text-sm font-medium transition-colors hover:text-primary px-3 py-2 rounded-md ${location.pathname.startsWith("/blog") ? "text-primary bg-primary/10" : "text-muted-foreground"}`}
+          >
+            Blog
+          </Link>
         </div>
 
-        {/* CTA + Auth Buttons */}
+        {/* Auth Buttons */}
         <div className="hidden items-center gap-2 xl:flex">
           {user ? (
             <>
@@ -210,11 +151,7 @@ export const Navbar = () => {
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           className="flex h-10 w-10 items-center justify-center rounded-lg bg-muted/50 xl:hidden"
         >
-          {isMobileMenuOpen ? (
-            <X className="h-5 w-5 text-foreground" />
-          ) : (
-            <Menu className="h-5 w-5 text-foreground" />
-          )}
+          {isMobileMenuOpen ? <X className="h-5 w-5 text-foreground" /> : <Menu className="h-5 w-5 text-foreground" />}
         </button>
       </div>
 
@@ -228,68 +165,45 @@ export const Navbar = () => {
             className="border-b border-border bg-background/95 backdrop-blur-xl xl:hidden"
           >
             <div className="container flex flex-col gap-4 px-4 py-6">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  to={link.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className={`text-lg font-medium transition-colors ${
-                    location.pathname === link.href
-                      ? "text-primary"
-                      : "text-muted-foreground"
-                  }`}
-                >
-                  {link.label}
-                </Link>
-              ))}
-              {/* Mobile YouTube Tools */}
+              <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className={`text-lg font-medium transition-colors ${location.pathname === "/" ? "text-primary" : "text-muted-foreground"}`}>
+                Home
+              </Link>
+
+              {/* Mobile Tools */}
               <div>
-                <button
-                  onClick={() => setIsMobileYTOpen(!isMobileYTOpen)}
-                  className={`text-lg font-medium transition-colors flex items-center gap-1 ${
-                    location.pathname.startsWith("/youtube-tools") ? "text-primary" : "text-muted-foreground"
-                  }`}
-                >
-                  YouTube Tools
-                  <ChevronDown className={`h-4 w-4 transition-transform ${isMobileYTOpen ? "rotate-180" : ""}`} />
+                <button onClick={() => toggleMobile("tools")} className={`text-lg font-medium transition-colors flex items-center gap-1 ${isToolsActive ? "text-primary" : "text-muted-foreground"}`}>
+                  Tools <ChevronDown className={`h-4 w-4 transition-transform ${mobileOpen === "tools" ? "rotate-180" : ""}`} />
                 </button>
-                {isMobileYTOpen && (
+                {mobileOpen === "tools" && (
                   <div className="ml-4 mt-2 flex flex-col gap-2">
-                    <Link to="/youtube-tools" onClick={() => setIsMobileMenuOpen(false)} className="text-sm font-medium text-foreground">
-                      All YouTube Tools
-                    </Link>
-                    {youtubeToolsDropdown.map((item) => (
-                      <Link
-                        key={item.href}
-                        to={item.href}
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className={`text-sm transition-colors ${location.pathname === item.href ? "text-primary" : "text-muted-foreground"}`}
-                      >
-                        {item.label}
-                      </Link>
+                    {toolsDropdown.map((item) => (
+                      <Link key={item.href} to={item.href} onClick={() => setIsMobileMenuOpen(false)} className={`text-sm transition-colors ${location.pathname.startsWith(item.href) ? "text-primary" : "text-muted-foreground"}`}>{item.label}</Link>
                     ))}
                   </div>
                 )}
               </div>
-              {/* Mobile Creator Studio */}
+
+              {/* Mobile Services */}
               <div>
-                <button
-                  onClick={() => setIsMobileCSOpen(!isMobileCSOpen)}
-                  className={`text-lg font-medium transition-colors flex items-center gap-1 ${location.pathname.startsWith("/creator-studio") ? "text-primary" : "text-muted-foreground"}`}
-                >
-                  Creator Studio
-                  <ChevronDown className={`h-4 w-4 transition-transform ${isMobileCSOpen ? "rotate-180" : ""}`} />
+                <button onClick={() => toggleMobile("services")} className={`text-lg font-medium transition-colors flex items-center gap-1 ${isServicesActive ? "text-primary" : "text-muted-foreground"}`}>
+                  Services <ChevronDown className={`h-4 w-4 transition-transform ${mobileOpen === "services" ? "rotate-180" : ""}`} />
                 </button>
-                {isMobileCSOpen && (
+                {mobileOpen === "services" && (
                   <div className="ml-4 mt-2 flex flex-col gap-2">
-                    <Link to="/creator-studio" onClick={() => setIsMobileMenuOpen(false)} className="text-sm font-medium text-foreground">All Creator Tools</Link>
-                    {creatorStudioDropdown.map((item) => (
-                      <Link key={item.href} to={item.href} onClick={() => setIsMobileMenuOpen(false)} className={`text-sm transition-colors ${location.pathname === item.href ? "text-primary" : "text-muted-foreground"}`}>{item.label}</Link>
+                    {servicesDropdown.map((item) => (
+                      <Link key={item.href} to={item.href} onClick={() => setIsMobileMenuOpen(false)} className={`text-sm transition-colors ${location.pathname.startsWith(item.href) ? "text-primary" : "text-muted-foreground"}`}>{item.label}</Link>
                     ))}
                   </div>
                 )}
               </div>
-              
+
+              <Link to="/pricing" onClick={() => setIsMobileMenuOpen(false)} className={`text-lg font-medium transition-colors ${location.pathname === "/pricing" ? "text-primary" : "text-muted-foreground"}`}>
+                Pricing
+              </Link>
+              <Link to="/blog" onClick={() => setIsMobileMenuOpen(false)} className={`text-lg font-medium transition-colors ${location.pathname.startsWith("/blog") ? "text-primary" : "text-muted-foreground"}`}>
+                Blog
+              </Link>
+
               {user ? (
                 <div className="flex flex-col gap-2 mt-4">
                   <Button className="w-full" variant="outline" asChild>
