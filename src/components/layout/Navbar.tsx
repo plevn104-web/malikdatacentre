@@ -12,7 +12,14 @@ const navLinks = [
   { href: "/services", label: "Services" },
   { href: "/pricing", label: "Pricing" },
   { href: "/ai-tools-services", label: "AI Tools & Services" },
+  { href: "/ai-tools-library", label: "AI Tools Library" },
+  { href: "/youtube-growth", label: "YouTube Growth" },
+  { href: "/free-youtube-tools", label: "Free Tools" },
+  { href: "/blog", label: "Blog" },
+  { href: "/success-stories", label: "Success Stories" },
   { href: "/courses", label: "Courses" },
+  { href: "/support", label: "Support" },
+  { href: "/youtube-growth-guide", label: "Free Guide" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];
@@ -53,14 +60,14 @@ export const Navbar = () => {
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden items-center gap-6 lg:flex">
+        <div className="hidden items-center gap-1 xl:flex">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               to={link.href}
-              className={`text-sm font-medium transition-colors hover:text-primary ${
+              className={`text-xs font-medium transition-colors hover:text-primary px-2 py-1 rounded-md ${
                 location.pathname === link.href
-                  ? "text-primary"
+                  ? "text-primary bg-primary/10"
                   : "text-muted-foreground"
               }`}
             >
@@ -70,7 +77,7 @@ export const Navbar = () => {
         </div>
 
         {/* CTA Button */}
-        <div className="hidden items-center gap-3 lg:flex">
+        <div className="hidden items-center gap-3 xl:flex">
           <Button className="btn-jelly bg-[#25D366] hover:bg-[#25D366]/90 text-white" size="sm" asChild>
             <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
               <MessageCircle className="h-4 w-4 mr-2" />
@@ -82,7 +89,7 @@ export const Navbar = () => {
         {/* Mobile Menu Button */}
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="flex h-10 w-10 items-center justify-center rounded-lg bg-muted/50 lg:hidden"
+          className="flex h-10 w-10 items-center justify-center rounded-lg bg-muted/50 xl:hidden"
         >
           {isMobileMenuOpen ? (
             <X className="h-5 w-5 text-foreground" />
@@ -99,7 +106,7 @@ export const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="border-b border-border bg-background/95 backdrop-blur-xl lg:hidden"
+            className="border-b border-border bg-background/95 backdrop-blur-xl xl:hidden"
           >
             <div className="container flex flex-col gap-4 px-4 py-6">
               {navLinks.map((link) => (

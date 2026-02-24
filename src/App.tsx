@@ -16,6 +16,13 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsConditions from "./pages/TermsConditions";
 import RefundPolicy from "./pages/RefundPolicy";
 import AIToolsServices from "./pages/AIToolsServices";
+import YouTubeGrowth from "./pages/YouTubeGrowth";
+import AIToolsLibrary from "./pages/AIToolsLibrary";
+import FreeYouTubeTools from "./pages/FreeYouTubeTools";
+import Blog from "./pages/Blog";
+import SuccessStories from "./pages/SuccessStories";
+import SupportFAQ from "./pages/SupportFAQ";
+import YouTubeGrowthGuide from "./pages/YouTubeGrowthGuide";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -40,6 +47,13 @@ const App = () => (
           <Route path="/terms-conditions" element={<TermsConditions />} />
           <Route path="/refund-policy" element={<RefundPolicy />} />
           <Route path="/ai-tools-services" element={<AIToolsServices />} />
+          <Route path="/youtube-growth" element={<YouTubeGrowth />} />
+          <Route path="/ai-tools-library" element={<AIToolsLibrary />} />
+          <Route path="/free-youtube-tools" element={<FreeYouTubeTools />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/success-stories" element={<SuccessStories />} />
+          <Route path="/support" element={<SupportFAQ />} />
+          <Route path="/youtube-growth-guide" element={<YouTubeGrowthGuide />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
