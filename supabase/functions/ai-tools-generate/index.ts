@@ -96,6 +96,39 @@ const TOOL_PROMPTS: Record<string, (inputs: Record<string, string>) => string> =
 
   "side-hustle-finder": (i) =>
     `Suggest 5 side hustle ideas for someone with skills: "${i.skills}", available ${i.timePerWeek || "10"} hours/week, budget: ${i.budget || "low"}. Return JSON array of 5 objects with fields: name (string), description (string), earningPotential (string), startingSteps (array of 3 strings), riskLevel (string: Low/Medium/High), investmentNeeded (string). Only return the JSON array, no other text.`,
+
+  "code-explainer": (i) =>
+    `Explain this code line by line in simple language:\n\`\`\`\n${i.code.slice(0, 4000)}\n\`\`\`\nReturn JSON with fields: lines (array of {lineNumber (number), code (string), explanation (string)}), summary (string), improvements (array of strings), edgeCases (array of strings). Only return the JSON object, no other text.`,
+
+  "code-debugger": (i) =>
+    `Debug this code:\n\`\`\`\n${i.code.slice(0, 4000)}\n\`\`\`\nError: "${i.error?.slice(0, 500) || "unknown"}"\nReturn JSON with fields: errorExplanation (string), rootCause (string), fixSuggestions (array of strings), correctedCode (string). Only return the JSON object, no other text.`,
+
+  "code-optimizer": (i) =>
+    `Optimize this code for performance and readability:\n\`\`\`\n${i.code.slice(0, 4000)}\n\`\`\`\nReturn JSON with fields: suggestions (array of {issue (string), fix (string)}), optimizedCode (string), bestPractices (array of strings). Only return the JSON object, no other text.`,
+
+  "code-converter": (i) =>
+    `Convert this code to ${i.targetLanguage}:\n\`\`\`\n${i.code.slice(0, 4000)}\n\`\`\`\nReturn JSON with fields: convertedCode (string), notes (array of strings explaining key differences). Only return the JSON object, no other text.`,
+
+  "regex-generator": (i) =>
+    `Generate a regex pattern for: "${i.description.slice(0, 500)}". Return JSON with fields: pattern (string), flags (string), explanation (string describing each part), testExamples (array of {input (string), matches (boolean)}). Only return the JSON object, no other text.`,
+
+  "api-doc-generator": (i) =>
+    `Generate API documentation for this code:\n\`\`\`\n${i.code.slice(0, 4000)}\n\`\`\`\nReturn JSON with fields: name (string), description (string), parameters (array of {name (string), type (string), required (boolean), description (string)}), returnType (string), exampleUsage (string), notes (array of strings). Only return the JSON object, no other text.`,
+
+  "sql-generator": (i) =>
+    `Generate an SQL query for: "${i.description.slice(0, 1000)}". Return JSON with fields: query (string), explanation (string), notes (array of strings). Only return the JSON object, no other text.`,
+
+  "git-commit-generator": (i) =>
+    `Generate git commit messages for these changes: "${i.description.slice(0, 1000)}". Return JSON with fields: conventional (string in conventional commit format), short (string under 50 chars), detailed (string with body). Only return the JSON object, no other text.`,
+
+  "readme-generator": (i) =>
+    `Generate a README.md for this project: "${i.description.slice(0, 2000)}". Return JSON with fields: title (string), description (string), installation (string), usage (string), features (array of strings), contributing (string), license (string). Only return the JSON object, no other text.`,
+
+  "code-complexity": (i) =>
+    `Analyze code complexity:\n\`\`\`\n${i.code.slice(0, 4000)}\n\`\`\`\nReturn JSON with fields: overallComplexity (string: Low/Medium/High), score (number 1-10), metrics (array of {metric (string), value (string), assessment (string)}), refactorSuggestions (array of strings), summary (string). Only return the JSON object, no other text.`,
+
+  "architecture-suggestion": (i) =>
+    `Suggest architecture for this app idea: "${i.idea.slice(0, 2000)}". Return JSON with fields: techStack ({frontend (string), backend (string), database (string), hosting (string)}), architecture (string describing the overall approach), databaseDesign (string), scalabilityNotes (array of strings), additionalTools (array of strings). Only return the JSON object, no other text.`,
 };
 
 serve(async (req) => {

@@ -59,6 +59,27 @@ const AIStudyPlanner = lazy(() => import("./pages/everyday-ai/AIStudyPlanner"));
 const AITravelPlanner = lazy(() => import("./pages/everyday-ai/AITravelPlanner"));
 const AIDecisionHelper = lazy(() => import("./pages/everyday-ai/AIDecisionHelper"));
 const AISideHustleFinder = lazy(() => import("./pages/everyday-ai/AISideHustleFinder"));
+const DevToolsHub = lazy(() => import("./pages/DevToolsHub"));
+const AICodeExplainer = lazy(() => import("./pages/dev-tools/AICodeExplainer"));
+const AICodeDebugger = lazy(() => import("./pages/dev-tools/AICodeDebugger"));
+const AICodeOptimizer = lazy(() => import("./pages/dev-tools/AICodeOptimizer"));
+const AICodeConverter = lazy(() => import("./pages/dev-tools/AICodeConverter"));
+const AIRegexGenerator = lazy(() => import("./pages/dev-tools/AIRegexGenerator"));
+const AIApiDocGenerator = lazy(() => import("./pages/dev-tools/AIApiDocGenerator"));
+const AISqlGenerator = lazy(() => import("./pages/dev-tools/AISqlGenerator"));
+const AIGitCommitGenerator = lazy(() => import("./pages/dev-tools/AIGitCommitGenerator"));
+const AIReadmeGenerator = lazy(() => import("./pages/dev-tools/AIReadmeGenerator"));
+const AICodeComplexity = lazy(() => import("./pages/dev-tools/AICodeComplexity"));
+const AIArchitectureSuggestion = lazy(() => import("./pages/dev-tools/AIArchitectureSuggestion"));
+const JsonFormatter = lazy(() => import("./pages/dev-tools/JsonFormatter"));
+const PasswordGenerator = lazy(() => import("./pages/dev-tools/PasswordGenerator"));
+const Base64Tool = lazy(() => import("./pages/dev-tools/Base64Tool"));
+const JwtDecoder = lazy(() => import("./pages/dev-tools/JwtDecoder"));
+const HashGenerator = lazy(() => import("./pages/dev-tools/HashGenerator"));
+const UrlEncoderDecoder = lazy(() => import("./pages/dev-tools/UrlEncoderDecoder"));
+const ColorConverter = lazy(() => import("./pages/dev-tools/ColorConverter"));
+const TimestampConverter = lazy(() => import("./pages/dev-tools/TimestampConverter"));
+const UuidGenerator = lazy(() => import("./pages/dev-tools/UuidGenerator"));
 const FreeYouTubeTools = lazy(() => import("./pages/FreeYouTubeTools"));
 const Blog = lazy(() => import("./pages/Blog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
@@ -220,6 +241,29 @@ const App = () => (
               <Route path="/everyday-ai/travel-planner" element={<P><AITravelPlanner /></P>} />
               <Route path="/everyday-ai/decision-helper" element={<P><AIDecisionHelper /></P>} />
               <Route path="/everyday-ai/side-hustle-finder" element={<P><AISideHustleFinder /></P>} />
+              {/* Developer Tools */}
+              <Route path="/dev-tools" element={<DevToolsHub />} />
+              <Route path="/dev-tools/code-explainer" element={<P><AICodeExplainer /></P>} />
+              <Route path="/dev-tools/code-debugger" element={<P><AICodeDebugger /></P>} />
+              <Route path="/dev-tools/code-optimizer" element={<P><AICodeOptimizer /></P>} />
+              <Route path="/dev-tools/code-converter" element={<P><AICodeConverter /></P>} />
+              <Route path="/dev-tools/regex-generator" element={<P><AIRegexGenerator /></P>} />
+              <Route path="/dev-tools/api-doc-generator" element={<P><AIApiDocGenerator /></P>} />
+              <Route path="/dev-tools/sql-generator" element={<P><AISqlGenerator /></P>} />
+              <Route path="/dev-tools/git-commit-generator" element={<P><AIGitCommitGenerator /></P>} />
+              <Route path="/dev-tools/readme-generator" element={<P><AIReadmeGenerator /></P>} />
+              <Route path="/dev-tools/code-complexity" element={<P><AICodeComplexity /></P>} />
+              <Route path="/dev-tools/architecture-suggestion" element={<P><AIArchitectureSuggestion /></P>} />
+              {/* Logic-based dev utilities (no auth required) */}
+              <Route path="/dev-tools/json-formatter" element={<JsonFormatter />} />
+              <Route path="/dev-tools/password-generator" element={<PasswordGenerator />} />
+              <Route path="/dev-tools/base64" element={<Base64Tool />} />
+              <Route path="/dev-tools/jwt-decoder" element={<JwtDecoder />} />
+              <Route path="/dev-tools/hash-generator" element={<HashGenerator />} />
+              <Route path="/dev-tools/url-encoder" element={<UrlEncoderDecoder />} />
+              <Route path="/dev-tools/color-converter" element={<ColorConverter />} />
+              <Route path="/dev-tools/timestamp-converter" element={<TimestampConverter />} />
+              <Route path="/dev-tools/uuid-generator" element={<UuidGenerator />} />
               {/* Admin routes */}
               <Route path="/admin-login" element={<AdminLogin />} />
               <Route path="/admin" element={<A><AdminDashboard /></A>} />
