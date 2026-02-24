@@ -1,7 +1,9 @@
 project_id = "ivrwcmtjruvritolfpae"
 
-[functions.chat-assistant]
-verify_jwt = false
-
-[functions.generate-image]
-verify_jwt = false
+[functions]
+  [functions.auth-email-hook]
+    verify_jwt = false
+  [functions.chat-assistant]
+    verify_jwt = false
+  [functions.generate-image]
+    verify_jwt = false
