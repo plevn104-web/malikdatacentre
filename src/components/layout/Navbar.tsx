@@ -1,10 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, MessageCircle } from "lucide-react";
+import { Menu, X, MessageCircle, ChevronDown } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
 const WHATSAPP_URL = "https://wa.me/923489057646";
+
+const youtubeToolsDropdown = [
+  { href: "/youtube-tools/title-generator", label: "Title Generator" },
+  { href: "/youtube-tools/description-generator", label: "Description Generator" },
+  { href: "/youtube-tools/tag-generator", label: "Tag Generator" },
+  { href: "/youtube-tools/thumbnail-headline-generator", label: "Thumbnail Headline Generator" },
+  { href: "/youtube-tools/hashtag-generator", label: "Hashtag Generator" },
+];
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -27,7 +35,20 @@ const navLinks = [
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isYTDropdownOpen, setIsYTDropdownOpen] = useState(false);
+  const [isMobileYTOpen, setIsMobileYTOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setIsYTDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -74,6 +95,44 @@ export const Navbar = () => {
               {link.label}
             </Link>
           ))}
+          {/* YouTube Tools Dropdown */}
+          <div className="relative" ref={dropdownRef}>
+            <button
+              onClick={() => setIsYTDropdownOpen(!isYTDropdownOpen)}
+              className={`text-xs font-medium transition-colors hover:text-primary px-2 py-1 rounded-md flex items-center gap-0.5 ${
+                location.pathname.startsWith("/youtube-tools")
+                  ? "text-primary bg-primary/10"
+                  : "text-muted-foreground"
+              }`}
+            >
+              YouTube Tools
+              <ChevronDown className={`h-3 w-3 transition-transform ${isYTDropdownOpen ? "rotate-180" : ""}`} />
+            </button>
+            {isYTDropdownOpen && (
+              <div className="absolute top-full left-0 mt-1 w-56 bg-background border border-border/50 rounded-lg shadow-lg py-1 z-50">
+                <Link
+                  to="/youtube-tools"
+                  onClick={() => setIsYTDropdownOpen(false)}
+                  className="block px-4 py-2 text-xs font-semibold text-foreground hover:bg-muted/50 transition-colors"
+                >
+                  All YouTube Tools
+                </Link>
+                <div className="border-t border-border/30 my-1" />
+                {youtubeToolsDropdown.map((item) => (
+                  <Link
+                    key={item.href}
+                    to={item.href}
+                    onClick={() => setIsYTDropdownOpen(false)}
+                    className={`block px-4 py-2 text-xs transition-colors hover:bg-muted/50 ${
+                      location.pathname === item.href ? "text-primary" : "text-muted-foreground"
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
 
         {/* CTA Button */}
@@ -123,6 +182,35 @@ export const Navbar = () => {
                   {link.label}
                 </Link>
               ))}
+              {/* Mobile YouTube Tools */}
+              <div>
+                <button
+                  onClick={() => setIsMobileYTOpen(!isMobileYTOpen)}
+                  className={`text-lg font-medium transition-colors flex items-center gap-1 ${
+                    location.pathname.startsWith("/youtube-tools") ? "text-primary" : "text-muted-foreground"
+                  }`}
+                >
+                  YouTube Tools
+                  <ChevronDown className={`h-4 w-4 transition-transform ${isMobileYTOpen ? "rotate-180" : ""}`} />
+                </button>
+                {isMobileYTOpen && (
+                  <div className="ml-4 mt-2 flex flex-col gap-2">
+                    <Link to="/youtube-tools" onClick={() => setIsMobileMenuOpen(false)} className="text-sm font-medium text-foreground">
+                      All YouTube Tools
+                    </Link>
+                    {youtubeToolsDropdown.map((item) => (
+                      <Link
+                        key={item.href}
+                        to={item.href}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className={`text-sm transition-colors ${location.pathname === item.href ? "text-primary" : "text-muted-foreground"}`}
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
               
               <Button className="w-full mt-4 bg-[#25D366] hover:bg-[#25D366]/90 text-white" asChild>
                 <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">

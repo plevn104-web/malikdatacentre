@@ -25,6 +25,12 @@ import BlogPost from "./pages/BlogPost";
 import SuccessStories from "./pages/SuccessStories";
 import SupportFAQ from "./pages/SupportFAQ";
 import YouTubeGrowthGuide from "./pages/YouTubeGrowthGuide";
+import YouTubeToolsHub from "./pages/YouTubeToolsHub";
+import YouTubeTitleGenerator from "./pages/YouTubeTitleGenerator";
+import YouTubeDescriptionGenerator from "./pages/YouTubeDescriptionGenerator";
+import YouTubeTagGenerator from "./pages/YouTubeTagGenerator";
+import YouTubeThumbnailHeadlineGenerator from "./pages/YouTubeThumbnailHeadlineGenerator";
+import YouTubeHashtagGenerator from "./pages/YouTubeHashtagGenerator";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -58,6 +64,12 @@ const App = () => (
           <Route path="/success-stories" element={<SuccessStories />} />
           <Route path="/support" element={<SupportFAQ />} />
           <Route path="/youtube-growth-guide" element={<YouTubeGrowthGuide />} />
+          <Route path="/youtube-tools" element={<YouTubeToolsHub />} />
+          <Route path="/youtube-tools/title-generator" element={<YouTubeTitleGenerator />} />
+          <Route path="/youtube-tools/description-generator" element={<YouTubeDescriptionGenerator />} />
+          <Route path="/youtube-tools/tag-generator" element={<YouTubeTagGenerator />} />
+          <Route path="/youtube-tools/thumbnail-headline-generator" element={<YouTubeThumbnailHeadlineGenerator />} />
+          <Route path="/youtube-tools/hashtag-generator" element={<YouTubeHashtagGenerator />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
