@@ -8,6 +8,7 @@ import { useAuth } from "@/hooks/useAuth";
 const toolsDropdown = [
   { href: "/creator-studio", label: "Creator Studio" },
   { href: "/ai-tools-library", label: "AI Tools Library" },
+  { href: "/everyday-ai", label: "Everyday AI Tools" },
   { href: "/free-youtube-tools", label: "Free Tools" },
   { href: "/youtube-tools", label: "YouTube Tools" },
 ];
@@ -47,7 +48,7 @@ export const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const isToolsActive = ["/creator-studio", "/ai-tools-library", "/free-youtube-tools", "/youtube-tools"].some(p => location.pathname.startsWith(p));
+  const isToolsActive = ["/creator-studio", "/ai-tools-library", "/everyday-ai", "/free-youtube-tools", "/youtube-tools"].some(p => location.pathname.startsWith(p));
   const isServicesActive = ["/youtube-growth", "/ai-tools-services", "/courses"].some(p => location.pathname.startsWith(p));
 
   const toggleDropdown = (name: string) => setOpenDropdown(prev => prev === name ? null : name);

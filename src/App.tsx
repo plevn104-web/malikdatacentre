@@ -51,6 +51,14 @@ const AILandingPageCopy = lazy(() => import("./pages/ai-tools/AILandingPageCopy"
 const AISalesFunnel = lazy(() => import("./pages/ai-tools/AISalesFunnel"));
 const AIProductDescription = lazy(() => import("./pages/ai-tools/AIProductDescription"));
 const AIChatbotBuilder = lazy(() => import("./pages/ai-tools/AIChatbotBuilder"));
+const EverydayAIHub = lazy(() => import("./pages/EverydayAIHub"));
+const AIHomeworkHelper = lazy(() => import("./pages/everyday-ai/AIHomeworkHelper"));
+const AILetterWriter = lazy(() => import("./pages/everyday-ai/AILetterWriter"));
+const AIWhatsAppImprover = lazy(() => import("./pages/everyday-ai/AIWhatsAppImprover"));
+const AIStudyPlanner = lazy(() => import("./pages/everyday-ai/AIStudyPlanner"));
+const AITravelPlanner = lazy(() => import("./pages/everyday-ai/AITravelPlanner"));
+const AIDecisionHelper = lazy(() => import("./pages/everyday-ai/AIDecisionHelper"));
+const AISideHustleFinder = lazy(() => import("./pages/everyday-ai/AISideHustleFinder"));
 const FreeYouTubeTools = lazy(() => import("./pages/FreeYouTubeTools"));
 const Blog = lazy(() => import("./pages/Blog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
@@ -203,6 +211,15 @@ const App = () => (
               <Route path="/ai-tools/sales-funnel" element={<P><AISalesFunnel /></P>} />
               <Route path="/ai-tools/product-description" element={<P><AIProductDescription /></P>} />
               <Route path="/ai-tools/chatbot-builder" element={<P><AIChatbotBuilder /></P>} />
+              {/* Everyday AI Tools */}
+              <Route path="/everyday-ai" element={<EverydayAIHub />} />
+              <Route path="/everyday-ai/homework-helper" element={<P><AIHomeworkHelper /></P>} />
+              <Route path="/everyday-ai/letter-writer" element={<P><AILetterWriter /></P>} />
+              <Route path="/everyday-ai/whatsapp-improver" element={<P><AIWhatsAppImprover /></P>} />
+              <Route path="/everyday-ai/study-planner" element={<P><AIStudyPlanner /></P>} />
+              <Route path="/everyday-ai/travel-planner" element={<P><AITravelPlanner /></P>} />
+              <Route path="/everyday-ai/decision-helper" element={<P><AIDecisionHelper /></P>} />
+              <Route path="/everyday-ai/side-hustle-finder" element={<P><AISideHustleFinder /></P>} />
               {/* Admin routes */}
               <Route path="/admin-login" element={<AdminLogin />} />
               <Route path="/admin" element={<A><AdminDashboard /></A>} />
