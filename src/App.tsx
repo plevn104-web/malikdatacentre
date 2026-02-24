@@ -7,56 +7,60 @@ import { AuthProvider } from "@/hooks/useAuth";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { AdminProtectedRoute } from "@/components/auth/AdminProtectedRoute";
 import { lazy, Suspense } from "react";
-import Index from "./pages/Index";
-import Courses from "./pages/Courses";
-import Portfolio from "./pages/Portfolio";
-import Services from "./pages/Services";
-import Pricing from "./pages/Pricing";
-import About from "./pages/About";
-import Contact from "./pages/Contact";
-import YouTubeMonetization from "./pages/YouTubeMonetization";
-import Founder from "./pages/Founder";
-import PrivacyPolicy from "./pages/PrivacyPolicy";
-import TermsConditions from "./pages/TermsConditions";
-import RefundPolicy from "./pages/RefundPolicy";
-import AIToolsServices from "./pages/AIToolsServices";
-import Disclaimer from "./pages/Disclaimer";
-import YouTubeGrowth from "./pages/YouTubeGrowth";
-import AIToolsLibrary from "./pages/AIToolsLibrary";
-import FreeYouTubeTools from "./pages/FreeYouTubeTools";
-import Blog from "./pages/Blog";
-import BlogPost from "./pages/BlogPost";
-import SuccessStories from "./pages/SuccessStories";
-import SupportFAQ from "./pages/SupportFAQ";
-import YouTubeGrowthGuide from "./pages/YouTubeGrowthGuide";
-import YouTubeToolsHub from "./pages/YouTubeToolsHub";
-import YouTubeTitleGenerator from "./pages/YouTubeTitleGenerator";
-import YouTubeDescriptionGenerator from "./pages/YouTubeDescriptionGenerator";
-import YouTubeTagGenerator from "./pages/YouTubeTagGenerator";
-import YouTubeThumbnailHeadlineGenerator from "./pages/YouTubeThumbnailHeadlineGenerator";
-import YouTubeHashtagGenerator from "./pages/YouTubeHashtagGenerator";
-import YouTubeRevenueEstimator from "./pages/YouTubeRevenueEstimator";
-import YouTubeWatchTimeCalculator from "./pages/YouTubeWatchTimeCalculator";
-import YouTubeSEOScoreChecker from "./pages/YouTubeSEOScoreChecker";
-import CreatorStudioHub from "./pages/CreatorStudioHub";
-import CreatorKeywordExplorer from "./pages/CreatorKeywordExplorer";
-import CreatorSEOAnalyzer from "./pages/CreatorSEOAnalyzer";
-import CreatorTagOptimization from "./pages/CreatorTagOptimization";
-import CreatorCompetitorBreakdown from "./pages/CreatorCompetitorBreakdown";
-import CreatorMonetizationEstimator from "./pages/CreatorMonetizationEstimator";
-import CreatorWatchTimeSimulator from "./pages/CreatorWatchTimeSimulator";
-import CreatorCTRAssistant from "./pages/CreatorCTRAssistant";
-import CreatorScriptBuilder from "./pages/CreatorScriptBuilder";
-import CreatorContentRepurposing from "./pages/CreatorContentRepurposing";
-import CreatorContentPlanner from "./pages/CreatorContentPlanner";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import ForgotPassword from "./pages/ForgotPassword";
-import ResetPassword from "./pages/ResetPassword";
-import Account from "./pages/Account";
-import NotFound from "./pages/NotFound";
 
-// Admin pages (lazy loaded)
+// Only eager-load the homepage for fast LCP
+import Index from "./pages/Index";
+
+// Lazy load ALL other pages
+const Courses = lazy(() => import("./pages/Courses"));
+const Portfolio = lazy(() => import("./pages/Portfolio"));
+const Services = lazy(() => import("./pages/Services"));
+const Pricing = lazy(() => import("./pages/Pricing"));
+const About = lazy(() => import("./pages/About"));
+const Contact = lazy(() => import("./pages/Contact"));
+const YouTubeMonetization = lazy(() => import("./pages/YouTubeMonetization"));
+const Founder = lazy(() => import("./pages/Founder"));
+const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
+const TermsConditions = lazy(() => import("./pages/TermsConditions"));
+const RefundPolicy = lazy(() => import("./pages/RefundPolicy"));
+const AIToolsServices = lazy(() => import("./pages/AIToolsServices"));
+const Disclaimer = lazy(() => import("./pages/Disclaimer"));
+const YouTubeGrowth = lazy(() => import("./pages/YouTubeGrowth"));
+const AIToolsLibrary = lazy(() => import("./pages/AIToolsLibrary"));
+const FreeYouTubeTools = lazy(() => import("./pages/FreeYouTubeTools"));
+const Blog = lazy(() => import("./pages/Blog"));
+const BlogPost = lazy(() => import("./pages/BlogPost"));
+const SuccessStories = lazy(() => import("./pages/SuccessStories"));
+const SupportFAQ = lazy(() => import("./pages/SupportFAQ"));
+const YouTubeGrowthGuide = lazy(() => import("./pages/YouTubeGrowthGuide"));
+const YouTubeToolsHub = lazy(() => import("./pages/YouTubeToolsHub"));
+const YouTubeTitleGenerator = lazy(() => import("./pages/YouTubeTitleGenerator"));
+const YouTubeDescriptionGenerator = lazy(() => import("./pages/YouTubeDescriptionGenerator"));
+const YouTubeTagGenerator = lazy(() => import("./pages/YouTubeTagGenerator"));
+const YouTubeThumbnailHeadlineGenerator = lazy(() => import("./pages/YouTubeThumbnailHeadlineGenerator"));
+const YouTubeHashtagGenerator = lazy(() => import("./pages/YouTubeHashtagGenerator"));
+const YouTubeRevenueEstimator = lazy(() => import("./pages/YouTubeRevenueEstimator"));
+const YouTubeWatchTimeCalculator = lazy(() => import("./pages/YouTubeWatchTimeCalculator"));
+const YouTubeSEOScoreChecker = lazy(() => import("./pages/YouTubeSEOScoreChecker"));
+const CreatorStudioHub = lazy(() => import("./pages/CreatorStudioHub"));
+const CreatorKeywordExplorer = lazy(() => import("./pages/CreatorKeywordExplorer"));
+const CreatorSEOAnalyzer = lazy(() => import("./pages/CreatorSEOAnalyzer"));
+const CreatorTagOptimization = lazy(() => import("./pages/CreatorTagOptimization"));
+const CreatorCompetitorBreakdown = lazy(() => import("./pages/CreatorCompetitorBreakdown"));
+const CreatorMonetizationEstimator = lazy(() => import("./pages/CreatorMonetizationEstimator"));
+const CreatorWatchTimeSimulator = lazy(() => import("./pages/CreatorWatchTimeSimulator"));
+const CreatorCTRAssistant = lazy(() => import("./pages/CreatorCTRAssistant"));
+const CreatorScriptBuilder = lazy(() => import("./pages/CreatorScriptBuilder"));
+const CreatorContentRepurposing = lazy(() => import("./pages/CreatorContentRepurposing"));
+const CreatorContentPlanner = lazy(() => import("./pages/CreatorContentPlanner"));
+const Login = lazy(() => import("./pages/Login"));
+const Signup = lazy(() => import("./pages/Signup"));
+const ForgotPassword = lazy(() => import("./pages/ForgotPassword"));
+const ResetPassword = lazy(() => import("./pages/ResetPassword"));
+const Account = lazy(() => import("./pages/Account"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+
+// Admin pages
 const AdminLogin = lazy(() => import("./pages/admin/AdminLogin"));
 const AdminDashboard = lazy(() => import("./pages/admin/AdminDashboard"));
 const AdminUsers = lazy(() => import("./pages/admin/AdminUsers"));
@@ -65,7 +69,16 @@ const AdminSubscriptions = lazy(() => import("./pages/admin/AdminSubscriptions")
 const AdminSettings = lazy(() => import("./pages/admin/AdminSettings"));
 const AdminEmails = lazy(() => import("./pages/admin/AdminEmails"));
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5 * 60 * 1000, // 5 min cache
+      gcTime: 10 * 60 * 1000,   // 10 min garbage collection
+      refetchOnWindowFocus: false,
+      retry: 1,
+    },
+  },
+});
 
 const P = ({ children }: { children: React.ReactNode }) => (
   <ProtectedRoute>{children}</ProtectedRoute>
@@ -118,7 +131,7 @@ const App = () => (
               <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="/account" element={<Account />} />
-              {/* Hub pages - public preview */}
+              {/* Hub pages */}
               <Route path="/youtube-tools" element={<YouTubeToolsHub />} />
               <Route path="/creator-studio" element={<CreatorStudioHub />} />
               {/* Protected YouTube Tools */}
