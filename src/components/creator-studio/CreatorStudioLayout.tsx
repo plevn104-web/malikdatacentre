@@ -1,6 +1,7 @@
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { SEOHead } from "@/components/SEOHead";
+import { UsageBar } from "@/components/auth/UsageBar";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { AdPlaceholder } from "@/components/layout/AdPlaceholder";
 import { Link } from "react-router-dom";
@@ -59,6 +60,10 @@ export const CreatorStudioLayout = ({
       />
       <Navbar />
       <Breadcrumbs items={breadcrumbs} />
+
+      <div className="container px-4 max-w-3xl mx-auto pt-4">
+        <UsageBar />
+      </div>
 
       <AdPlaceholder position="header" />
 
