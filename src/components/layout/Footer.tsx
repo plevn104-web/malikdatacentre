@@ -65,24 +65,26 @@ export const Footer = () => {
             </ul>
           </motion.div>
 
-          {/* More Services */}
+          {/* Support */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.15 }}
           >
-            <h3 className="mb-4 font-display font-semibold text-foreground">More Services</h3>
+            <h3 className="mb-4 font-display font-semibold text-foreground">Support</h3>
             <ul className="space-y-3 text-sm text-muted-foreground">
+              <li><Link to="/contact" className="hover:text-primary transition-colors">Contact Us</Link></li>
+              <li><Link to="/support" className="hover:text-primary transition-colors">Support & FAQ</Link></li>
               <li><Link to="/ai-tools-services" className="hover:text-primary transition-colors">AI Tools & Services</Link></li>
               <li><Link to="/youtube-monetization" className="hover:text-primary transition-colors">YouTube Monetization</Link></li>
-              <li><Link to="/contact" className="hover:text-primary transition-colors">Contact Us</Link></li>
             </ul>
             
             <h3 className="mb-4 mt-6 font-display font-semibold text-foreground">Legal</h3>
             <ul className="space-y-3 text-sm text-muted-foreground">
               <li><Link to="/privacy-policy" className="hover:text-primary transition-colors">Privacy Policy</Link></li>
               <li><Link to="/terms-conditions" className="hover:text-primary transition-colors">Terms & Conditions</Link></li>
+              <li><Link to="/disclaimer" className="hover:text-primary transition-colors">Disclaimer</Link></li>
               <li><Link to="/refund-policy" className="hover:text-primary transition-colors">Refund Policy</Link></li>
             </ul>
           </motion.div>
