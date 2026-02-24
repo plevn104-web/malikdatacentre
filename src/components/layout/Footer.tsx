@@ -60,8 +60,10 @@ export const Footer = () => {
               <li><Link to="/portfolio" className="hover:text-primary transition-colors">Portfolio</Link></li>
               <li><Link to="/services" className="hover:text-primary transition-colors">Services</Link></li>
               <li><Link to="/pricing" className="hover:text-primary transition-colors">Pricing</Link></li>
-              <li><Link to="/courses" className="hover:text-primary transition-colors">Courses</Link></li>
               <li><Link to="/about" className="hover:text-primary transition-colors">About</Link></li>
+              <li><Link to="/contact" className="hover:text-primary transition-colors">Contact</Link></li>
+              <li><Link to="/success-stories" className="hover:text-primary transition-colors">Success Stories</Link></li>
+              <li><Link to="/courses" className="hover:text-primary transition-colors">Courses</Link></li>
             </ul>
           </motion.div>
 
@@ -74,8 +76,9 @@ export const Footer = () => {
           >
             <h3 className="mb-4 font-display font-semibold text-foreground">Support</h3>
             <ul className="space-y-3 text-sm text-muted-foreground">
-              <li><Link to="/contact" className="hover:text-primary transition-colors">Contact Us</Link></li>
               <li><Link to="/support" className="hover:text-primary transition-colors">Support & FAQ</Link></li>
+              <li><Link to="/contact" className="hover:text-primary transition-colors">Contact Us</Link></li>
+              <li><Link to="/youtube-growth-guide" className="hover:text-primary transition-colors">Free Guide</Link></li>
               <li><Link to="/ai-tools-services" className="hover:text-primary transition-colors">AI Tools & Services</Link></li>
               <li><Link to="/youtube-monetization" className="hover:text-primary transition-colors">YouTube Monetization</Link></li>
             </ul>
