@@ -40,26 +40,26 @@ export const useToolUsage = () => {
     }
 
     try {
-      // Usage count
-      const { count, error } = await (supabase as any)
-        .from("tool_usage")
-        .select("id", { count: "exact", head: true })
-        .eq("user_id", user.id)
-        .eq("month_year", currentMonth);
+      // Run both queries in parallel
+      const [usageRes, subsRes] = await Promise.all([
+        (supabase as any)
+          .from("tool_usage")
+          .select("id", { count: "exact", head: true })
+          .eq("user_id", user.id)
+          .eq("month_year", currentMonth),
+        supabase
+          .from("user_subscriptions")
+          .select("id, plan_id, premium_plans(name)")
+          .eq("user_id", user.id)
+          .eq("status", "active")
+          .gt("expires_at", new Date().toISOString())
+          .limit(1),
+      ]);
 
-      if (!error) setUsage(count || 0);
+      if (!usageRes.error) setUsage(usageRes.count || 0);
 
-      // Active subscription with plan info
-      const { data: subs } = await supabase
-        .from("user_subscriptions")
-        .select("id, plan_id, premium_plans(name)")
-        .eq("user_id", user.id)
-        .eq("status", "active")
-        .gt("expires_at", new Date().toISOString())
-        .limit(1);
-
-      if (subs && subs.length > 0) {
-        const planName = (subs[0] as any).premium_plans?.name || "Free";
+      if (subsRes.data && subsRes.data.length > 0) {
+        const planName = (subsRes.data[0] as any).premium_plans?.name || "Free";
         setPlan(PLAN_MAP[planName] || FREE_PLAN);
       } else {
         setPlan(FREE_PLAN);
