@@ -17,6 +17,19 @@ const youtubeToolsDropdown = [
   { href: "/youtube-tools/seo-score-checker", label: "SEO Score Checker" },
 ];
 
+const creatorStudioDropdown = [
+  { href: "/creator-studio/keyword-explorer", label: "Keyword Explorer" },
+  { href: "/creator-studio/seo-analyzer", label: "SEO Score Analyzer" },
+  { href: "/creator-studio/tag-optimization", label: "Tag Optimization" },
+  { href: "/creator-studio/competitor-breakdown", label: "Competitor Breakdown" },
+  { href: "/creator-studio/monetization-estimator", label: "Monetization Estimator" },
+  { href: "/creator-studio/watch-time-simulator", label: "Watch Time Simulator" },
+  { href: "/creator-studio/ctr-assistant", label: "CTR Assistant" },
+  { href: "/creator-studio/script-builder", label: "AI Script Builder" },
+  { href: "/creator-studio/content-repurposing", label: "Content Repurposing" },
+  { href: "/creator-studio/content-planner", label: "30-Day Planner" },
+];
+
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/portfolio", label: "Portfolio" },
@@ -39,14 +52,20 @@ export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isYTDropdownOpen, setIsYTDropdownOpen] = useState(false);
+  const [isCSDropdownOpen, setIsCSDropdownOpen] = useState(false);
   const [isMobileYTOpen, setIsMobileYTOpen] = useState(false);
+  const [isMobileCSOpen, setIsMobileCSOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const csDropdownRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setIsYTDropdownOpen(false);
+      }
+      if (csDropdownRef.current && !csDropdownRef.current.contains(e.target as Node)) {
+        setIsCSDropdownOpen(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -136,6 +155,29 @@ export const Navbar = () => {
               </div>
             )}
           </div>
+          {/* Creator Studio Dropdown */}
+          <div className="relative" ref={csDropdownRef}>
+            <button
+              onClick={() => setIsCSDropdownOpen(!isCSDropdownOpen)}
+              className={`text-xs font-medium transition-colors hover:text-primary px-2 py-1 rounded-md flex items-center gap-0.5 ${
+                location.pathname.startsWith("/creator-studio")
+                  ? "text-primary bg-primary/10"
+                  : "text-muted-foreground"
+              }`}
+            >
+              Creator Studio
+              <ChevronDown className={`h-3 w-3 transition-transform ${isCSDropdownOpen ? "rotate-180" : ""}`} />
+            </button>
+            {isCSDropdownOpen && (
+              <div className="absolute top-full right-0 mt-1 w-56 bg-background border border-border/50 rounded-lg shadow-lg py-1 z-50">
+                <Link to="/creator-studio" onClick={() => setIsCSDropdownOpen(false)} className="block px-4 py-2 text-xs font-semibold text-foreground hover:bg-muted/50 transition-colors">All Creator Tools</Link>
+                <div className="border-t border-border/30 my-1" />
+                {creatorStudioDropdown.map((item) => (
+                  <Link key={item.href} to={item.href} onClick={() => setIsCSDropdownOpen(false)} className={`block px-4 py-2 text-xs transition-colors hover:bg-muted/50 ${location.pathname === item.href ? "text-primary" : "text-muted-foreground"}`}>{item.label}</Link>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
 
         {/* CTA Button */}
@@ -210,6 +252,24 @@ export const Navbar = () => {
                       >
                         {item.label}
                       </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+              {/* Mobile Creator Studio */}
+              <div>
+                <button
+                  onClick={() => setIsMobileCSOpen(!isMobileCSOpen)}
+                  className={`text-lg font-medium transition-colors flex items-center gap-1 ${location.pathname.startsWith("/creator-studio") ? "text-primary" : "text-muted-foreground"}`}
+                >
+                  Creator Studio
+                  <ChevronDown className={`h-4 w-4 transition-transform ${isMobileCSOpen ? "rotate-180" : ""}`} />
+                </button>
+                {isMobileCSOpen && (
+                  <div className="ml-4 mt-2 flex flex-col gap-2">
+                    <Link to="/creator-studio" onClick={() => setIsMobileMenuOpen(false)} className="text-sm font-medium text-foreground">All Creator Tools</Link>
+                    {creatorStudioDropdown.map((item) => (
+                      <Link key={item.href} to={item.href} onClick={() => setIsMobileMenuOpen(false)} className={`text-sm transition-colors ${location.pathname === item.href ? "text-primary" : "text-muted-foreground"}`}>{item.label}</Link>
                     ))}
                   </div>
                 )}
