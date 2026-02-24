@@ -31,6 +31,9 @@ import YouTubeDescriptionGenerator from "./pages/YouTubeDescriptionGenerator";
 import YouTubeTagGenerator from "./pages/YouTubeTagGenerator";
 import YouTubeThumbnailHeadlineGenerator from "./pages/YouTubeThumbnailHeadlineGenerator";
 import YouTubeHashtagGenerator from "./pages/YouTubeHashtagGenerator";
+import YouTubeRevenueEstimator from "./pages/YouTubeRevenueEstimator";
+import YouTubeWatchTimeCalculator from "./pages/YouTubeWatchTimeCalculator";
+import YouTubeSEOScoreChecker from "./pages/YouTubeSEOScoreChecker";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -70,6 +73,9 @@ const App = () => (
           <Route path="/youtube-tools/tag-generator" element={<YouTubeTagGenerator />} />
           <Route path="/youtube-tools/thumbnail-headline-generator" element={<YouTubeThumbnailHeadlineGenerator />} />
           <Route path="/youtube-tools/hashtag-generator" element={<YouTubeHashtagGenerator />} />
+          <Route path="/youtube-tools/revenue-estimator" element={<YouTubeRevenueEstimator />} />
+          <Route path="/youtube-tools/watch-time-calculator" element={<YouTubeWatchTimeCalculator />} />
+          <Route path="/youtube-tools/seo-score-checker" element={<YouTubeSEOScoreChecker />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

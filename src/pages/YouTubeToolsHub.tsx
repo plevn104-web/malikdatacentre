@@ -3,7 +3,7 @@ import { Footer } from "@/components/layout/Footer";
 import { SEOHead } from "@/components/SEOHead";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { Link } from "react-router-dom";
-import { Type, FileText, Hash, Image, Tag } from "lucide-react";
+import { Type, FileText, Hash, Image, Tag, DollarSign, Clock, Search } from "lucide-react";
 
 const tools = [
   {
@@ -35,6 +35,24 @@ const tools = [
     description: "Discover 20 relevant hashtags mixing broad and niche-specific tags for reach.",
     href: "/youtube-tools/hashtag-generator",
     icon: <Hash className="h-7 w-7" />,
+  },
+  {
+    title: "Revenue Estimator",
+    description: "Estimate your YouTube ad earnings based on monthly views and RPM.",
+    href: "/youtube-tools/revenue-estimator",
+    icon: <DollarSign className="h-7 w-7" />,
+  },
+  {
+    title: "Watch Time Calculator",
+    description: "Calculate watch hours and plan your path to 4,000 hours for monetization.",
+    href: "/youtube-tools/watch-time-calculator",
+    icon: <Clock className="h-7 w-7" />,
+  },
+  {
+    title: "SEO Score Checker",
+    description: "Analyze your title and description for SEO optimization with a score out of 100.",
+    href: "/youtube-tools/seo-score-checker",
+    icon: <Search className="h-7 w-7" />,
   },
 ];
 
