@@ -4,6 +4,7 @@ import { Footer } from "@/components/layout/Footer";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { AdPlaceholder } from "@/components/layout/AdPlaceholder";
 import { blogPosts } from "@/data/blogPosts";
+import { SEOHead } from "@/components/SEOHead";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -110,6 +111,56 @@ const BlogPost = () => {
 
   return (
     <main className="min-h-screen bg-background">
+      <SEOHead
+        title={post.title}
+        description={post.excerpt}
+        canonical={`/blog/${post.slug}`}
+        type="article"
+        article={{
+          publishedTime: post.date,
+          category: post.category,
+          author: "Malik Data Centre",
+        }}
+        schema={[
+          {
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: post.title,
+            description: post.excerpt,
+            datePublished: post.date,
+            author: { "@type": "Organization", name: "Malik Data Centre" },
+            publisher: { "@type": "Organization", name: "Malik Data Centre" },
+            mainEntityOfPage: {
+              "@type": "WebPage",
+              "@id": `https://malikdatacentre.lovable.app/blog/${post.slug}`,
+            },
+          },
+          // FAQ schema from content
+          ...(post.content.some((b) => b === "## Frequently Asked Questions")
+            ? [
+                {
+                  "@context": "https://schema.org",
+                  "@type": "FAQPage",
+                  mainEntity: post.content
+                    .reduce<{ q: string; a: string }[]>((acc, block, i) => {
+                      if (block.startsWith("### ") && post.content.indexOf("## Frequently Asked Questions") < i) {
+                        acc.push({ q: block.slice(4), a: "" });
+                      } else if (acc.length > 0 && !block.startsWith("## ") && !block.startsWith("### ") && post.content.indexOf("## Conclusion") > i && post.content.indexOf("## Frequently Asked Questions") < i) {
+                        acc[acc.length - 1].a += block + " ";
+                      }
+                      return acc;
+                    }, [])
+                    .filter((f) => f.q && f.a)
+                    .map((f) => ({
+                      "@type": "Question",
+                      name: f.q,
+                      acceptedAnswer: { "@type": "Answer", text: f.a.trim() },
+                    })),
+                },
+              ]
+            : []),
+        ]}
+      />
       <Navbar />
       <Breadcrumbs items={[{ label: "Blog", href: "/blog" }, { label: post.title }]} />
       <AdPlaceholder position="header" />

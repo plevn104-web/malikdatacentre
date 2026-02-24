@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { SEOHead } from "@/components/SEOHead";
 import { motion } from "framer-motion";
 import { MessageCircle, Linkedin, Mail, Send, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -13,6 +14,7 @@ const LINKEDIN_URL = "https://www.linkedin.com/in/malik-amir-usman-71ab54397";
 export default function Contact() {
   return (
     <main className="min-h-screen bg-background">
+      <SEOHead title="Contact Us" description="Get in touch with Malik Data Centre. We respond within 24-48 hours. Reach us via WhatsApp, email, or contact form." canonical="/contact" />
       <Navbar />
 
       {/* Hero */}

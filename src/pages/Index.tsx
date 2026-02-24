@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { SEOHead } from "@/components/SEOHead";
 import { HeroSection } from "@/components/home/HeroSection";
 import { AIToolsSection } from "@/components/home/AIToolsSection";
 import { TrustSection } from "@/components/home/TrustSection";
@@ -34,6 +35,11 @@ const Index = () => {
 
   return (
     <main className="min-h-screen bg-background">
+      <SEOHead
+        title="Premium AI Tools & YouTube Growth Services"
+        description="Get premium AI tools, YouTube monetization services, and channel growth strategies. Best prices in Pakistan for ChatGPT, SORA AI, and more."
+        canonical="/"
+      />
       <Navbar />
       <HeroSection />
       <AIToolsSection />

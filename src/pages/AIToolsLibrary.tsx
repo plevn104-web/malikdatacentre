@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { SEOHead } from "@/components/SEOHead";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -48,6 +49,7 @@ const categories = [
 
 const AIToolsLibrary = () => (
   <main className="min-h-screen bg-background">
+    <SEOHead title="AI Tools Library" description="Premium AI tools for creators and businesses. Explore content creation, SEO, automation, and design tools to boost productivity." canonical="/ai-tools-library" />
     <Navbar />
 
     {/* Hero */}

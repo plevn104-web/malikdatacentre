@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { SEOHead } from "@/components/SEOHead";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -54,6 +55,7 @@ const faqs = [
 
 const YouTubeGrowth = () => (
   <main className="min-h-screen bg-background">
+    <SEOHead title="YouTube Growth Services" description="Grow your YouTube channel with expert SEO, thumbnail design, channel audits, and monetization strategies. Get results fast." canonical="/youtube-growth" />
     <Navbar />
 
     {/* Hero */}

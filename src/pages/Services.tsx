@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { SEOHead } from "@/components/SEOHead";
 import { motion } from "framer-motion";
 import { Globe, Rocket, RefreshCcw, Bot, ShoppingCart, Smartphone, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -18,6 +19,7 @@ const services = [
 export default function Services() {
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead title="Web Development Services" description="Professional web development services including business websites, e-commerce, portfolios, and custom applications. Get a free demo today." canonical="/services" />
       <Navbar />
       <section className="pt-32 pb-24">
         <div className="container px-4">

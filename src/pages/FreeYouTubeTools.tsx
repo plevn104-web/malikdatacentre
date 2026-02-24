@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { SEOHead } from "@/components/SEOHead";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -32,6 +33,7 @@ const tools = [
 
 const FreeYouTubeTools = () => (
   <main className="min-h-screen bg-background">
+    <SEOHead title="Free YouTube Tools" description="Free tools to boost your YouTube growth. Generate optimized titles, descriptions, and keyword ideas instantly." canonical="/free-youtube-tools" />
     <Navbar />
 
     {/* Hero */}
