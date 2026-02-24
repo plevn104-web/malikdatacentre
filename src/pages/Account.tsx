@@ -6,11 +6,11 @@ import { SEOHead } from "@/components/SEOHead";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Link, Navigate } from "react-router-dom";
-import { LogOut, User } from "lucide-react";
+import { LogOut, User, Crown } from "lucide-react";
 
 const Account = () => {
   const { user, loading: authLoading, signOut } = useAuth();
-  const { usage, limit, isProUser, loading: usageLoading } = useToolUsage();
+  const { usage, limit, plan, isUnlimited, loading: usageLoading } = useToolUsage();
 
   if (authLoading) {
     return (
@@ -22,8 +22,8 @@ const Account = () => {
 
   if (!user) return <Navigate to="/login" replace />;
 
-  const percentage = Math.min((usage / limit) * 100, 100);
-  const remaining = Math.max(0, limit - usage);
+  const percentage = isUnlimited ? 0 : Math.min((usage / (limit as number)) * 100, 100);
+  const remaining = isUnlimited ? "∞" : Math.max(0, (limit as number) - usage);
 
   return (
     <main className="min-h-screen bg-background">
@@ -40,9 +40,7 @@ const Account = () => {
                 <User className="h-6 w-6 text-primary" />
               </div>
               <div>
-                <p className="font-medium text-foreground">
-                  {user.user_metadata?.full_name || "User"}
-                </p>
+                <p className="font-medium text-foreground">{user.user_metadata?.full_name || "User"}</p>
                 <p className="text-sm text-muted-foreground">{user.email}</p>
               </div>
             </div>
@@ -52,8 +50,9 @@ const Account = () => {
           <div className="border border-border/50 rounded-xl p-6 mb-6">
             <h2 className="font-display text-lg font-semibold text-foreground mb-3">Plan Status</h2>
             <div className="flex items-center gap-2 mb-4">
-              <span className={`px-3 py-1 rounded-full text-sm font-medium ${isProUser ? "bg-primary/10 text-primary" : "bg-muted/50 text-muted-foreground"}`}>
-                {isProUser ? "Pro Plan" : "Free Plan"}
+              <span className={`px-3 py-1 rounded-full text-sm font-medium inline-flex items-center gap-1.5 ${plan.name !== "Free" ? "bg-primary/10 text-primary" : "bg-muted/50 text-muted-foreground"}`}>
+                {plan.name !== "Free" && <Crown className="h-3.5 w-3.5" />}
+                {plan.name} Plan
               </span>
             </div>
 
@@ -62,10 +61,10 @@ const Account = () => {
                 <div className="flex items-center justify-between mb-2">
                   <p className="text-sm text-foreground">Tool runs this month</p>
                   <p className="text-sm text-muted-foreground">
-                    {isProUser ? `${usage} (unlimited)` : `${usage}/${limit}`}
+                    {isUnlimited ? `${usage} (unlimited)` : `${usage}/${limit}`}
                   </p>
                 </div>
-                {!isProUser && (
+                {!isUnlimited && (
                   <>
                     <Progress value={percentage} className="h-2 mb-2" />
                     <p className="text-xs text-muted-foreground">{remaining} runs remaining</p>
@@ -73,13 +72,27 @@ const Account = () => {
                 )}
               </div>
             )}
+
+            {/* Plan perks */}
+            <div className="mt-4 pt-4 border-t border-border/30 space-y-1.5">
+              <p className="text-xs text-muted-foreground">Ads: {plan.adsVisible ? "Visible" : "Hidden"}</p>
+              <p className="text-xs text-muted-foreground">Advanced Tools: {plan.advancedTools ? "Unlocked" : "Locked"}</p>
+              <p className="text-xs text-muted-foreground">
+                History: {plan.historyDays === 0 ? "None" : plan.historyDays === -1 ? "Unlimited" : `${plan.historyDays} days`}
+              </p>
+            </div>
           </div>
 
           {/* Actions */}
           <div className="space-y-3">
-            {!isProUser && (
+            {plan.name === "Free" && (
               <Button className="w-full" asChild>
-                <Link to="/pricing">Upgrade to Pro</Link>
+                <Link to="/pricing">Upgrade Plan</Link>
+              </Button>
+            )}
+            {plan.name !== "Free" && plan.name !== "Elite Creator" && (
+              <Button className="w-full" variant="outline" asChild>
+                <Link to="/pricing">Upgrade to Higher Plan</Link>
               </Button>
             )}
             <Button variant="outline" className="w-full" onClick={signOut}>
