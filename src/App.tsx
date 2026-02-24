@@ -34,6 +34,17 @@ import YouTubeHashtagGenerator from "./pages/YouTubeHashtagGenerator";
 import YouTubeRevenueEstimator from "./pages/YouTubeRevenueEstimator";
 import YouTubeWatchTimeCalculator from "./pages/YouTubeWatchTimeCalculator";
 import YouTubeSEOScoreChecker from "./pages/YouTubeSEOScoreChecker";
+import CreatorStudioHub from "./pages/CreatorStudioHub";
+import CreatorKeywordExplorer from "./pages/CreatorKeywordExplorer";
+import CreatorSEOAnalyzer from "./pages/CreatorSEOAnalyzer";
+import CreatorTagOptimization from "./pages/CreatorTagOptimization";
+import CreatorCompetitorBreakdown from "./pages/CreatorCompetitorBreakdown";
+import CreatorMonetizationEstimator from "./pages/CreatorMonetizationEstimator";
+import CreatorWatchTimeSimulator from "./pages/CreatorWatchTimeSimulator";
+import CreatorCTRAssistant from "./pages/CreatorCTRAssistant";
+import CreatorScriptBuilder from "./pages/CreatorScriptBuilder";
+import CreatorContentRepurposing from "./pages/CreatorContentRepurposing";
+import CreatorContentPlanner from "./pages/CreatorContentPlanner";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -76,6 +87,17 @@ const App = () => (
           <Route path="/youtube-tools/revenue-estimator" element={<YouTubeRevenueEstimator />} />
           <Route path="/youtube-tools/watch-time-calculator" element={<YouTubeWatchTimeCalculator />} />
           <Route path="/youtube-tools/seo-score-checker" element={<YouTubeSEOScoreChecker />} />
+          <Route path="/creator-studio" element={<CreatorStudioHub />} />
+          <Route path="/creator-studio/keyword-explorer" element={<CreatorKeywordExplorer />} />
+          <Route path="/creator-studio/seo-analyzer" element={<CreatorSEOAnalyzer />} />
+          <Route path="/creator-studio/tag-optimization" element={<CreatorTagOptimization />} />
+          <Route path="/creator-studio/competitor-breakdown" element={<CreatorCompetitorBreakdown />} />
+          <Route path="/creator-studio/monetization-estimator" element={<CreatorMonetizationEstimator />} />
+          <Route path="/creator-studio/watch-time-simulator" element={<CreatorWatchTimeSimulator />} />
+          <Route path="/creator-studio/ctr-assistant" element={<CreatorCTRAssistant />} />
+          <Route path="/creator-studio/script-builder" element={<CreatorScriptBuilder />} />
+          <Route path="/creator-studio/content-repurposing" element={<CreatorContentRepurposing />} />
+          <Route path="/creator-studio/content-planner" element={<CreatorContentPlanner />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
