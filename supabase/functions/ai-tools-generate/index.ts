@@ -75,6 +75,27 @@ const TOOL_PROMPTS: Record<string, (inputs: Record<string, string>) => string> =
 
   "chatbot-flow": (i) =>
     `Design a chatbot conversation flow for: "${i.purpose}" in the ${i.industry || "general"} industry. Return JSON with fields: greeting (string), flows (array of {trigger, responses (array of strings), followUp (string)}), fallbackMessage (string), handoffMessage (string). Generate 5-7 flows. Only return the JSON object, no other text.`,
+
+  "homework-helper": (i) =>
+    `Help solve this ${i.subject ? i.subject + " " : ""}question/problem: "${i.question.slice(0, 3000)}". Return JSON with fields: stepByStep (array of {step (number), explanation (string)}), summary (string under 80 words), concept (string explaining the underlying concept). Use simple language a student can understand. Only return the JSON object, no other text.`,
+
+  "letter-writer": (i) =>
+    `Write a ${i.letterType} letter with these details: "${i.details.slice(0, 2000)}". Tone: ${i.tone || "Formal"}. Return JSON with fields: subject (string), body (string with proper formatting using newlines), closing (string), signatureFormat (string). Make it professional and properly structured. Only return the JSON object, no other text.`,
+
+  "whatsapp-improver": (i) =>
+    `Improve this WhatsApp message in ${i.tone || "Polite"} tone: "${i.message.slice(0, 1000)}". Return JSON with fields: variations (array of 3 objects with {improved (string), toneApplied (string), changesMade (string)}). Keep messages short and natural. Only return the JSON object, no other text.`,
+
+  "study-planner": (i) =>
+    `Create a study plan for exams on ${i.examDate}. Subjects: ${i.subjects}. Available: ${i.dailyHours} hours/day. Return JSON with fields: weeks (array of {weekNumber (number), days (array of {day (string), subjects (array of {subject (string), hours (number), focus (string)})})}), revisionDays (array of strings), tips (array of 5 motivation tips). Only return the JSON object, no other text.`,
+
+  "travel-planner": (i) =>
+    `Plan a ${i.days}-day trip to ${i.destination} with ${i.budget || "medium"} budget. Return JSON with fields: itinerary (array of {day (number), title (string), activities (array of {time (string), activity (string), tip (string)})}), budgetTips (array of 5 strings), travelTips (array of 5 strings). Only return the JSON object, no other text.`,
+
+  "decision-helper": (i) =>
+    `Help decide between Option A: "${i.optionA}" and Option B: "${i.optionB}". Context: "${i.context || "general decision"}". Return JSON with fields: optionA ({pros (array), cons (array), riskLevel (string)}), optionB ({pros (array), cons (array), riskLevel (string)}), comparison (string), recommendation (string). Only return the JSON object, no other text.`,
+
+  "side-hustle-finder": (i) =>
+    `Suggest 5 side hustle ideas for someone with skills: "${i.skills}", available ${i.timePerWeek || "10"} hours/week, budget: ${i.budget || "low"}. Return JSON array of 5 objects with fields: name (string), description (string), earningPotential (string), startingSteps (array of 3 strings), riskLevel (string: Low/Medium/High), investmentNeeded (string). Only return the JSON array, no other text.`,
 };
 
 serve(async (req) => {
