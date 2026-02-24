@@ -1,0 +1,1 @@
+DROP POLICY "Block anonymous access to profiles" ON public.profiles;
