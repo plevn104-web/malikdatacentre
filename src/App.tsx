@@ -16,6 +16,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsConditions from "./pages/TermsConditions";
 import RefundPolicy from "./pages/RefundPolicy";
 import AIToolsServices from "./pages/AIToolsServices";
+import Disclaimer from "./pages/Disclaimer";
 import YouTubeGrowth from "./pages/YouTubeGrowth";
 import AIToolsLibrary from "./pages/AIToolsLibrary";
 import FreeYouTubeTools from "./pages/FreeYouTubeTools";
@@ -47,6 +48,7 @@ const App = () => (
           <Route path="/terms-conditions" element={<TermsConditions />} />
           <Route path="/refund-policy" element={<RefundPolicy />} />
           <Route path="/ai-tools-services" element={<AIToolsServices />} />
+          <Route path="/disclaimer" element={<Disclaimer />} />
           <Route path="/youtube-growth" element={<YouTubeGrowth />} />
           <Route path="/ai-tools-library" element={<AIToolsLibrary />} />
           <Route path="/free-youtube-tools" element={<FreeYouTubeTools />} />
