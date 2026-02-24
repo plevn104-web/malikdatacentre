@@ -101,6 +101,9 @@ export const YouTubeToolLayout = ({
             <Link to="/youtube-tools/tag-generator" className="text-sm text-primary hover:underline">Tag Generator</Link>
             <Link to="/youtube-tools/thumbnail-headline-generator" className="text-sm text-primary hover:underline">Thumbnail Headlines</Link>
             <Link to="/youtube-tools/hashtag-generator" className="text-sm text-primary hover:underline">Hashtag Generator</Link>
+            <Link to="/youtube-tools/revenue-estimator" className="text-sm text-primary hover:underline">Revenue Estimator</Link>
+            <Link to="/youtube-tools/watch-time-calculator" className="text-sm text-primary hover:underline">Watch Time Calculator</Link>
+            <Link to="/youtube-tools/seo-score-checker" className="text-sm text-primary hover:underline">SEO Score Checker</Link>
           </div>
           <div className="flex flex-wrap gap-3 mt-4">
             <Link to="/blog" className="text-sm text-muted-foreground hover:text-primary">Blog</Link>

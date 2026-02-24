@@ -12,6 +12,9 @@ const youtubeToolsDropdown = [
   { href: "/youtube-tools/tag-generator", label: "Tag Generator" },
   { href: "/youtube-tools/thumbnail-headline-generator", label: "Thumbnail Headline Generator" },
   { href: "/youtube-tools/hashtag-generator", label: "Hashtag Generator" },
+  { href: "/youtube-tools/revenue-estimator", label: "Revenue Estimator" },
+  { href: "/youtube-tools/watch-time-calculator", label: "Watch Time Calculator" },
+  { href: "/youtube-tools/seo-score-checker", label: "SEO Score Checker" },
 ];
 
 const navLinks = [
