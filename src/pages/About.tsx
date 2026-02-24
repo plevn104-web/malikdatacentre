@@ -83,6 +83,24 @@ export default function About() {
             </div>
           </div>
 
+          {/* Trust Badges */}
+          <div className="mb-12">
+            <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground text-center mb-8">Why Clients Trust Us</h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
+              {[
+                { value: "500+", label: "Clients Served" },
+                { value: "98%", label: "Satisfaction Rate" },
+                { value: "24/7", label: "Support Available" },
+                { value: "2+ Years", label: "Industry Experience" },
+              ].map((badge) => (
+                <div key={badge.label} className="glass-card p-4 text-center">
+                  <p className="font-display text-2xl font-bold text-primary">{badge.value}</p>
+                  <p className="text-muted-foreground text-sm">{badge.label}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
           {/* Contact */}
           <div className="max-w-3xl mx-auto glass-card p-8 text-center">
             <h2 className="font-display text-2xl font-bold text-foreground mb-4">Get in Touch</h2>
