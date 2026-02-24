@@ -27,6 +27,30 @@ const AIToolsServices = lazy(() => import("./pages/AIToolsServices"));
 const Disclaimer = lazy(() => import("./pages/Disclaimer"));
 const YouTubeGrowth = lazy(() => import("./pages/YouTubeGrowth"));
 const AIToolsLibrary = lazy(() => import("./pages/AIToolsLibrary"));
+const AIToolsHub = lazy(() => import("./pages/AIToolsHub"));
+const AIBusinessIdeaGenerator = lazy(() => import("./pages/ai-tools/AIBusinessIdeaGenerator"));
+const AIPricingStrategy = lazy(() => import("./pages/ai-tools/AIPricingStrategy"));
+const AIMarketResearch = lazy(() => import("./pages/ai-tools/AIMarketResearch"));
+const AIBusinessPlan = lazy(() => import("./pages/ai-tools/AIBusinessPlan"));
+const AIInstagramCaption = lazy(() => import("./pages/ai-tools/AIInstagramCaption"));
+const AILinkedInPost = lazy(() => import("./pages/ai-tools/AILinkedInPost"));
+const AITwitterThread = lazy(() => import("./pages/ai-tools/AITwitterThread"));
+const AIHashtagResearch = lazy(() => import("./pages/ai-tools/AIHashtagResearch"));
+const AITextSummarizer = lazy(() => import("./pages/ai-tools/AITextSummarizer"));
+const AIParaphrasing = lazy(() => import("./pages/ai-tools/AIParaphrasing"));
+const AIPdfToNotes = lazy(() => import("./pages/ai-tools/AIPdfToNotes"));
+const AIPlagiarismChecker = lazy(() => import("./pages/ai-tools/AIPlagiarismChecker"));
+const AIBlogIntro = lazy(() => import("./pages/ai-tools/AIBlogIntro"));
+const AIMetaDescription = lazy(() => import("./pages/ai-tools/AIMetaDescription"));
+const AIFAQGenerator = lazy(() => import("./pages/ai-tools/AIFAQGenerator"));
+const AIKeywordCluster = lazy(() => import("./pages/ai-tools/AIKeywordCluster"));
+const AIProposalGenerator = lazy(() => import("./pages/ai-tools/AIProposalGenerator"));
+const AIClientBriefAnalyzer = lazy(() => import("./pages/ai-tools/AIClientBriefAnalyzer"));
+const AIContractTemplate = lazy(() => import("./pages/ai-tools/AIContractTemplate"));
+const AILandingPageCopy = lazy(() => import("./pages/ai-tools/AILandingPageCopy"));
+const AISalesFunnel = lazy(() => import("./pages/ai-tools/AISalesFunnel"));
+const AIProductDescription = lazy(() => import("./pages/ai-tools/AIProductDescription"));
+const AIChatbotBuilder = lazy(() => import("./pages/ai-tools/AIChatbotBuilder"));
 const FreeYouTubeTools = lazy(() => import("./pages/FreeYouTubeTools"));
 const Blog = lazy(() => import("./pages/Blog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
@@ -120,6 +144,7 @@ const App = () => (
               <Route path="/disclaimer" element={<Disclaimer />} />
               <Route path="/youtube-growth" element={<YouTubeGrowth />} />
               <Route path="/ai-tools-library" element={<AIToolsLibrary />} />
+              <Route path="/ai-tools" element={<AIToolsHub />} />
               <Route path="/free-youtube-tools" element={<FreeYouTubeTools />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:slug" element={<BlogPost />} />
@@ -154,6 +179,30 @@ const App = () => (
               <Route path="/creator-studio/script-builder" element={<P><CreatorScriptBuilder /></P>} />
               <Route path="/creator-studio/content-repurposing" element={<P><CreatorContentRepurposing /></P>} />
               <Route path="/creator-studio/content-planner" element={<P><CreatorContentPlanner /></P>} />
+              {/* Protected AI Tools */}
+              <Route path="/ai-tools/business-idea-generator" element={<P><AIBusinessIdeaGenerator /></P>} />
+              <Route path="/ai-tools/pricing-strategy" element={<P><AIPricingStrategy /></P>} />
+              <Route path="/ai-tools/market-research" element={<P><AIMarketResearch /></P>} />
+              <Route path="/ai-tools/business-plan" element={<P><AIBusinessPlan /></P>} />
+              <Route path="/ai-tools/instagram-caption" element={<P><AIInstagramCaption /></P>} />
+              <Route path="/ai-tools/linkedin-post" element={<P><AILinkedInPost /></P>} />
+              <Route path="/ai-tools/twitter-thread" element={<P><AITwitterThread /></P>} />
+              <Route path="/ai-tools/hashtag-research" element={<P><AIHashtagResearch /></P>} />
+              <Route path="/ai-tools/text-summarizer" element={<P><AITextSummarizer /></P>} />
+              <Route path="/ai-tools/paraphrasing" element={<P><AIParaphrasing /></P>} />
+              <Route path="/ai-tools/pdf-to-notes" element={<P><AIPdfToNotes /></P>} />
+              <Route path="/ai-tools/plagiarism-checker" element={<P><AIPlagiarismChecker /></P>} />
+              <Route path="/ai-tools/blog-intro" element={<P><AIBlogIntro /></P>} />
+              <Route path="/ai-tools/meta-description" element={<P><AIMetaDescription /></P>} />
+              <Route path="/ai-tools/faq-generator" element={<P><AIFAQGenerator /></P>} />
+              <Route path="/ai-tools/keyword-cluster" element={<P><AIKeywordCluster /></P>} />
+              <Route path="/ai-tools/proposal-generator" element={<P><AIProposalGenerator /></P>} />
+              <Route path="/ai-tools/client-brief-analyzer" element={<P><AIClientBriefAnalyzer /></P>} />
+              <Route path="/ai-tools/contract-template" element={<P><AIContractTemplate /></P>} />
+              <Route path="/ai-tools/landing-page-copy" element={<P><AILandingPageCopy /></P>} />
+              <Route path="/ai-tools/sales-funnel" element={<P><AISalesFunnel /></P>} />
+              <Route path="/ai-tools/product-description" element={<P><AIProductDescription /></P>} />
+              <Route path="/ai-tools/chatbot-builder" element={<P><AIChatbotBuilder /></P>} />
               {/* Admin routes */}
               <Route path="/admin-login" element={<AdminLogin />} />
               <Route path="/admin" element={<A><AdminDashboard /></A>} />
