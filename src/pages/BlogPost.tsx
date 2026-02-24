@@ -13,8 +13,8 @@ import React from "react";
 
 // Internal link map: phrase → route
 const internalLinks: Record<string, string> = {
-  "our AI Tools Library": "/ai-tools",
-  "AI Tools Library": "/ai-tools",
+  "our AI Tools Library": "/ai-tools-library",
+  "AI Tools Library": "/ai-tools-library",
   "our YouTube Growth Services": "/youtube-growth",
   "YouTube Growth Services": "/youtube-growth",
   "our free YouTube tools": "/free-youtube-tools",
@@ -32,7 +32,26 @@ const internalLinks: Record<string, string> = {
   "Support & FAQ": "/support",
 };
 
-const sortedLinkKeys = Object.keys(internalLinks).sort((a, b) => b.length - a.length);
+// Outbound authority links: phrase → external URL
+const outboundLinks: Record<string, string> = {
+  "YouTube Partner Program": "https://support.google.com/youtube/answer/72851",
+  "Google AdSense": "https://www.google.com/adsense/start/",
+  "Google Ads Settings": "https://adssettings.google.com/",
+  "YouTube Studio": "https://studio.youtube.com/",
+  "Google Trends": "https://trends.google.com/trends/",
+  "Google Analytics": "https://analytics.google.com/",
+  "Google Search Console": "https://search.google.com/search-console/",
+};
+
+const allLinks: Record<string, { href: string; external: boolean }> = {};
+for (const [k, v] of Object.entries(internalLinks)) {
+  allLinks[k] = { href: v, external: false };
+}
+for (const [k, v] of Object.entries(outboundLinks)) {
+  allLinks[k] = { href: v, external: true };
+}
+
+const sortedLinkKeys = Object.keys(allLinks).sort((a, b) => b.length - a.length);
 
 const renderTextWithLinks = (text: string): React.ReactNode[] => {
   const parts: React.ReactNode[] = [];
@@ -60,11 +79,20 @@ const renderTextWithLinks = (text: string): React.ReactNode[] => {
       parts.push(remaining.slice(0, earliestIndex));
     }
 
-    parts.push(
-      <Link key={`il-${keyIndex++}`} to={internalLinks[matchedKey]} className="text-primary hover:underline font-medium">
-        {matchedKey}
-      </Link>
-    );
+    const linkInfo = allLinks[matchedKey];
+    if (linkInfo.external) {
+      parts.push(
+        <a key={`el-${keyIndex++}`} href={linkInfo.href} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-medium">
+          {matchedKey}
+        </a>
+      );
+    } else {
+      parts.push(
+        <Link key={`il-${keyIndex++}`} to={linkInfo.href} className="text-primary hover:underline font-medium">
+          {matchedKey}
+        </Link>
+      );
+    }
 
     remaining = remaining.slice(earliestIndex + matchedKey.length);
   }
@@ -171,9 +199,13 @@ const BlogPost = () => {
             <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">{post.category}</span>
             <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground mt-4 mb-4">{post.title}</h1>
             <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
-              <span className="flex items-center gap-1"><Calendar className="h-4 w-4" /> {post.date}</span>
+              <span className="flex items-center gap-1"><Calendar className="h-4 w-4" /> Published: {post.date}</span>
+              <span className="flex items-center gap-1"><Calendar className="h-4 w-4" /> Last Updated: {post.date}</span>
               <span className="flex items-center gap-1"><Clock className="h-4 w-4" /> {post.readTime}</span>
             </div>
+            <p className="text-xs text-muted-foreground/70 mt-3 italic">
+              Disclosure: Some links in this article may be affiliate links. We may earn a small commission at no extra cost to you. See our <Link to="/disclaimer" className="text-primary hover:underline">Disclaimer</Link> for details.
+            </p>
           </motion.header>
 
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>
