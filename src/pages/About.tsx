@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { SEOHead } from "@/components/SEOHead";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { FounderSection } from "@/components/home/FounderSection";
 import { motion } from "framer-motion";
@@ -18,6 +19,7 @@ const values = [
 export default function About() {
   return (
     <main className="min-h-screen bg-background">
+      <SEOHead title="About Us" description="Learn about Malik Data Centre — your trusted partner for AI tools, YouTube growth services, and digital solutions in Pakistan." canonical="/about" />
       <Navbar />
       <Breadcrumbs items={[{ label: "About Us" }]} />
 

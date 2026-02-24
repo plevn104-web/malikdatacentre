@@ -3,6 +3,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { AdPlaceholder } from "@/components/layout/AdPlaceholder";
+import { SEOHead } from "@/components/SEOHead";
 import { blogPosts } from "@/data/blogPosts";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -19,6 +20,11 @@ const Blog = () => {
 
   return (
     <main className="min-h-screen bg-background">
+      <SEOHead
+        title="Blog & Resources"
+        description="Expert insights, tutorials, and strategies on AI tools, YouTube growth, SEO, and content automation. Learn from in-depth articles."
+        canonical="/blog"
+      />
       <Navbar />
       <Breadcrumbs items={[{ label: "Blog" }]} />
       <AdPlaceholder position="header" />

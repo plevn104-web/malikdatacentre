@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { SEOHead } from "@/components/SEOHead";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Star, TrendingUp, Clock, DollarSign, Play } from "lucide-react";
@@ -26,6 +27,7 @@ const videoTestimonials = [
 
 const SuccessStories = () => (
   <main className="min-h-screen bg-background">
+    <SEOHead title="Success Stories" description="Real results from real clients. See how Malik Data Centre helped creators grow subscribers, watch time, and revenue." canonical="/success-stories" />
     <Navbar />
 
     {/* Hero */}

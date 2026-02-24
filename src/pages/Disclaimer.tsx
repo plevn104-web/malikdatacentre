@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { SEOHead } from "@/components/SEOHead";
 
 const sections = [
   {
@@ -68,6 +69,7 @@ const sections = [
 export default function Disclaimer() {
   return (
     <main className="min-h-screen bg-background">
+      <SEOHead title="Disclaimer" description="Read the disclaimer for Malik Data Centre. Content is for informational purposes only." canonical="/disclaimer" />
       <Navbar />
       
       <section className="pt-24 pb-16 md:pt-32 md:pb-24">

@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { SEOHead } from "@/components/SEOHead";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -23,6 +24,7 @@ const faqs = [
 
 const SupportFAQ = () => (
   <main className="min-h-screen bg-background">
+    <SEOHead title="Support & FAQ" description="Find answers to common questions about Malik Data Centre services. Contact us via WhatsApp, email, or our support form." canonical="/support" />
     <Navbar />
 
     {/* Hero */}

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { SEOHead } from "@/components/SEOHead";
 
 const sections = [
   {
@@ -90,6 +91,7 @@ const sections = [
 export default function TermsConditions() {
   return (
     <main className="min-h-screen bg-background">
+      <SEOHead title="Terms & Conditions" description="Read the terms and conditions for using Malik Data Centre website and services." canonical="/terms-conditions" />
       <Navbar />
       
       <section className="pt-24 pb-16 md:pt-32 md:pb-24">

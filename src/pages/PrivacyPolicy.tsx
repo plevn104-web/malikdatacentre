@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { SEOHead } from "@/components/SEOHead";
 
 const sections = [
   {
@@ -96,6 +97,7 @@ const sections = [
 export default function PrivacyPolicy() {
   return (
     <main className="min-h-screen bg-background">
+      <SEOHead title="Privacy Policy" description="Read the Malik Data Centre privacy policy. Learn how we collect, use, and protect your personal information." canonical="/privacy-policy" />
       <Navbar />
       
       <section className="pt-24 pb-16 md:pt-32 md:pb-24">

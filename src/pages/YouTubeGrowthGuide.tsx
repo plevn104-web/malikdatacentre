@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { SEOHead } from "@/components/SEOHead";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -22,6 +23,7 @@ const trustBadges = [
 
 const YouTubeGrowthGuide = () => (
   <main className="min-h-screen bg-background">
+    <SEOHead title="Free YouTube Growth Guide" description="Download the ultimate free YouTube growth guide. Step-by-step roadmap from 0 to monetization with proven strategies." canonical="/youtube-growth-guide" />
     <Navbar />
 
     {/* Hero */}
