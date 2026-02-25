@@ -126,7 +126,7 @@ serve(async (req) => {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 120000); // 2 min timeout
 
-    const createRes = await fetch("https://api.replicate.com/v1/models/minimax/video-01/predictions", {
+    const createRes = await fetch("https://api.replicate.com/v1/predictions", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${REPLICATE_API_TOKEN}`,
@@ -134,9 +134,9 @@ serve(async (req) => {
         Prefer: "wait",
       },
       body: JSON.stringify({
+        version: "8c47da666861d081eeb4d1261853087de23923a268a69b63febdf5dc1dee08e4",
         input: {
           prompt: fullPrompt,
-          prompt_optimizer: true,
         },
       }),
       signal: controller.signal,
