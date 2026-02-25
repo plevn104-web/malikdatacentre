@@ -119,6 +119,7 @@ serve(async (req) => {
 
     // Call Replicate API
     const REPLICATE_API_TOKEN = Deno.env.get("REPLICATE_API_TOKEN");
+    console.log("REPLICATE_API_TOKEN exists:", !!REPLICATE_API_TOKEN, "length:", REPLICATE_API_TOKEN?.length, "prefix:", REPLICATE_API_TOKEN?.substring(0, 6));
     if (!REPLICATE_API_TOKEN) {
       throw new Error("REPLICATE_API_TOKEN is not configured");
     }
