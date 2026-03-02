@@ -82,7 +82,7 @@ const TimestampConverter = lazy(() => import("./pages/dev-tools/TimestampConvert
 const UuidGenerator = lazy(() => import("./pages/dev-tools/UuidGenerator"));
 const Veo3UltraPlan = lazy(() => import("./pages/Veo3UltraPlan"));
 const MapNavigation = lazy(() => import("./pages/MapNavigation"));
-const WorldMonitor = lazy(() => import("./pages/WorldMonitor"));
+
 const FreeYouTubeTools = lazy(() => import("./pages/FreeYouTubeTools"));
 const Blog = lazy(() => import("./pages/Blog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
@@ -183,7 +183,7 @@ const App = () => (
               <Route path="/success-stories" element={<SuccessStories />} />
               <Route path="/support" element={<SupportFAQ />} />
               <Route path="/youtube-growth-guide" element={<YouTubeGrowthGuide />} />
-              <Route path="/world-monitor" element={<WorldMonitor />} />
+              
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/forgot-password" element={<ForgotPassword />} />
