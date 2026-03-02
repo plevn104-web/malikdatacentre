@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ChevronDown, User, LogOut, MapPin, Globe } from "lucide-react";
+import { Menu, X, ChevronDown, User, LogOut, MapPin } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
@@ -131,13 +131,6 @@ export const Navbar = () => {
             <MapPin className="h-3.5 w-3.5" />
             Map
           </Link>
-          <Link
-            to="/world-monitor"
-            className={`text-sm font-medium transition-colors hover:text-primary px-3 py-2 rounded-md flex items-center gap-1 ${location.pathname === "/world-monitor" ? "text-primary bg-primary/10" : "text-muted-foreground"}`}
-          >
-            <Globe className="h-3.5 w-3.5" />
-            World Monitor
-          </Link>
         </div>
 
         {/* Auth Buttons */}
@@ -222,9 +215,6 @@ export const Navbar = () => {
               </Link>
               <Link to="/map" onClick={() => setIsMobileMenuOpen(false)} className={`text-lg font-medium transition-colors flex items-center gap-1.5 ${location.pathname === "/map" ? "text-primary" : "text-muted-foreground"}`}>
                 <MapPin className="h-4 w-4" /> Map & Navigation
-              </Link>
-              <Link to="/world-monitor" onClick={() => setIsMobileMenuOpen(false)} className={`text-lg font-medium transition-colors flex items-center gap-1.5 ${location.pathname === "/world-monitor" ? "text-primary" : "text-muted-foreground"}`}>
-                <Globe className="h-4 w-4" /> World Monitor
               </Link>
 
               {user ? (
