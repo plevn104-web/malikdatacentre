@@ -1,18 +1,18 @@
-import { useState, useEffect, useRef, useCallback, useMemo } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Navbar } from "@/components/layout/Navbar";
 import {
   MapPin, Navigation, Car, Footprints, Bike, Bus,
   ChevronDown, ChevronUp, LocateFixed, Layers, ArrowLeftRight,
   X, Clock, Route, Copy, ExternalLink, AlertTriangle, Loader2,
-  RotateCw, Box, Map as MapIcon
+  RotateCw
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
-import maplibregl from "maplibre-gl";
-import "maplibre-gl/dist/maplibre-gl.css";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
 
 // ── Business location ──────────────────────────────────
 const BUSINESS = {
@@ -84,7 +84,7 @@ const decodePolyline = (encoded: string): [number, number][] => {
   return points;
 };
 
-// ── Route cache ───────────────────────────────────────
+// ── Route cache (sessionStorage, 5 min TTL) ───────────
 const ROUTE_CACHE_KEY = "map_route_cache";
 const LOCATION_CACHE_KEY = "map_user_location";
 
@@ -116,6 +116,30 @@ function setCachedLocation(lat: number, lng: number) {
   try { localStorage.setItem(LOCATION_CACHE_KEY, JSON.stringify({ lat, lng, ts: Date.now() })); } catch {}
 }
 
+// ── Debounce hook ─────────────────────────────────────
+function useDebounce<T>(value: T, delay: number): T {
+  const [debounced, setDebounced] = useState(value);
+  useEffect(() => {
+    const t = setTimeout(() => setDebounced(value), delay);
+    return () => clearTimeout(t);
+  }, [value, delay]);
+  return debounced;
+}
+
+// ── Custom marker icons ────────────────────────────────
+const createIcon = (color: string) =>
+  L.divIcon({
+    className: "",
+    html: `<div style="width:36px;height:36px;border-radius:50%;background:${color};border:3px solid white;box-shadow:0 4px 14px rgba(0,0,0,0.35);display:flex;align-items:center;justify-content:center">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+    </div>`,
+    iconSize: [36, 36],
+    iconAnchor: [18, 36],
+  });
+
+const businessIcon = createIcon("hsl(189 100% 40%)");
+const userIcon = createIcon("hsl(263 70% 50%)");
+
 // ── Geocode via Nominatim ──────────────────────────────
 async function geocode(query: string): Promise<{ lat: number; lng: number } | null> {
   try {
@@ -126,13 +150,13 @@ async function geocode(query: string): Promise<{ lat: number; lng: number } | nu
   } catch { return null; }
 }
 
-// ── Fetch route from OSRM ─────────────────────────────
+// ── Fetch route from OSRM (with cache) ────────────────
 async function fetchRoute(
   start: { lat: number; lng: number },
   end: { lat: number; lng: number },
   mode: TravelMode
 ): Promise<RouteInfo | null> {
-  const cacheKey = `${start.lat},${start.lng}-${end.lat},${end.lng}-${mode}`;
+  const cacheKey = `${start.lat.toFixed(4)},${start.lng.toFixed(4)}-${end.lat.toFixed(4)},${end.lng.toFixed(4)}-${mode}`;
   const cached = getCachedRoute(cacheKey);
   if (cached) return cached;
 
@@ -162,39 +186,10 @@ async function fetchRoute(
   } catch { return null; }
 }
 
-// ── Debounce hook ─────────────────────────────────────
-function useDebounce<T>(value: T, delay: number): T {
-  const [debounced, setDebounced] = useState(value);
-  useEffect(() => {
-    const t = setTimeout(() => setDebounced(value), delay);
-    return () => clearTimeout(t);
-  }, [value, delay]);
-  return debounced;
-}
-
-// ── Create marker element ─────────────────────────────
-function createMarkerEl(color: string): HTMLDivElement {
-  const el = document.createElement("div");
-  el.innerHTML = `<div style="width:36px;height:36px;border-radius:50%;background:${color};border:3px solid white;box-shadow:0 2px 12px rgba(0,0,0,0.35);display:flex;align-items:center;justify-content:center;cursor:pointer">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-  </div>`;
-  return el;
-}
-
-// ── 3D buildings layer ────────────────────────────────
-const BUILDINGS_3D_LAYER: maplibregl.LayerSpecification = {
-  id: "3d-buildings",
-  source: "openmaptiles",
-  "source-layer": "building",
-  type: "fill-extrusion",
-  minzoom: 14,
-  paint: {
-    "fill-extrusion-color": "hsl(220, 20%, 25%)",
-    "fill-extrusion-height": ["interpolate", ["linear"], ["zoom"], 14, 0, 16, ["get", "render_height"]],
-    "fill-extrusion-base": ["interpolate", ["linear"], ["zoom"], 14, 0, 16, ["get", "render_min_height"]],
-    "fill-extrusion-opacity": 0.7,
-  },
-};
+// ── Tile layers ───────────────────────────────────────
+const TILE_DARK = "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png";
+const TILE_SAT = "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}";
+const TILE_LABELS = "https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}{r}.png";
 
 // ══════════════════════════════════════════════════════
 // COMPONENT
@@ -202,8 +197,13 @@ const BUILDINGS_3D_LAYER: maplibregl.LayerSpecification = {
 const MapNavigation = () => {
   const isMobile = useIsMobile();
   const mapRef = useRef<HTMLDivElement>(null);
-  const mapInstance = useRef<maplibregl.Map | null>(null);
-  const userMarkerRef = useRef<maplibregl.Marker | null>(null);
+  const mapInstance = useRef<L.Map | null>(null);
+  const routeLayer = useRef<L.Polyline | null>(null);
+  const routeGlow = useRef<L.Polyline | null>(null);
+  const userMarker = useRef<L.Marker | null>(null);
+  const darkLayer = useRef<L.TileLayer | null>(null);
+  const satLayer = useRef<L.TileLayer | null>(null);
+  const labelsLayer = useRef<L.TileLayer | null>(null);
 
   const [mapReady, setMapReady] = useState(false);
   const [panelOpen, setPanelOpen] = useState(false);
@@ -216,188 +216,78 @@ const MapNavigation = () => {
   const [error, setError] = useState<string | null>(null);
   const [locPermission, setLocPermission] = useState<"granted" | "denied" | "pending">("pending");
   const [activeStep, setActiveStep] = useState<number | null>(null);
-  const [is3D, setIs3D] = useState(true);
-  const [isSatellite, setIsSatellite] = useState(true);
+  const [isSatellite, setIsSatellite] = useState(false);
 
   const debouncedStart = useDebounce(startInput, 400);
   const debouncedDest = useDebounce(destInput, 400);
-
-  // ── Tile sources ────────────────────────────────
-  const VECTOR_STYLE = "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json";
-  const SATELLITE_STYLE: maplibregl.StyleSpecification = {
-    version: 8,
-    name: "Hybrid",
-    sources: {
-      satellite: {
-        type: "raster",
-        tiles: ["https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"],
-        tileSize: 256,
-        maxzoom: 19,
-      },
-      roads: {
-        type: "raster",
-        tiles: ["https://stamen-tiles.a.ssl.fastly.net/toner-lines/{z}/{x}/{y}.png"],
-        tileSize: 256,
-        maxzoom: 18,
-      },
-      labels: {
-        type: "raster",
-        tiles: ["https://stamen-tiles.a.ssl.fastly.net/toner-labels/{z}/{x}/{y}.png"],
-        tileSize: 256,
-        maxzoom: 18,
-      },
-    },
-    layers: [
-      { id: "satellite", type: "raster", source: "satellite" },
-      { id: "roads", type: "raster", source: "roads", paint: { "raster-opacity": 0.45 } },
-      { id: "labels", type: "raster", source: "labels", paint: { "raster-opacity": 0.75 } },
-    ],
-  };
 
   // ── Init map ────────────────────────────────────
   useEffect(() => {
     if (!mapRef.current || mapInstance.current) return;
 
-    const map = new maplibregl.Map({
-      container: mapRef.current,
-      style: isSatellite ? SATELLITE_STYLE : VECTOR_STYLE,
-      center: [BUSINESS.lng, BUSINESS.lat],
+    const map = L.map(mapRef.current, {
+      center: [BUSINESS.lat, BUSINESS.lng],
       zoom: 14,
-      pitch: 45,
-      bearing: -15,
-      // @ts-ignore – antialias improves 3D rendering
-      antialias: true,
-      maxPitch: 85,
-      touchZoomRotate: true,
-      touchPitch: true,
-      dragRotate: true,
+      zoomControl: false,
+      attributionControl: false,
     });
 
-    // Controls
-    map.addControl(new maplibregl.NavigationControl({ visualizePitch: true, showCompass: true }), "top-right");
+    L.control.zoom({ position: "topright" }).addTo(map);
+    L.control.attribution({ position: "bottomright", prefix: false }).addTo(map);
+
+    // Dark tile layer (default)
+    darkLayer.current = L.tileLayer(TILE_DARK, {
+      attribution: '&copy; <a href="https://carto.com">CARTO</a> &copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>',
+      maxZoom: 20,
+    }).addTo(map);
+
+    // Satellite layer (hidden by default)
+    satLayer.current = L.tileLayer(TILE_SAT, {
+      attribution: "&copy; Esri",
+      maxZoom: 19,
+    });
+
+    // Labels overlay for satellite
+    labelsLayer.current = L.tileLayer(TILE_LABELS, {
+      attribution: '&copy; CARTO',
+      maxZoom: 20,
+      pane: "overlayPane",
+    });
 
     // Business marker
-    const bizEl = createMarkerEl("hsl(189, 100%, 40%)");
-    new maplibregl.Marker({ element: bizEl })
-      .setLngLat([BUSINESS.lng, BUSINESS.lat])
-      .setPopup(new maplibregl.Popup({ offset: 25, closeButton: false }).setHTML(`
-        <div style="font-family:system-ui;min-width:180px;padding:4px">
-          <strong style="font-size:14px">${BUSINESS.name}</strong><br/>
-          <span style="font-size:12px;color:#888">${BUSINESS.address}</span><br/>
-          <span style="font-size:12px;color:#888">${BUSINESS.phone}</span>
+    L.marker([BUSINESS.lat, BUSINESS.lng], { icon: businessIcon })
+      .addTo(map)
+      .bindPopup(`
+        <div style="font-family:system-ui;min-width:180px;padding:4px 0">
+          <strong style="font-size:14px;color:#0ff">${BUSINESS.name}</strong><br/>
+          <span style="font-size:12px;color:#999">${BUSINESS.address}</span><br/>
+          <span style="font-size:12px;color:#999">${BUSINESS.phone}</span>
         </div>
-      `))
-      .addTo(map);
-
-    map.on("load", () => {
-      setMapReady(true);
-      // Try adding 3D buildings from vector source
-      try {
-        if (map.getSource("openmaptiles")) {
-          map.addLayer(BUILDINGS_3D_LAYER);
-        }
-      } catch {}
-    });
+      `);
 
     mapInstance.current = map;
 
-    return () => {
-      map.remove();
-      mapInstance.current = null;
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // Small delay to ensure tiles start loading
+    setTimeout(() => setMapReady(true), 800);
+
+    return () => { map.remove(); mapInstance.current = null; };
   }, []);
 
-  // ── Switch style ────────────────────────────────
+  // ── Toggle satellite ────────────────────────────
   useEffect(() => {
     const map = mapInstance.current;
     if (!map || !mapReady) return;
-    
-    const center = map.getCenter();
-    const zoom = map.getZoom();
-    const pitch = map.getPitch();
-    const bearing = map.getBearing();
-    
-    map.setStyle(isSatellite ? SATELLITE_STYLE : VECTOR_STYLE);
-    
-    map.once("styledata", () => {
-      map.jumpTo({ center, zoom, pitch, bearing });
-      // Re-add route if exists
-      if (routeInfo) {
-        addRouteToMap(routeInfo.geometry);
-      }
-      // Re-add 3D buildings for vector style
-      if (!isSatellite) {
-        try {
-          if (map.getSource("openmaptiles") && !map.getLayer("3d-buildings")) {
-            map.addLayer(BUILDINGS_3D_LAYER);
-          }
-        } catch {}
-      }
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSatellite]);
 
-  // ── Toggle 3D ───────────────────────────────────
-  useEffect(() => {
-    const map = mapInstance.current;
-    if (!map || !mapReady) return;
-    map.easeTo({ pitch: is3D ? 45 : 0, duration: 600 });
-  }, [is3D, mapReady]);
-
-  // ── Add route to map ────────────────────────────
-  const addRouteToMap = useCallback((geometry: [number, number][]) => {
-    const map = mapInstance.current;
-    if (!map) return;
-
-    // Remove existing route
-    if (map.getLayer("route-line")) map.removeLayer("route-line");
-    if (map.getLayer("route-glow")) map.removeLayer("route-glow");
-    if (map.getSource("route")) map.removeSource("route");
-
-    const coords = geometry.map(([lat, lng]) => [lng, lat] as [number, number]);
-
-    map.addSource("route", {
-      type: "geojson",
-      data: {
-        type: "Feature",
-        properties: {},
-        geometry: { type: "LineString", coordinates: coords },
-      },
-    });
-
-    // Glow effect
-    map.addLayer({
-      id: "route-glow",
-      type: "line",
-      source: "route",
-      layout: { "line-join": "round", "line-cap": "round" },
-      paint: {
-        "line-color": "hsl(189, 100%, 50%)",
-        "line-width": 10,
-        "line-opacity": 0.25,
-        "line-blur": 6,
-      },
-    });
-
-    // Main line
-    map.addLayer({
-      id: "route-line",
-      type: "line",
-      source: "route",
-      layout: { "line-join": "round", "line-cap": "round" },
-      paint: {
-        "line-color": "hsl(189, 100%, 45%)",
-        "line-width": 5,
-        "line-opacity": 0.9,
-      },
-    });
-
-    // Fit bounds
-    const bounds = new maplibregl.LngLatBounds();
-    coords.forEach((c) => bounds.extend(c));
-    map.fitBounds(bounds, { padding: { top: 80, bottom: 200, left: isMobile ? 40 : 420, right: 40 }, duration: 1200 });
-  }, [isMobile]);
+    if (isSatellite) {
+      if (darkLayer.current) map.removeLayer(darkLayer.current);
+      if (satLayer.current && !map.hasLayer(satLayer.current)) satLayer.current.addTo(map);
+      if (labelsLayer.current && !map.hasLayer(labelsLayer.current)) labelsLayer.current.addTo(map);
+    } else {
+      if (satLayer.current) map.removeLayer(satLayer.current);
+      if (labelsLayer.current) map.removeLayer(labelsLayer.current);
+      if (darkLayer.current && !map.hasLayer(darkLayer.current)) darkLayer.current.addTo(map);
+    }
+  }, [isSatellite, mapReady]);
 
   // ── Request geolocation ─────────────────────────
   const requestLocation = useCallback(() => {
@@ -408,12 +298,10 @@ const MapNavigation = () => {
       setLocPermission("granted");
       setStartInput("My Location");
       if (mapInstance.current) {
-        if (userMarkerRef.current) userMarkerRef.current.remove();
-        const el = createMarkerEl("hsl(263, 70%, 50%)");
-        userMarkerRef.current = new maplibregl.Marker({ element: el })
-          .setLngLat([cached.lng, cached.lat])
-          .setPopup(new maplibregl.Popup({ offset: 25, closeButton: false }).setHTML("<strong>You are here</strong>"))
-          .addTo(mapInstance.current);
+        if (userMarker.current) userMarker.current.remove();
+        userMarker.current = L.marker([cached.lat, cached.lng], { icon: userIcon })
+          .addTo(mapInstance.current)
+          .bindPopup("You are here");
       }
     }
 
@@ -426,12 +314,10 @@ const MapNavigation = () => {
         setStartInput("My Location");
         setCachedLocation(loc.lat, loc.lng);
         if (mapInstance.current) {
-          if (userMarkerRef.current) userMarkerRef.current.remove();
-          const el = createMarkerEl("hsl(263, 70%, 50%)");
-          userMarkerRef.current = new maplibregl.Marker({ element: el })
-            .setLngLat([loc.lng, loc.lat])
-            .setPopup(new maplibregl.Popup({ offset: 25, closeButton: false }).setHTML("<strong>You are here</strong>"))
-            .addTo(mapInstance.current);
+          if (userMarker.current) userMarker.current.remove();
+          userMarker.current = L.marker([loc.lat, loc.lng], { icon: userIcon })
+            .addTo(mapInstance.current)
+            .bindPopup("You are here");
         }
       },
       () => setLocPermission("denied"),
@@ -446,7 +332,7 @@ const MapNavigation = () => {
     const map = mapInstance.current;
     if (!map) return;
     const target = userLocation || { lat: BUSINESS.lat, lng: BUSINESS.lng };
-    map.flyTo({ center: [target.lng, target.lat], zoom: 15, pitch: is3D ? 45 : 0, bearing: 0, duration: 1500 });
+    map.flyTo([target.lat, target.lng], 15, { duration: 1.2 });
   };
 
   // ── Get directions ──────────────────────────────
@@ -478,7 +364,37 @@ const MapNavigation = () => {
 
     setRouteInfo(route);
     setPanelOpen(true);
-    addRouteToMap(route.geometry);
+
+    // Draw route on map
+    if (mapInstance.current) {
+      if (routeGlow.current) routeGlow.current.remove();
+      if (routeLayer.current) routeLayer.current.remove();
+
+      // Glow effect (wider, transparent)
+      routeGlow.current = L.polyline(route.geometry, {
+        color: "hsl(189, 100%, 50%)",
+        weight: 12,
+        opacity: 0.2,
+        lineCap: "round",
+        lineJoin: "round",
+      }).addTo(mapInstance.current);
+
+      // Main line
+      routeLayer.current = L.polyline(route.geometry, {
+        color: "hsl(189, 100%, 45%)",
+        weight: 5,
+        opacity: 0.9,
+        lineCap: "round",
+        lineJoin: "round",
+      }).addTo(mapInstance.current);
+
+      mapInstance.current.fitBounds(routeLayer.current.getBounds(), {
+        padding: [60, isMobile ? 40 : 420],
+        animate: true,
+        duration: 1,
+      });
+    }
+
     setLoading(false);
   };
 
@@ -490,12 +406,8 @@ const MapNavigation = () => {
 
   // ── Clear ───────────────────────────────────────
   const clearRoute = () => {
-    const map = mapInstance.current;
-    if (map) {
-      if (map.getLayer("route-line")) map.removeLayer("route-line");
-      if (map.getLayer("route-glow")) map.removeLayer("route-glow");
-      if (map.getSource("route")) map.removeSource("route");
-    }
+    if (routeGlow.current) routeGlow.current.remove();
+    if (routeLayer.current) routeLayer.current.remove();
     setRouteInfo(null);
     setActiveStep(null);
     setError(null);
@@ -512,20 +424,13 @@ const MapNavigation = () => {
     setActiveStep(idx);
     if (routeInfo && mapInstance.current) {
       const geoIdx = Math.min(idx * 5, routeInfo.geometry.length - 1);
-      const [lat, lng] = routeInfo.geometry[geoIdx];
-      mapInstance.current.flyTo({ center: [lng, lat], zoom: 17, pitch: is3D ? 60 : 0, duration: 800 });
+      mapInstance.current.flyTo(routeInfo.geometry[geoIdx], 17, { duration: 0.8 });
     }
   };
 
   // ── Reset view ──────────────────────────────────
   const resetView = () => {
-    mapInstance.current?.flyTo({
-      center: [BUSINESS.lng, BUSINESS.lat],
-      zoom: 14,
-      pitch: is3D ? 45 : 0,
-      bearing: 0,
-      duration: 1200,
-    });
+    mapInstance.current?.flyTo([BUSINESS.lat, BUSINESS.lng], 14, { duration: 1.2 });
   };
 
   // ── Panel content ───────────────────────────────
@@ -687,7 +592,7 @@ const MapNavigation = () => {
               className="absolute inset-0 z-30 bg-background flex flex-col items-center justify-center"
             >
               <div className="h-12 w-12 border-3 border-primary border-t-transparent rounded-full animate-spin mb-4" />
-              <p className="text-muted-foreground text-sm">Initializing 3D map...</p>
+              <p className="text-muted-foreground text-sm">Loading map...</p>
             </motion.div>
           )}
         </AnimatePresence>
@@ -700,11 +605,8 @@ const MapNavigation = () => {
           <Button variant="glass" size="icon" onClick={recenter} title="Recenter">
             <LocateFixed className="h-4 w-4" />
           </Button>
-          <Button variant="glass" size="icon" onClick={() => setIsSatellite(!isSatellite)} title={isSatellite ? "Map view" : "Satellite view"}>
+          <Button variant="glass" size="icon" onClick={() => setIsSatellite(!isSatellite)} title={isSatellite ? "Dark map" : "Satellite view"}>
             <Layers className="h-4 w-4" />
-          </Button>
-          <Button variant="glass" size="icon" onClick={() => setIs3D(!is3D)} title={is3D ? "2D view" : "3D view"}>
-            {is3D ? <MapIcon className="h-4 w-4" /> : <Box className="h-4 w-4" />}
           </Button>
           <Button variant="glass" size="icon" onClick={resetView} title="Reset view">
             <RotateCw className="h-4 w-4" />
