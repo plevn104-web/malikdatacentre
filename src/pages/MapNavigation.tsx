@@ -245,7 +245,8 @@ const MapNavigation = () => {
   };
 
   // ── Get directions ──────────────────────────────
-  const getDirections = async () => {
+  const getDirections = async (modeOverride?: TravelMode) => {
+    const mode = modeOverride || selectedMode;
     setError(null);
     setLoading(true);
     setRouteInfo(null);
@@ -267,7 +268,7 @@ const MapNavigation = () => {
     if (!start) { setError("Could not find starting location. Try a different address."); setLoading(false); return; }
     if (!end) { setError("Could not find destination. Try a different address."); setLoading(false); return; }
 
-    const route = await fetchRoute(start, end, selectedMode);
+    const route = await fetchRoute(start, end, mode);
     if (!route) { setError("Could not calculate route. Try a different mode or address."); setLoading(false); return; }
 
     setRouteInfo(route);
@@ -334,7 +335,7 @@ const MapNavigation = () => {
           {travelModes.map(({ mode, label, icon }) => (
             <button
               key={mode}
-              onClick={() => { setSelectedMode(mode); if (routeInfo) setTimeout(getDirections, 100); }}
+              onClick={() => { setSelectedMode(mode); if (routeInfo) getDirections(mode); }}
               className={cn(
                 "flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-medium transition-all",
                 selectedMode === mode
@@ -390,7 +391,7 @@ const MapNavigation = () => {
         )}
 
         <div className="flex gap-2">
-          <Button onClick={getDirections} disabled={loading} className="flex-1">
+          <Button onClick={() => getDirections()} disabled={loading} className="flex-1">
             {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Route className="h-4 w-4" />}
             {loading ? "Calculating..." : "Get Directions"}
           </Button>
