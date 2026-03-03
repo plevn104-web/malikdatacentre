@@ -84,6 +84,7 @@ const Veo3UltraPlan = lazy(() => import("./pages/Veo3UltraPlan"));
 const MapNavigation = lazy(() => import("./pages/MapNavigation"));
 const DigitalGrowthAgency = lazy(() => import("./pages/DigitalGrowthAgency"));
 const AIBased = lazy(() => import("./pages/AIBased"));
+const SocialMediaAgency = lazy(() => import("./pages/SocialMediaAgency"));
 
 const FreeYouTubeTools = lazy(() => import("./pages/FreeYouTubeTools"));
 const Blog = lazy(() => import("./pages/Blog"));
@@ -276,6 +277,7 @@ const App = () => (
               <Route path="/map" element={<MapNavigation />} />
               <Route path="/digital-growth-agency" element={<DigitalGrowthAgency />} />
               <Route path="/ai-based" element={<AIBased />} />
+              <Route path="/social-media-agency" element={<SocialMediaAgency />} />
               {/* Admin routes */}
               <Route path="/admin-login" element={<AdminLogin />} />
               <Route path="/admin" element={<A><AdminDashboard /></A>} />
