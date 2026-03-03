@@ -20,6 +20,7 @@ const servicesDropdown = [
   { href: "/ai-tools-services", label: "AI Tools & Services" },
   { href: "/courses", label: "Courses" },
   { href: "/digital-growth-agency", label: "Digital Growth Agency" },
+  { href: "/ai-based", label: "AI-Based" },
 ];
 
 export const Navbar = () => {
