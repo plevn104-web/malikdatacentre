@@ -94,7 +94,7 @@ const Index = () => {
             </motion.div>
 
             <motion.h1 {...fadeIn} transition={{ duration: 0.5, delay: 0.1 }} className="font-display text-4xl md:text-5xl lg:text-7xl font-bold text-foreground leading-tight mb-6">
-              Malik Data Centre –{" "}
+              Malik Data Centre{" "}
               <span className="gradient-text">Digital Growth & AI Solutions</span>
             </motion.h1>
 
