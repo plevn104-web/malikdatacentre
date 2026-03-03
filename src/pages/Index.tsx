@@ -118,7 +118,7 @@ const Index = () => {
 
             <motion.div {...fadeIn} transition={{ duration: 0.5, delay: 0.3 }} className="mt-16 grid grid-cols-3 gap-8 max-w-lg mx-auto">
               {[
-                { value: "50000+", label: "Happy Clients" },
+                { value: "5000+", label: "Happy Clients" },
                 { value: "100%", label: "Client Satisfaction" },
                 { value: "24/7", label: "Support Available" },
               ].map((stat, i) => (
