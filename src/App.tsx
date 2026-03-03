@@ -83,6 +83,7 @@ const UuidGenerator = lazy(() => import("./pages/dev-tools/UuidGenerator"));
 const Veo3UltraPlan = lazy(() => import("./pages/Veo3UltraPlan"));
 const MapNavigation = lazy(() => import("./pages/MapNavigation"));
 const DigitalGrowthAgency = lazy(() => import("./pages/DigitalGrowthAgency"));
+const AIBased = lazy(() => import("./pages/AIBased"));
 
 const FreeYouTubeTools = lazy(() => import("./pages/FreeYouTubeTools"));
 const Blog = lazy(() => import("./pages/Blog"));
@@ -274,6 +275,7 @@ const App = () => (
               {/* Map & Navigation */}
               <Route path="/map" element={<MapNavigation />} />
               <Route path="/digital-growth-agency" element={<DigitalGrowthAgency />} />
+              <Route path="/ai-based" element={<AIBased />} />
               {/* Admin routes */}
               <Route path="/admin-login" element={<AdminLogin />} />
               <Route path="/admin" element={<A><AdminDashboard /></A>} />
