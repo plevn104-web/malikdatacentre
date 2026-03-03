@@ -16,12 +16,12 @@ const toolsDropdown = [
 ];
 
 const servicesDropdown = [
-  { href: "/youtube-growth", label: "YouTube Growth" },
-  { href: "/ai-tools-services", label: "AI Tools & Services" },
-  { href: "/courses", label: "Courses" },
   { href: "/digital-growth-agency", label: "Digital Growth Agency" },
-  { href: "/ai-based", label: "AI-Based" },
+  { href: "/youtube-growth", label: "YouTube Growth" },
+  { href: "/ai-based", label: "AI Solutions" },
+  { href: "/ai-tools-services", label: "Tools Marketplace" },
   { href: "/map", label: "Map & Navigation" },
+  { href: "/courses", label: "Courses" },
 ];
 
 export const Navbar = () => {
