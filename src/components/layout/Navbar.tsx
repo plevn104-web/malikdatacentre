@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ChevronDown, User, LogOut, MapPin } from "lucide-react";
+import { Menu, X, ChevronDown, User, LogOut } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
@@ -21,6 +21,7 @@ const servicesDropdown = [
   { href: "/courses", label: "Courses" },
   { href: "/digital-growth-agency", label: "Digital Growth Agency" },
   { href: "/ai-based", label: "AI-Based" },
+  { href: "/map", label: "Map & Navigation" },
 ];
 
 export const Navbar = () => {
@@ -53,7 +54,7 @@ export const Navbar = () => {
   }, []);
 
   const isToolsActive = ["/creator-studio", "/ai-tools-library", "/everyday-ai", "/dev-tools", "/video-tools", "/free-youtube-tools", "/youtube-tools"].some(p => location.pathname.startsWith(p));
-  const isServicesActive = ["/youtube-growth", "/ai-tools-services", "/courses"].some(p => location.pathname.startsWith(p));
+  const isServicesActive = ["/youtube-growth", "/ai-tools-services", "/courses", "/map"].some(p => location.pathname.startsWith(p));
 
   const toggleDropdown = (name: string) => setOpenDropdown(prev => prev === name ? null : name);
   const toggleMobile = (name: string) => setMobileOpen(prev => prev === name ? null : name);
@@ -125,13 +126,6 @@ export const Navbar = () => {
             className={`text-sm font-medium transition-colors hover:text-primary px-3 py-2 rounded-md ${location.pathname.startsWith("/blog") ? "text-primary bg-primary/10" : "text-muted-foreground"}`}
           >
             Blog
-          </Link>
-          <Link
-            to="/map"
-            className={`text-sm font-medium transition-colors hover:text-primary px-3 py-2 rounded-md flex items-center gap-1 ${location.pathname === "/map" ? "text-primary bg-primary/10" : "text-muted-foreground"}`}
-          >
-            <MapPin className="h-3.5 w-3.5" />
-            Map
           </Link>
         </div>
 
@@ -215,10 +209,6 @@ export const Navbar = () => {
               <Link to="/blog" onClick={() => setIsMobileMenuOpen(false)} className={`text-lg font-medium transition-colors ${location.pathname.startsWith("/blog") ? "text-primary" : "text-muted-foreground"}`}>
                 Blog
               </Link>
-              <Link to="/map" onClick={() => setIsMobileMenuOpen(false)} className={`text-lg font-medium transition-colors flex items-center gap-1.5 ${location.pathname === "/map" ? "text-primary" : "text-muted-foreground"}`}>
-                <MapPin className="h-4 w-4" /> Map & Navigation
-              </Link>
-
               {user ? (
                 <div className="flex flex-col gap-2 mt-4">
                   <Button className="w-full" variant="outline" asChild>
