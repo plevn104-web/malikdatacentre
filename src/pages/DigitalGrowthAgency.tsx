@@ -303,41 +303,24 @@ const DigitalGrowthAgency = () => {
               </div>
             </FadeIn>
 
-            <div className="grid md:grid-cols-3 gap-6 mb-16">
+            <div className="grid sm:grid-cols-2 gap-6">
               {[
-                { icon: BarChart3, title: "Performance-Focused Strategy", desc: "Every campaign is built around measurable KPIs and real ROI." },
-                { icon: Award, title: "Creative Excellence", desc: "Standout visuals and content that captures attention and drives action." },
-                { icon: Users, title: "Reliable Monthly Management", desc: "Consistent execution, transparent reporting, and a dedicated team." },
+                { icon: Target, title: "Strategy-Driven Execution", desc: "Every campaign begins with deep research and a clear roadmap aligned to your business objectives." },
+                { icon: Sparkles, title: "AI-Powered Innovation", desc: "We leverage cutting-edge AI tools to optimize content, targeting, and performance at scale." },
+                { icon: Globe, title: "End-to-End Digital Solutions", desc: "From brand identity to paid ads to web development — everything handled under one roof." },
+                { icon: Users, title: "Long-Term Partnership Approach", desc: "We don't do one-off projects. We build lasting relationships focused on sustained growth." },
               ].map((item, i) => (
                 <FadeIn key={item.title} delay={i * 0.1}>
-                  <div className="rounded-xl border border-border bg-card p-6 text-center hover:border-primary/30 transition-all">
-                    <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 text-primary mb-4">
+                  <div className="rounded-xl border border-border bg-card p-6 hover:border-primary/30 transition-all group">
+                    <div className="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-primary/10 text-primary mb-4 group-hover:scale-110 transition-transform">
                       <item.icon className="h-6 w-6" />
                     </div>
-                    <h3 className="font-semibold mb-2">{item.title}</h3>
-                    <p className="text-sm text-muted-foreground">{item.desc}</p>
+                    <h3 className="font-semibold text-lg mb-2">{item.title}</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
                   </div>
                 </FadeIn>
               ))}
             </div>
-
-            {/* Counters */}
-            <FadeIn>
-              <div className="grid grid-cols-3 gap-6 max-w-2xl mx-auto text-center">
-                {[
-                  { end: 50, suffix: "+", label: "Campaigns" },
-                  { end: 200, suffix: "+", label: "Creatives Delivered" },
-                  { end: 15, suffix: "+", label: "Active Clients" },
-                ].map((c) => (
-                  <div key={c.label} className="p-4">
-                    <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                      <AnimatedCounter end={c.end} suffix={c.suffix} />
-                    </div>
-                    <p className="text-sm text-muted-foreground mt-1">{c.label}</p>
-                  </div>
-                ))}
-              </div>
-            </FadeIn>
           </div>
         </section>
 
