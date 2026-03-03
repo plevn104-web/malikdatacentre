@@ -10,8 +10,37 @@ import {
   Bot, Globe, MessageSquare, Zap, Shield, Settings, Users,
   CheckCircle2, ArrowRight, Sparkles, Brain, Mic, Plug, Target,
   ClipboardList, Rocket, Headphones, ShoppingCart, GraduationCap,
-  Building2, Briefcase,
+  Building2, Briefcase, MessageCircle,
 } from "lucide-react";
+
+/* ─── Premium 3D Button ─── */
+const Premium3DButton = ({ children, onClick, variant = "primary" }: { children: React.ReactNode; onClick: () => void; variant?: "primary" | "secondary" }) => {
+  const isPrimary = variant === "primary";
+  return (
+    <motion.button
+      onClick={onClick}
+      whileHover={{ scale: 1.04, y: -3 }}
+      whileTap={{ scale: 0.97, y: 1 }}
+      transition={{ type: "spring", stiffness: 400, damping: 17 }}
+      className={`
+        relative group inline-flex items-center gap-2.5 px-8 py-4 rounded-xl font-semibold text-base tracking-wide cursor-pointer overflow-hidden
+        transition-all duration-300 ease-out
+        ${isPrimary
+          ? "bg-gradient-to-br from-[hsl(210,90%,56%)] via-[hsl(210,85%,50%)] to-[hsl(220,80%,45%)] text-white shadow-[0_6px_20px_rgba(59,130,246,0.35),inset_0_1px_0_rgba(255,255,255,0.2),inset_0_-2px_4px_rgba(0,0,0,0.15)] hover:shadow-[0_10px_35px_rgba(59,130,246,0.45),inset_0_1px_0_rgba(255,255,255,0.25),inset_0_-2px_4px_rgba(0,0,0,0.1)]"
+          : "bg-white/[0.04] backdrop-blur-md text-white/90 border border-white/[0.12] shadow-[0_4px_16px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.06),inset_0_-1px_2px_rgba(0,0,0,0.2)] hover:bg-[hsl(210,80%,55%)]/[0.12] hover:border-[hsl(210,80%,60%)]/30 hover:shadow-[0_8px_28px_rgba(59,130,246,0.2),inset_0_1px_0_rgba(255,255,255,0.1)]"
+        }
+      `}
+    >
+      {/* Shimmer sweep */}
+      <span className="absolute inset-0 overflow-hidden rounded-xl pointer-events-none">
+        <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-[1.2s] ease-in-out bg-gradient-to-r from-transparent via-white/[0.12] to-transparent" />
+      </span>
+      {/* Top highlight bevel */}
+      <span className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none" />
+      <span className="relative z-10 flex items-center gap-2.5">{children}</span>
+    </motion.button>
+  );
+};
 
 /* ─── Tokens ─── */
 const glass = "rounded-xl border border-white/[0.06] bg-[hsl(220,30%,12%)]/60 backdrop-blur-lg shadow-[0_4px_24px_rgba(0,0,0,0.4)]";
@@ -298,9 +327,13 @@ const AIBased = () => {
             <p className="text-base md:text-lg text-white/40 max-w-2xl mx-auto mb-12 leading-relaxed tracking-wide">
               Automate conversations, handle customer queries, generate leads, and make smart voice calls — powered by advanced AI technology.
             </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <WhatsAppButton message="Hi, I'm interested in AI consultation for my business." size="lg">Get AI Consultation</WhatsAppButton>
-              <WhatsAppButton message="Hi, I'd like to request a demo of your AI chatbot/voice agent." size="lg">Request Demo</WhatsAppButton>
+            <div className="flex flex-wrap justify-center gap-5">
+              <Premium3DButton onClick={() => window.open(`https://wa.me/923489057646?text=${encodeURIComponent("Hi, I'm interested in AI consultation for my business.")}`, "_blank")} variant="primary">
+                <MessageCircle className="h-5 w-5" /> Get AI Consultation
+              </Premium3DButton>
+              <Premium3DButton onClick={() => window.open(`https://wa.me/923489057646?text=${encodeURIComponent("Hi, I'd like to request a demo of your AI chatbot/voice agent.")}`, "_blank")} variant="secondary">
+                <MessageCircle className="h-5 w-5" /> Request Demo
+              </Premium3DButton>
             </div>
           </FadeIn>
         </div>
