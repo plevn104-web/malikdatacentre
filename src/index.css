@@ -126,6 +126,11 @@
   }
 }
 
+@keyframes wa-pulse {
+  0%, 100% { box-shadow: 0 4px 20px rgba(37,211,102,0.4); }
+  50% { box-shadow: 0 4px 28px rgba(37,211,102,0.6), 0 0 0 8px rgba(37,211,102,0.08); }
+}
+
 .animate-fade-in-up {
   animation: fadeInUp 0.4s ease-out forwards;
 }
