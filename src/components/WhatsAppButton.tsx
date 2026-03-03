@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 
 const WHATSAPP_NUMBER = "+923489057646";
 const WHATSAPP_BASE_URL = "https://wa.me";
+const DEFAULT_MESSAGE = "Hello, I'm interested in your services. Please share more details.";
 
 interface WhatsAppButtonProps {
   message?: string;
@@ -13,7 +14,7 @@ interface WhatsAppButtonProps {
 }
 
 export const WhatsAppButton = ({
-  message = "Hello, I have sent the payment. Here is the screenshot. Please process my order.",
+  message = DEFAULT_MESSAGE,
   className = "",
   children,
   size = "default",
@@ -29,10 +30,10 @@ export const WhatsAppButton = ({
     return (
       <button
         onClick={handleClick}
-        className="fixed bottom-6 right-6 z-50 flex h-16 w-16 items-center justify-center rounded-full bg-[#25D366] text-white shadow-[0_0_30px_rgba(37,211,102,0.5)] transition-all duration-300 hover:scale-110 hover:shadow-[0_0_50px_rgba(37,211,102,0.7)]"
+        className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#25D366] to-[#128C7E] text-white shadow-[0_4px_20px_rgba(37,211,102,0.4)] transition-all duration-300 hover:scale-110 hover:shadow-[0_6px_28px_rgba(37,211,102,0.55)] animate-[wa-pulse_2.5s_ease-in-out_infinite]"
         aria-label="Contact on WhatsApp"
       >
-        <MessageCircle className="h-8 w-8" />
+        <MessageCircle className="h-7 w-7" />
       </button>
     );
   }
