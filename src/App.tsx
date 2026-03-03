@@ -82,6 +82,7 @@ const TimestampConverter = lazy(() => import("./pages/dev-tools/TimestampConvert
 const UuidGenerator = lazy(() => import("./pages/dev-tools/UuidGenerator"));
 const Veo3UltraPlan = lazy(() => import("./pages/Veo3UltraPlan"));
 const MapNavigation = lazy(() => import("./pages/MapNavigation"));
+const DigitalGrowthAgency = lazy(() => import("./pages/DigitalGrowthAgency"));
 
 const FreeYouTubeTools = lazy(() => import("./pages/FreeYouTubeTools"));
 const Blog = lazy(() => import("./pages/Blog"));
@@ -272,6 +273,7 @@ const App = () => (
               <Route path="/video-tools/veo3-ultra" element={<P><Veo3UltraPlan /></P>} />
               {/* Map & Navigation */}
               <Route path="/map" element={<MapNavigation />} />
+              <Route path="/digital-growth-agency" element={<DigitalGrowthAgency />} />
               {/* Admin routes */}
               <Route path="/admin-login" element={<AdminLogin />} />
               <Route path="/admin" element={<A><AdminDashboard /></A>} />

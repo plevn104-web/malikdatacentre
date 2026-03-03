@@ -19,6 +19,7 @@ const servicesDropdown = [
   { href: "/youtube-growth", label: "YouTube Growth" },
   { href: "/ai-tools-services", label: "AI Tools & Services" },
   { href: "/courses", label: "Courses" },
+  { href: "/digital-growth-agency", label: "Digital Growth Agency" },
 ];
 
 export const Navbar = () => {
