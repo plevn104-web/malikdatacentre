@@ -2,224 +2,206 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { SEOHead } from "@/components/SEOHead";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { Check, X, Star, MessageCircle } from "lucide-react";
-import { useAuth } from "@/hooks/useAuth";
+import { Card, CardContent } from "@/components/ui/card";
+import { motion } from "framer-motion";
+import { Check, Star, ArrowRight, MessageCircle, ShieldCheck } from "lucide-react";
 
-const WHATSAPP_URL = "https://wa.me/923489057646?text=Hi! I'm interested in upgrading my Creator Studio plan. Please share details.";
+const WHATSAPP_BASE = "https://wa.me/923489057646?text=";
+
+const fadeIn = {
+  initial: { opacity: 0, y: 24 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true },
+  transition: { duration: 0.5 },
+};
 
 const plans = [
   {
-    key: "free",
-    name: "Free",
-    price: "0",
-    period: "/month",
-    description: "Get started with basic YouTube tools",
-    popular: false,
-    features: {
-      toolRuns: "10 / month",
-      advancedTools: false,
-      adsRemoval: false,
-      historyStorage: false,
-      supportPriority: "Community",
-    },
-  },
-  {
-    key: "starter",
     name: "Starter",
-    price: "1,000",
-    period: "/month",
-    description: "For creators ready to grow",
+    tagline: "Ideal for small businesses",
     popular: false,
-    features: {
-      toolRuns: "200 / month",
-      advancedTools: false,
-      adsRemoval: true,
-      historyStorage: false,
-      supportPriority: "Email",
-    },
+    features: [
+      "Basic Social Media Management",
+      "Limited Ad Management",
+      "Monthly Report",
+      "Basic Support",
+    ],
+    cta: "Get Started",
+    msg: "Hi! I'm interested in the Starter Plan. Please share details.",
   },
   {
-    key: "creator-pro",
-    name: "Creator Pro",
-    price: "2,000",
-    period: "/month",
-    description: "For serious YouTube creators",
+    name: "Professional",
+    tagline: "For growing businesses",
     popular: true,
-    features: {
-      toolRuns: "600 / month",
-      advancedTools: true,
-      adsRemoval: true,
-      historyStorage: "30 days",
-      supportPriority: "Priority",
-    },
+    features: [
+      "Full Social Media Management",
+      "Ads + Lead Generation",
+      "Website Maintenance",
+      "AI Chatbot Setup (Basic)",
+      "Monthly Strategy Call",
+    ],
+    cta: "Choose Professional",
+    msg: "Hi! I'm interested in the Professional Plan. Please share details.",
   },
   {
-    key: "elite",
-    name: "Elite Creator",
-    price: "3,000",
-    period: "/month",
-    description: "Unlimited power for top creators",
+    name: "Enterprise",
+    tagline: "For serious growth & automation",
     popular: false,
-    features: {
-      toolRuns: "Unlimited",
-      advancedTools: true,
-      adsRemoval: true,
-      historyStorage: "Unlimited",
-      supportPriority: "Dedicated",
-    },
+    features: [
+      "Complete Digital Growth Management",
+      "Advanced Ad Campaign Architecture",
+      "Custom AI Chatbot & Voice Agent",
+      "Automation Integration",
+      "Dedicated Support",
+      "Custom Reporting Dashboard",
+    ],
+    cta: "Schedule Strategy Call",
+    msg: "Hi! I'm interested in the Enterprise Plan. Let's schedule a strategy call.",
   },
 ];
-
-const featureRows = [
-  { label: "Tool Runs", key: "toolRuns" as const },
-  { label: "Advanced Tools", key: "advancedTools" as const },
-  { label: "Ads Removal", key: "adsRemoval" as const },
-  { label: "History Storage", key: "historyStorage" as const },
-  { label: "Support Priority", key: "supportPriority" as const },
-];
-
-const renderCell = (value: string | boolean) => {
-  if (typeof value === "string") return <span className="text-foreground text-sm font-medium">{value}</span>;
-  return value ? <Check className="h-5 w-5 text-primary mx-auto" /> : <X className="h-5 w-5 text-muted-foreground/40 mx-auto" />;
-};
 
 export default function Pricing() {
-  const { user } = useAuth();
-
   return (
     <div className="min-h-screen bg-background">
-      <SEOHead title="Pricing – Creator Studio Plans" description="Choose the perfect Creator Studio plan. From free to Elite Creator – upgrade your YouTube growth tools." canonical="/pricing" />
+      <SEOHead
+        title="Pricing – Flexible Plans for Every Stage of Growth"
+        description="From digital marketing to AI systems — choose the plan that fits your business. Starter, Professional, and Enterprise tiers available."
+        canonical="/pricing"
+      />
       <Navbar />
-      <section className="pt-24 pb-20">
-        <div className="container px-4 max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">Pricing</span>
-            <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-4">
-              Simple, Transparent <span className="gradient-text">Pricing</span>
+
+      {/* ── Hero ── */}
+      <section className="relative pt-28 pb-16 md:pt-36 md:pb-24 overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute top-1/3 left-1/4 w-80 h-80 bg-primary/10 rounded-full blur-[120px]" />
+          <div className="absolute bottom-1/4 right-1/3 w-64 h-64 bg-secondary/10 rounded-full blur-[100px]" />
+        </div>
+        <div className="container px-4 relative z-10">
+          <motion.div {...fadeIn} className="max-w-3xl mx-auto text-center">
+            <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
+              Pricing
+            </span>
+            <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight mb-6">
+              Flexible Plans for Every{" "}
+              <span className="gradient-text">Stage of Growth</span>
             </h1>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">Choose the plan that fits your creator journey. All prices in PKR.</p>
-          </div>
+            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
+              From digital marketing to AI systems — choose the plan that fits your business.
+            </p>
+          </motion.div>
+        </div>
+      </section>
 
-          {/* Plan Cards - Mobile */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-            {plans.map((plan) => (
-              <div
-                key={plan.key}
-                className={`glass-card p-6 relative flex flex-col ${plan.popular ? "border-primary/50 shadow-lg shadow-primary/10 ring-2 ring-primary/20" : ""}`}
+      {/* ── Plan Cards ── */}
+      <section className="pb-20 md:pb-28">
+        <div className="container px-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto items-stretch">
+            {plans.map((plan, i) => (
+              <motion.div
+                key={plan.name}
+                {...fadeIn}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className="flex"
               >
-                {plan.popular && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                    <div className="flex items-center gap-1 px-4 py-1 rounded-full bg-gradient-to-r from-primary to-secondary text-primary-foreground text-xs font-semibold">
-                      <Star className="h-3 w-3" /> Most Popular
+                <Card
+                  className={`relative flex flex-col w-full bg-card/60 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${
+                    plan.popular
+                      ? "border-primary/50 shadow-lg shadow-primary/10 ring-2 ring-primary/20"
+                      : "border-border/50 hover:border-primary/30 hover:shadow-primary/5"
+                  }`}
+                >
+                  {plan.popular && (
+                    <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 z-10">
+                      <div className="flex items-center gap-1.5 px-5 py-1.5 rounded-full bg-gradient-to-r from-primary to-secondary text-primary-foreground text-xs font-semibold shadow-lg shadow-primary/30">
+                        <Star className="h-3.5 w-3.5" /> Most Popular
+                      </div>
                     </div>
-                  </div>
-                )}
-                <div className="text-center mb-6">
-                  <h2 className="font-display text-lg font-bold text-foreground mb-1">{plan.name}</h2>
-                  <p className="font-display text-3xl font-bold gradient-text">
-                    Rs {plan.price}<span className="text-sm font-normal text-muted-foreground">{plan.period}</span>
-                  </p>
-                  <p className="text-sm text-muted-foreground mt-1">{plan.description}</p>
-                </div>
+                  )}
 
-                <ul className="space-y-3 mb-6 flex-1">
-                  {featureRows.map((row) => {
-                    const val = plan.features[row.key];
-                    return (
-                      <li key={row.key} className="flex items-center gap-2 text-sm">
-                        {typeof val === "boolean" ? (
-                          val ? <Check className="h-4 w-4 text-primary flex-shrink-0" /> : <X className="h-4 w-4 text-muted-foreground/40 flex-shrink-0" />
-                        ) : (
-                          <Check className="h-4 w-4 text-primary flex-shrink-0" />
-                        )}
-                        <span className={typeof val === "boolean" && !val ? "text-muted-foreground/60" : "text-foreground"}>
-                          {row.label}{typeof val === "string" ? `: ${val}` : ""}
-                        </span>
-                      </li>
-                    );
-                  })}
-                </ul>
+                  <CardContent className="p-8 flex flex-col h-full">
+                    <div className="mb-6">
+                      <h2 className="font-display text-2xl font-bold text-foreground mb-1">
+                        {plan.name}
+                      </h2>
+                      <p className="text-sm text-muted-foreground">{plan.tagline}</p>
+                    </div>
 
-                {plan.key === "free" ? (
-                  <Button variant="outline" className="w-full" disabled>
-                    {user ? "Current Plan" : "Free Forever"}
-                  </Button>
-                ) : (
-                  <Button
-                    className={`w-full ${plan.popular ? "bg-gradient-to-r from-primary to-secondary text-primary-foreground" : ""}`}
-                    variant={plan.popular ? "default" : "outline"}
-                    asChild
-                  >
-                    <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
-                      <MessageCircle className="mr-2 h-4 w-4" />
-                      Get {plan.name}
-                    </a>
-                  </Button>
-                )}
-              </div>
-            ))}
-          </div>
+                    <div className="mb-8 pb-6 border-b border-border/30">
+                      <span className="text-sm text-muted-foreground">
+                        Custom pricing based on scope
+                      </span>
+                    </div>
 
-          {/* Comparison Table - Desktop */}
-          <div className="hidden lg:block">
-            <h2 className="font-display text-2xl font-bold text-foreground text-center mb-8">Detailed Comparison</h2>
-            <div className="border border-border/50 rounded-xl overflow-hidden">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-border/50">
-                    <th className="text-left p-4 text-muted-foreground font-medium">Feature</th>
-                    {plans.map((p) => (
-                      <th key={p.key} className={`p-4 text-center font-semibold text-foreground ${p.popular ? "bg-primary/5" : ""}`}>
-                        {p.name}
-                        {p.popular && <span className="block text-xs text-primary font-normal mt-1">⭐ Recommended</span>}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="border-b border-border/30">
-                    <td className="p-4 text-muted-foreground">Price</td>
-                    {plans.map((p) => (
-                      <td key={p.key} className={`p-4 text-center font-bold text-foreground ${p.popular ? "bg-primary/5" : ""}`}>
-                        Rs {p.price}{p.period}
-                      </td>
-                    ))}
-                  </tr>
-                  {featureRows.map((row) => (
-                    <tr key={row.key} className="border-b border-border/30">
-                      <td className="p-4 text-muted-foreground">{row.label}</td>
-                      {plans.map((p) => (
-                        <td key={p.key} className={`p-4 text-center ${p.popular ? "bg-primary/5" : ""}`}>
-                          {renderCell(p.features[row.key])}
-                        </td>
+                    <ul className="space-y-3.5 mb-8 flex-1">
+                      {plan.features.map((f) => (
+                        <li key={f} className="flex items-start gap-3">
+                          <Check className="h-5 w-5 text-primary shrink-0 mt-0.5" />
+                          <span className="text-sm text-foreground leading-snug">{f}</span>
+                        </li>
                       ))}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
+                    </ul>
 
-          {/* Payment Info */}
-          <div className="mt-16 text-center">
-            <div className="glass-card p-8 max-w-2xl mx-auto">
-              <h3 className="font-display text-xl font-bold text-foreground mb-3">How to Subscribe</h3>
-              <p className="text-muted-foreground mb-4">
-                Contact us via WhatsApp to activate your plan. We accept EasyPaisa, JazzCash, and bank transfer. International payments via Stripe coming soon.
-              </p>
-              <div className="flex flex-wrap gap-3 justify-center">
-                <Button asChild>
-                  <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
-                    <MessageCircle className="mr-2 h-4 w-4" /> Contact on WhatsApp
-                  </a>
-                </Button>
-              </div>
-              <p className="text-xs text-muted-foreground mt-4">Stripe, Paddle & local gateway integrations coming soon.</p>
-            </div>
+                    <Button
+                      size="lg"
+                      className={`w-full text-base font-semibold ${
+                        plan.popular
+                          ? "bg-gradient-to-r from-primary to-secondary text-primary-foreground shadow-lg shadow-primary/20"
+                          : ""
+                      }`}
+                      variant={plan.popular ? "default" : "outline"}
+                      asChild
+                    >
+                      <a
+                        href={`${WHATSAPP_BASE}${encodeURIComponent(plan.msg)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <MessageCircle className="mr-2 h-4 w-4" />
+                        {plan.cta}
+                      </a>
+                    </Button>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
+
+      {/* ── Custom Quote ── */}
+      <section className="py-20 md:py-28">
+        <div className="container px-4">
+          <motion.div {...fadeIn} className="max-w-4xl mx-auto">
+            <div className="relative rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/5 via-card/80 to-secondary/5 p-10 md:p-16 text-center overflow-hidden">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2" />
+              <div className="relative z-10">
+                <ShieldCheck className="w-12 h-12 text-primary mx-auto mb-6" />
+                <h2 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-4">
+                  Need a Custom Digital Infrastructure?
+                </h2>
+                <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
+                  We build tailored AI, marketing, and automation systems for complex operations.
+                </p>
+                <Button
+                  size="lg"
+                  className="bg-gradient-to-r from-primary to-secondary text-primary-foreground px-10 py-6 text-lg font-semibold rounded-xl shadow-lg shadow-primary/20 hover:shadow-xl transition-all duration-200 hover:-translate-y-0.5"
+                  asChild
+                >
+                  <a
+                    href={`${WHATSAPP_BASE}${encodeURIComponent("Hi! I need a custom digital infrastructure proposal. Let's discuss.")}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Request Custom Proposal
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </a>
+                </Button>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       <Footer />
     </div>
   );
