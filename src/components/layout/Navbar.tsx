@@ -113,6 +113,12 @@ export const Navbar = () => {
           >
             Home
           </Link>
+          <Link
+            to="/social-media-agency"
+            className={`text-sm font-medium transition-colors hover:text-primary px-3 py-2 rounded-md ${location.pathname === "/social-media-agency" ? "text-primary bg-primary/10" : "text-muted-foreground"}`}
+          >
+            Social Media Agency
+          </Link>
           <DropdownMenu name="tools" label="Tools" items={toolsDropdown} isActive={isToolsActive} ref={toolsRef} />
           <DropdownMenu name="services" label="Services" items={servicesDropdown} isActive={isServicesActive} ref={servicesRef} />
           <Link
@@ -173,6 +179,9 @@ export const Navbar = () => {
             <div className="container flex flex-col gap-4 px-4 py-6">
               <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className={`text-lg font-medium transition-colors ${location.pathname === "/" ? "text-primary" : "text-muted-foreground"}`}>
                 Home
+              </Link>
+              <Link to="/social-media-agency" onClick={() => setIsMobileMenuOpen(false)} className={`text-lg font-medium transition-colors ${location.pathname === "/social-media-agency" ? "text-primary" : "text-muted-foreground"}`}>
+                Social Media Agency
               </Link>
 
               {/* Mobile Tools */}
