@@ -3,7 +3,6 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { SEOHead } from "@/components/SEOHead";
 import { HeroSection } from "@/components/home/HeroSection";
-import { AIToolsSection } from "@/components/home/AIToolsSection";
 import { TrustSection } from "@/components/home/TrustSection";
 import { WhyChooseSection } from "@/components/home/WhyChooseSection";
 import { ServicesPreview } from "@/components/home/ServicesPreview";
@@ -42,7 +41,6 @@ const Index = () => {
       />
       <Navbar />
       <HeroSection />
-      <AIToolsSection />
       <TrustSection />
       <FreeHomepageDemoSection />
       <WhyChooseSection />
