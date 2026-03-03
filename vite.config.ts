@@ -15,7 +15,6 @@ export default defineConfig(({ mode }) => ({
     },
   },
   build: {
-    // Code splitting for smaller bundles
     rollupOptions: {
       output: {
         manualChunks: {
@@ -23,16 +22,18 @@ export default defineConfig(({ mode }) => ({
           ui: ["@radix-ui/react-dialog", "@radix-ui/react-dropdown-menu", "@radix-ui/react-tabs", "@radix-ui/react-tooltip"],
           charts: ["recharts"],
           motion: ["framer-motion"],
+          supabase: ["@supabase/supabase-js"],
+          query: ["@tanstack/react-query"],
         },
       },
     },
-    // Smaller chunk size warnings
     chunkSizeWarningLimit: 500,
-    // Minification
     minify: "esbuild",
-    // CSS code splitting
     cssCodeSplit: true,
-    // Source maps only in dev
-    sourcemap: mode === "development",
+    cssMinify: true,
+    sourcemap: false,
+    target: "es2020",
+    // Tree-shake dead code
+    treeshake: true,
   },
 }));
