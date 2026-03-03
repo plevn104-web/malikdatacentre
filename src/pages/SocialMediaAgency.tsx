@@ -4,10 +4,10 @@ import { Footer } from "@/components/layout/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { SEOHead } from "@/components/SEOHead";
 import {
-  Megaphone, Palette, Video, Target, BarChart3, Users,
+  Megaphone, Palette, Video, Target, BarChart3,
   ArrowRight, Sparkles, TrendingUp, Lightbulb, Rocket,
-  MessageSquare, Globe, PenTool, CheckCircle2, ChevronRight,
-  Layers, Eye, FileText, Camera,
+  MessageSquare, Globe, PenTool, CheckCircle2,
+  Layers, Shield, Building2, Store, Briefcase, MapPin,
 } from "lucide-react";
 
 const FadeIn = ({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) => (
@@ -18,64 +18,66 @@ const FadeIn = ({ children, delay = 0, className = "" }: { children: React.React
 
 const services = [
   {
-    icon: Megaphone, title: "Social Media Management",
-    desc: "We handle complete social media operations including:",
-    bullets: ["Monthly Content Planning & Strategy", "Post Design & Creative Content Creation", "Caption Writing with Optimized Hashtags", "Facebook & Instagram Page Management", "Content Calendar Planning", "Monthly Performance Reporting"],
-    tagline: "Our focus is consistency, branding, and audience engagement.",
+    icon: Megaphone, title: "Strategic Social Media Management",
+    bullets: ["Advanced Content Planning Framework", "Brand-Aligned Creative Production", "Platform-Specific Optimization", "Performance Analytics & Insights", "Structured Monthly Reporting", "Audience Behavior Analysis"],
+    tagline: "We transform social media into a strategic growth channel.",
   },
   {
-    icon: Video, title: "Video Production & Reels Creation",
-    desc: "Professional short-form and promotional content including:",
-    bullets: ["Short Reels Creation", "Promotional & Highlight Videos", "Campaign-Based Video Content", "Activity & Achievement Showcases", "Professional Editing with Transitions & Music"],
-    tagline: "Video content designed to increase reach and engagement.",
+    icon: Video, title: "High-Impact Video & Creative Production",
+    bullets: ["Short-Form Video Systems", "Campaign-Based Visual Content", "Professional Post-Production", "Platform-Optimized Creative Assets", "Engagement-Focused Editing"],
+    tagline: "Designed to increase reach, retention, and brand authority.",
   },
   {
-    icon: Target, title: "Paid Advertising Management",
-    desc: "Performance-driven ad campaigns designed for growth:",
-    bullets: ["Facebook & Instagram Ads Setup", "Lead Generation Campaigns", "Audience Targeting & Optimization", "A/B Testing for Maximum Results", "Monthly Ads Performance Reports"],
-    tagline: "Ad budget is managed separately from service fees.",
+    icon: Target, title: "Performance Advertising & Lead Generation",
+    bullets: ["Advanced Ad Campaign Architecture", "Conversion-Optimized Funnel Design", "Data-Driven Audience Segmentation", "Continuous A/B Testing", "ROI-Based Optimization Strategy", "Transparent Reporting Framework"],
+    tagline: "Ad budgets are structured separately for transparency and scalability.",
   },
   {
-    icon: MessageSquare, title: "Chat & Inquiry Support",
-    desc: "We manage digital communication professionally:",
-    bullets: ["Facebook & Instagram Inbox Handling", "Customer Inquiry Responses", "Basic Information Sharing", "Forwarding Qualified Leads to Management", "Response During Official Working Hours"],
-    tagline: "This ensures no opportunity is missed.",
+    icon: MessageSquare, title: "Communication & Inquiry Management",
+    bullets: ["Structured Lead Response System", "Inbox & DM Management", "Inquiry Qualification Framework", "Response Automation Integration", "Working-Hour Support Management"],
+    tagline: "Ensuring zero lead leakage and improved conversion efficiency.",
   },
   {
-    icon: Globe, title: "Website Development & Management",
-    desc: "Modern, fast, and conversion-focused websites:",
-    bullets: ["Professional Business Website Development", "Landing Page Creation", "Contact & Inquiry Forms Integration", "Regular Updates & Maintenance", "Speed & Mobile Optimization", "Basic SEO Setup"],
-    tagline: "Your website becomes your digital foundation.",
+    icon: Globe, title: "Web Infrastructure & Digital Foundation",
+    bullets: ["High-Performance Business Websites", "Conversion-Focused Landing Pages", "Technical Optimization", "Speed & Mobile Performance", "SEO-Ready Architecture", "Ongoing Technical Maintenance"],
+    tagline: "Your website becomes the backbone of your digital ecosystem.",
   },
   {
-    icon: PenTool, title: "Additional Creative Services",
-    desc: "Expand your brand with premium creative solutions:",
-    bullets: ["Event Coverage & Highlight Creation", "Branding Strategy Development", "Logo & Creative Designing", "Brochure / Marketing Material Designing", "Photography Coordination"],
+    icon: PenTool, title: "Creative & Brand Development",
+    bullets: ["Strategic Brand Positioning", "Visual Identity Systems", "Marketing Collateral Design", "Campaign Asset Development", "Event & Promotional Media Coverage"],
     tagline: "",
   },
 ];
 
-const processSteps = [
-  { step: "01", title: "Strategy", desc: "Deep analysis of your brand, market, and goals to craft a winning roadmap.", icon: Lightbulb },
-  { step: "02", title: "Content Creation", desc: "Produce compelling visuals, videos, and copy that resonate with your audience.", icon: Palette },
-  { step: "03", title: "Campaign Launch", desc: "Execute campaigns across platforms with precision targeting and scheduling.", icon: Rocket },
-  { step: "04", title: "Optimization", desc: "Analyze performance data and continuously refine for better results.", icon: TrendingUp },
-  { step: "05", title: "Reporting", desc: "Transparent monthly reports with clear KPIs so you always know your ROI.", icon: BarChart3 },
+const frameworkSteps = [
+  { step: "01", title: "Strategic Discovery & Planning", icon: Lightbulb },
+  { step: "02", title: "Content & Asset Production", icon: Palette },
+  { step: "03", title: "Campaign Deployment", icon: Rocket },
+  { step: "04", title: "Data Monitoring & Optimization", icon: TrendingUp },
+  { step: "05", title: "Performance Reporting & Scaling", icon: BarChart3 },
 ];
 
 const whyUs = [
-  "Complete Digital Media Handling",
-  "Dedicated Team Structure",
-  "Performance-Focused Advertising",
-  "Structured Monthly Management",
-  "Long-Term Growth Approach",
+  "Multi-Domain Digital Expertise",
+  "Structured System-Based Approach",
+  "Performance & Data Orientation",
+  "Scalable Growth Architecture",
+  "Long-Term Strategic Partnership",
+];
+
+const industries = [
+  { icon: Briefcase, label: "Service-Based Businesses" },
+  { icon: Store, label: "E-commerce Brands" },
+  { icon: Shield, label: "Professional Firms" },
+  { icon: Building2, label: "Growing Enterprises" },
+  { icon: MapPin, label: "Multi-Location Operations" },
 ];
 
 const SocialMediaAgency = () => (
   <>
     <SEOHead
-      title="Social Media Agency | Malik Data Centre"
-      description="Strategic social media & digital growth solutions — content creation, paid advertising, website management, and online support managed by a dedicated expert team."
+      title="Enterprise Digital Growth & Media Management | Malik Data Centre"
+      description="Structured social media systems, performance advertising, high-impact creative content, and digital infrastructure — engineered for scalable business growth."
     />
     <Navbar />
 
@@ -88,47 +90,47 @@ const SocialMediaAgency = () => (
       <div className="container mx-auto px-4 relative z-10 py-28">
         <FadeIn className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/[0.06] text-primary text-xs font-medium tracking-widest uppercase mb-10">
-            <Megaphone className="h-4 w-4" /> Social Media Agency
+            <Layers className="h-4 w-4" /> Enterprise Digital Solutions
           </div>
           <h1 className="text-4xl md:text-6xl lg:text-[4.5rem] font-bold leading-[1.06] mb-7 tracking-tight text-foreground">
-            Strategic Social Media &<br className="hidden md:block" /> Digital{" "}
-            <span className="bg-gradient-to-r from-primary via-[hsl(var(--neon-cyan))] to-secondary bg-clip-text text-transparent">Growth Solutions</span>
+            Enterprise-Grade Digital<br className="hidden md:block" /> Growth &{" "}
+            <span className="bg-gradient-to-r from-primary via-[hsl(var(--neon-cyan))] to-secondary bg-clip-text text-transparent">Media Management</span>
           </h1>
           <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-12 leading-relaxed">
-            Complete content creation, advertising, website management, and online support — managed by a dedicated expert team.
+            Structured social media systems, performance advertising, high-impact creative content, and digital infrastructure — engineered for scalable business growth.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <WhatsAppButton message="Hi, I'm interested in a free consultation for social media & digital growth services." size="lg">
-              Get Free Consultation
+            <WhatsAppButton message="Hi, I'd like to schedule a strategy call to discuss enterprise digital growth services." size="lg">
+              Schedule Strategy Call
             </WhatsAppButton>
-            <WhatsAppButton message="Hi, I'd like to see your portfolio and previous work." size="lg">
-              View Our Work
+            <WhatsAppButton message="Hi, I'd like to request a capability deck outlining your digital services." size="lg">
+              Request Capability Deck
             </WhatsAppButton>
           </div>
         </FadeIn>
       </div>
     </section>
 
-    {/* ── About Our Agency ── */}
+    {/* ── Strategic Positioning ── */}
     <section className="py-24 bg-card/50 relative">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <FadeIn className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">About Our Agency</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">A Structured Approach to Digital Expansion</h2>
           </FadeIn>
           <FadeIn delay={0.1}>
             <div className="relative rounded-2xl border border-border bg-card p-8 md:p-12">
               <div className="absolute top-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
               <p className="text-muted-foreground leading-relaxed text-base md:text-lg mb-6">
-                At Malik Data Centre, we provide complete digital media management designed to strengthen brand presence, increase engagement, and generate measurable growth.
+                At Malik Data Centre, we operate beyond traditional social media management. We design and implement structured digital growth systems that integrate content, advertising, communication, and web infrastructure into one scalable framework.
               </p>
               <p className="text-muted-foreground leading-relaxed text-base md:text-lg mb-8">
-                We don't just post content — we build structured digital systems that combine creativity, strategy, and performance optimization.
+                Our focus is long-term performance, measurable outcomes, and operational efficiency.
               </p>
               <div className="flex items-center gap-3 px-5 py-3 rounded-lg bg-primary/[0.06] border border-primary/15 w-fit mx-auto">
                 <Sparkles className="h-5 w-5 text-primary shrink-0" />
                 <p className="text-sm md:text-base font-medium text-foreground italic">
-                  "We don't just manage social media, we engineer digital growth systems."
+                  "Digital growth is not random. It is engineered."
                 </p>
               </div>
             </div>
@@ -137,12 +139,12 @@ const SocialMediaAgency = () => (
       </div>
     </section>
 
-    {/* ── Core Services ── */}
+    {/* ── Core Enterprise Services ── */}
     <section className="py-24 bg-background relative">
       <div className="container mx-auto px-4">
         <FadeIn className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Our Core Services</h2>
-          <p className="text-muted-foreground max-w-xl mx-auto">Everything you need to dominate digital and grow your brand online.</p>
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Core Enterprise Services</h2>
+          <p className="text-muted-foreground max-w-xl mx-auto">End-to-end digital capabilities designed for scalable business growth.</p>
         </FadeIn>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map((s, i) => (
@@ -151,8 +153,7 @@ const SocialMediaAgency = () => (
                 <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-primary mb-5 group-hover:bg-primary/20 transition-colors">
                   <s.icon className="h-6 w-6" />
                 </div>
-                <h3 className="text-lg font-semibold text-foreground mb-2">{s.title}</h3>
-                <p className="text-sm text-muted-foreground mb-3">{s.desc}</p>
+                <h3 className="text-lg font-semibold text-foreground mb-3">{s.title}</h3>
                 <ul className="space-y-1.5 mb-4 flex-1">
                   {s.bullets.map((b) => (
                     <li key={b} className="flex items-start gap-2 text-sm text-muted-foreground">
@@ -171,41 +172,43 @@ const SocialMediaAgency = () => (
       </div>
     </section>
 
-    {/* ── Process ── */}
+    {/* ── Digital Framework ── */}
     <section className="py-24 bg-card/50 relative">
       <div className="container mx-auto px-4">
-        <FadeIn className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Our Process</h2>
-          <p className="text-muted-foreground max-w-xl mx-auto">We combine structured planning with performance tracking to ensure long-term growth.</p>
+        <FadeIn className="text-center mb-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Our Digital Framework</h2>
+          <p className="text-muted-foreground max-w-xl mx-auto">A 5-step structured execution model for predictable, scalable growth.</p>
         </FadeIn>
-        <div className="grid md:grid-cols-5 gap-6 relative">
+        <div className="grid md:grid-cols-5 gap-6 mt-16 relative">
           <div className="hidden md:block absolute top-16 left-[10%] right-[10%] h-px bg-gradient-to-r from-primary/30 via-primary/50 to-primary/30" />
-          {processSteps.map((p, i) => (
+          {frameworkSteps.map((p, i) => (
             <FadeIn key={p.step} delay={i * 0.1}>
               <div className="text-center relative">
                 <div className="flex h-16 w-16 items-center justify-center rounded-full border-2 border-primary/30 bg-card text-primary mx-auto mb-5 relative z-10">
                   <p.icon className="h-7 w-7" />
                 </div>
                 <span className="text-xs font-bold text-primary tracking-widest uppercase">Step {p.step}</span>
-                <h3 className="text-base font-semibold text-foreground mt-2 mb-2">{p.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{p.desc}</p>
+                <h3 className="text-sm font-semibold text-foreground mt-2 leading-snug">{p.title}</h3>
               </div>
             </FadeIn>
           ))}
         </div>
+        <FadeIn delay={0.5} className="text-center mt-10">
+          <p className="text-muted-foreground text-sm">This ensures predictable, scalable growth.</p>
+        </FadeIn>
       </div>
     </section>
 
-    {/* ── Why Work With Us ── */}
+    {/* ── Why Enterprise Clients Work With Us ── */}
     <section className="py-24 bg-background relative">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <FadeIn className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Why Work With Us</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Why Enterprise Clients Work With Us</h2>
           </FadeIn>
           <FadeIn delay={0.1}>
             <div className="grid sm:grid-cols-2 gap-4 mb-10">
-              {whyUs.map((item, i) => (
+              {whyUs.map((item) => (
                 <div key={item} className="flex items-center gap-3 p-4 rounded-xl border border-border bg-card hover:border-primary/20 transition-colors">
                   <CheckCircle2 className="h-5 w-5 text-primary shrink-0" />
                   <span className="text-foreground font-medium text-sm">{item}</span>
@@ -215,9 +218,28 @@ const SocialMediaAgency = () => (
           </FadeIn>
           <FadeIn delay={0.2} className="text-center">
             <p className="text-muted-foreground text-base md:text-lg">
-              We act as your digital growth partner — not just a service provider.
+              We function as an external digital operations division for our clients.
             </p>
           </FadeIn>
+        </div>
+      </div>
+    </section>
+
+    {/* ── Industries We Support ── */}
+    <section className="py-24 bg-card/50 relative">
+      <div className="container mx-auto px-4">
+        <FadeIn className="text-center mb-14">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Industries We Support</h2>
+        </FadeIn>
+        <div className="flex flex-wrap justify-center gap-4 max-w-3xl mx-auto">
+          {industries.map((ind, i) => (
+            <FadeIn key={ind.label} delay={i * 0.08}>
+              <div className="flex items-center gap-3 px-6 py-4 rounded-xl border border-border bg-card hover:border-primary/25 transition-colors">
+                <ind.icon className="h-5 w-5 text-primary shrink-0" />
+                <span className="text-foreground font-medium text-sm">{ind.label}</span>
+              </div>
+            </FadeIn>
+          ))}
         </div>
       </div>
     </section>
@@ -228,16 +250,16 @@ const SocialMediaAgency = () => (
       <div className="container mx-auto px-4 relative z-10">
         <FadeIn className="max-w-3xl mx-auto text-center">
           <Sparkles className="h-10 w-10 text-primary mx-auto mb-6" />
-          <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-6">Ready to Strengthen Your Digital Presence?</h2>
+          <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-6">Ready to Build a Structured Digital Growth System?</h2>
           <p className="text-muted-foreground mb-10 max-w-lg mx-auto">
-            Let's build a structured digital strategy that delivers measurable results.
+            Partner with a team that combines creativity, strategy, and technical execution under one framework.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <WhatsAppButton message="Hi, I'd like to schedule a consultation for digital growth services." size="lg">
-              Schedule Consultation
+            <WhatsAppButton message="Hi, I'd like to book an executive consultation for digital growth services." size="lg">
+              Book Executive Consultation
             </WhatsAppButton>
-            <WhatsAppButton message="Hi, I'd like to talk to your team about social media management." size="lg">
-              Talk to Our Team
+            <WhatsAppButton message="Hi, I'd like to discuss a growth plan for my business." size="lg">
+              Discuss Your Growth Plan
             </WhatsAppButton>
           </div>
         </FadeIn>
