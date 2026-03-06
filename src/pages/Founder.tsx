@@ -81,7 +81,7 @@ export default function Founder() {
               className="flex justify-center"
             >
               <div className="relative">
-                <div className="absolute -inset-1 rounded-2xl bg-gradient-to-br from-blue-500/30 to-blue-900/20 blur-2xl" />
+                <div className="absolute -inset-1 rounded-2xl bg-gradient-to-br from-cyan-500/30 via-blue-500/20 to-indigo-600/20 blur-2xl" />
                 <img
                   src={founderPhoto}
                   alt="Founder of Malik Data Centre"
@@ -92,7 +92,7 @@ export default function Founder() {
 
             {/* Hero Text */}
             <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.15 }} className="text-center lg:text-left">
-              <span className="inline-block rounded-full bg-blue-500/10 border border-blue-500/20 px-4 py-1.5 text-sm font-medium text-blue-400 mb-5">
+              <span className="inline-block rounded-full bg-cyan-500/10 border border-cyan-500/20 px-4 py-1.5 text-sm font-medium text-cyan-400 mb-5">
                 Meet the Founder
               </span>
               <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight mb-4">
