@@ -84,7 +84,7 @@ export default function Founder() {
                 <div className="absolute -inset-1 rounded-2xl bg-gradient-to-br from-blue-500/30 to-blue-900/20 blur-2xl" />
                 <img
                   src={founderPhoto}
-                  alt="Founder of Lovable Men"
+                  alt="Founder of Malik Data Centre"
                   className="relative h-80 w-80 md:h-[26rem] md:w-[26rem] rounded-2xl object-cover object-top border-2 border-white/10 shadow-2xl"
                 />
               </div>
@@ -98,7 +98,7 @@ export default function Founder() {
               <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight mb-4">
                 Meet the Founder of{" "}
                 <span className="bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
-                  Lovable Men
+                  Malik Data Centre
                 </span>
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-xl">
@@ -118,7 +118,7 @@ export default function Founder() {
             </h2>
           </motion.div>
           <motion.p {...fadeUp} className="text-lg text-muted-foreground leading-relaxed text-center">
-            A digital entrepreneur working on multiple online projects, AI automation systems, and digital media platforms. He is building <strong className="text-foreground">Lovable Men</strong> as a platform to inspire and help men grow in business, technology, mindset, and lifestyle — creating a powerful ecosystem where ambition meets execution.
+            A digital entrepreneur working on multiple online projects, AI automation systems, and digital media platforms. He is building <strong className="text-foreground">Malik Data Centre</strong> as a platform to inspire and help men grow in business, technology, mindset, and lifestyle — creating a powerful ecosystem where ambition meets execution.
           </motion.p>
         </div>
       </section>
@@ -131,7 +131,7 @@ export default function Founder() {
               Our Team & <span className="bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">Ecosystem</span>
             </h2>
             <p className="mt-3 text-muted-foreground max-w-2xl mx-auto">
-              Lovable Men operates with a growing team and digital ecosystem.
+              Malik Data Centre operates with a growing team and digital ecosystem.
             </p>
           </motion.div>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto">
@@ -255,7 +255,7 @@ export default function Founder() {
               Vision for the <span className="bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">Future</span>
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-              To build <strong className="text-foreground">Lovable Men</strong> into a global platform focused on AI innovation, digital entrepreneurship, automation systems, and personal development for modern men.
+              To build <strong className="text-foreground">Malik Data Centre</strong> into a global platform focused on AI innovation, digital entrepreneurship, automation systems, and personal development for modern men.
             </p>
           </motion.div>
         </div>
