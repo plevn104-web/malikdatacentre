@@ -1,226 +1,287 @@
 import { motion } from "framer-motion";
-import { Linkedin, Brain, Bot, Youtube, Briefcase, Shield, GraduationCap, Target, Rocket, ArrowLeft } from "lucide-react";
+import { Linkedin, Brain, Bot, Youtube, Briefcase, Shield, GraduationCap, Target, Rocket, ArrowLeft, Monitor, Wifi, Lock, CreditCard, Video, MessageSquare, Phone, Zap, Users, Code, Palette, TrendingUp, Globe } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import founderImage from "@/assets/founder-malik-amir-usman.png";
+import founderPhoto from "@/assets/founder-photo.png";
 
-const LINKEDIN_URL = "https://www.linkedin.com/in/malik-amir-usman-71ab54397";
+const fadeUp = {
+  initial: { opacity: 0, y: 24 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-40px" },
+  transition: { duration: 0.5 },
+};
 
-const expertiseItems = [
-  { icon: Brain, label: "Artificial Intelligence & Automation" },
-  { icon: Bot, label: "AI Tools & SaaS Platforms" },
-  { icon: Youtube, label: "YouTube Automation & Monetization" },
-  { icon: Briefcase, label: "Digital Business Solutions" },
-  { icon: GraduationCap, label: "AI Education & Training" },
-  { icon: Shield, label: "Data Security & Privacy" },
+const teamItems = [
+  { icon: Palette, label: "Professional Editors Team" },
+  { icon: Code, label: "Software Developers" },
+  { icon: Bot, label: "AI Assistant Systems" },
+  { icon: Youtube, label: "YouTubers Team (50/50 Partnership)" },
+  { icon: Video, label: "TikTok Automation Team" },
+  { icon: Users, label: "Content Creators & Media Support" },
+];
+
+const aiTools = [
+  "ChatGPT", "Claude AI", "Grok AI", "Lovable", "Cursor Pro",
+  "Kling AI", "HeyGen AI", "CapCut Pro", "Other Advanced AI Tools",
+];
+
+const aiCapabilities = [
+  { icon: MessageSquare, label: "AI Chatbot Development" },
+  { icon: Phone, label: "AI Calling Agents" },
+  { icon: Zap, label: "AI Automated Workflows" },
+  { icon: Brain, label: "AI Content Systems" },
+];
+
+const infraItems = [
+  { icon: Monitor, label: "Laptop & Mobile Systems for Digital Operations" },
+  { icon: Wifi, label: "High-Speed Internet / WiFi Availability" },
+  { icon: Lock, label: "Secure VPN Infrastructure (NordVPN, Surfshark)" },
+  { icon: CreditCard, label: "Online Payment Systems (Stripe)" },
+];
+
+const currentProjects = [
+  "AI Chatbot Systems",
+  "AI Automation Solutions",
+  "AI Calling Agents",
+  "Content Creation Systems",
+  "Social Media Automation",
+  "YouTube Channel Development",
+  "TikTok Automation Projects",
+  "AI Powered Digital Products",
 ];
 
 export default function Founder() {
   return (
     <main className="min-h-screen bg-background">
       <Navbar />
-      
-      <section className="relative overflow-hidden pt-24 pb-16 md:pt-32 md:pb-24">
-        {/* Background gradient */}
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent" />
-        
+
+      {/* Hero */}
+      <section className="relative pt-24 pb-20 md:pt-32 md:pb-28 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-[hsl(220,40%,8%)] via-background to-background" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,hsl(220,60%,20%,0.15),transparent_60%)]" />
+
         <div className="container relative px-4">
-          {/* Back button */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-            className="mb-8"
-          >
+          <motion.div {...fadeUp} className="mb-8">
             <Link to="/">
-              <Button variant="ghost" size="sm" className="gap-2">
+              <Button variant="ghost" size="sm" className="gap-2 text-muted-foreground hover:text-foreground">
                 <ArrowLeft className="h-4 w-4" />
                 Back to Home
               </Button>
             </Link>
           </motion.div>
 
-          <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
-            {/* Profile Image */}
+          <div className="grid gap-12 lg:grid-cols-2 items-center">
+            {/* Photo */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
+              initial={{ opacity: 0, scale: 0.92 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6 }}
-              className="flex justify-center lg:justify-start"
+              className="flex justify-center"
             >
               <div className="relative">
-                {/* Decorative ring */}
-                <div className="absolute -inset-4 rounded-full bg-gradient-to-br from-primary/20 via-secondary/20 to-primary/20 blur-xl" />
-                <div className="absolute -inset-2 rounded-full bg-gradient-to-br from-primary to-secondary opacity-20" />
-                
+                <div className="absolute -inset-1 rounded-2xl bg-gradient-to-br from-blue-500/30 to-blue-900/20 blur-2xl" />
                 <img
-                  src={founderImage}
-                  alt="Malik Amir Usman - Founder & CEO of MALIK DATA CENTRE"
-                  className="relative h-72 w-72 rounded-full object-cover border-4 border-background shadow-2xl md:h-96 md:w-96"
+                  src={founderPhoto}
+                  alt="Founder of Lovable Men"
+                  className="relative h-80 w-80 md:h-[26rem] md:w-[26rem] rounded-2xl object-cover object-top border-2 border-white/10 shadow-2xl"
                 />
-                
-                {/* Badge */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4, duration: 0.5 }}
-                  className="absolute -bottom-2 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-lg"
-                >
-                  Founder & CEO
-                </motion.div>
               </div>
             </motion.div>
 
-            {/* Content */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-center lg:text-left"
-            >
-              <h1 className="font-display text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
-                <span className="gradient-text">Malik Amir Usman</span>
+            {/* Hero Text */}
+            <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.15 }} className="text-center lg:text-left">
+              <span className="inline-block rounded-full bg-blue-500/10 border border-blue-500/20 px-4 py-1.5 text-sm font-medium text-blue-400 mb-5">
+                Meet the Founder
+              </span>
+              <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight mb-4">
+                Meet the Founder of{" "}
+                <span className="bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
+                  Lovable Men
+                </span>
               </h1>
-              <p className="mt-2 text-lg text-primary font-medium md:text-xl">
-                Founder & CEO – MALIK DATA CENTRE
+              <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-xl">
+                Building the future of digital innovation, AI automation, and modern men's success.
               </p>
-              
-              <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
-                Malik Amir Usman is the Founder and Owner of MALIK DATA CENTRE, a modern AI-powered platform providing premium AI tools, automation services, digital solutions, and professional training programs. He focuses on building secure, scalable, and practical AI systems for real-world use.
-              </p>
-
-              {/* LinkedIn Button */}
-              <div className="mt-8">
-                <Button
-                  size="lg"
-                  className="gap-2 bg-[#0A66C2] hover:bg-[#0A66C2]/90 text-white"
-                  asChild
-                >
-                  <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer">
-                    <Linkedin className="h-5 w-5" />
-                    Connect on LinkedIn
-                  </a>
-                </Button>
-              </div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Expertise Section */}
-      <section className="py-16 md:py-24 bg-muted/30">
-        <div className="container px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-12"
-          >
-            <h2 className="font-display text-3xl font-bold md:text-4xl">
-              Areas of <span className="gradient-text">Expertise</span>
+      {/* About the Founder */}
+      <section className="py-16 md:py-24">
+        <div className="container px-4 max-w-4xl">
+          <motion.div {...fadeUp} className="text-center mb-8">
+            <h2 className="font-display text-3xl md:text-4xl font-bold mb-2">
+              About the <span className="bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">Founder</span>
             </h2>
           </motion.div>
+          <motion.p {...fadeUp} className="text-lg text-muted-foreground leading-relaxed text-center">
+            A digital entrepreneur working on multiple online projects, AI automation systems, and digital media platforms. He is building <strong className="text-foreground">Lovable Men</strong> as a platform to inspire and help men grow in business, technology, mindset, and lifestyle — creating a powerful ecosystem where ambition meets execution.
+          </motion.p>
+        </div>
+      </section>
 
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {expertiseItems.map((item, index) => (
+      {/* Team & Ecosystem */}
+      <section className="py-16 md:py-24 bg-muted/30">
+        <div className="container px-4">
+          <motion.div {...fadeUp} className="text-center mb-12">
+            <h2 className="font-display text-3xl md:text-4xl font-bold">
+              Our Team & <span className="bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">Ecosystem</span>
+            </h2>
+            <p className="mt-3 text-muted-foreground max-w-2xl mx-auto">
+              Lovable Men operates with a growing team and digital ecosystem.
+            </p>
+          </motion.div>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto">
+            {teamItems.map((item, i) => (
               <motion.div
                 key={item.label}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="flex items-center gap-4 rounded-xl bg-background p-4 shadow-sm border border-border hover:border-primary/50 transition-colors"
+                {...fadeUp}
+                transition={{ duration: 0.4, delay: i * 0.06 }}
+                className="flex items-center gap-4 rounded-xl bg-background p-5 border border-border hover:border-blue-500/40 transition-colors"
               >
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-primary/10">
-                  <item.icon className="h-6 w-6 text-primary" />
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-blue-500/10">
+                  <item.icon className="h-5 w-5 text-blue-400" />
                 </div>
-                <span className="font-medium text-foreground">{item.label}</span>
+                <span className="font-medium text-foreground text-sm">{item.label}</span>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Vision & Mission Section */}
+      {/* Technology & AI Infrastructure */}
       <section className="py-16 md:py-24">
         <div className="container px-4">
-          <div className="grid gap-8 md:grid-cols-2">
-            {/* Vision */}
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/10 via-primary/5 to-transparent p-8 border border-primary/20"
-            >
-              <div className="absolute top-4 right-4 h-20 w-20 rounded-full bg-primary/10 blur-2xl" />
-              <div className="relative">
-                <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-primary/10">
-                  <Target className="h-7 w-7 text-primary" />
-                </div>
-                <h3 className="font-display text-2xl font-bold text-foreground mb-3">
-                  Our Vision
-                </h3>
-                <p className="text-lg text-muted-foreground leading-relaxed">
-                  Making AI accessible and useful for everyone – empowering individuals and businesses to harness the power of artificial intelligence without complexity.
-                </p>
+          <motion.div {...fadeUp} className="text-center mb-12">
+            <h2 className="font-display text-3xl md:text-4xl font-bold">
+              Technology & <span className="bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">AI Infrastructure</span>
+            </h2>
+          </motion.div>
+
+          <div className="grid gap-8 lg:grid-cols-2 max-w-5xl mx-auto">
+            {/* Paid AI Tools */}
+            <motion.div {...fadeUp} className="rounded-2xl bg-gradient-to-br from-blue-950/40 to-background p-6 border border-blue-500/15">
+              <h3 className="font-display text-xl font-bold text-foreground mb-4">Paid AI Tools</h3>
+              <div className="flex flex-wrap gap-2">
+                {aiTools.map((tool) => (
+                  <span key={tool} className="rounded-full bg-blue-500/10 border border-blue-500/20 px-3 py-1.5 text-xs font-medium text-blue-300">
+                    {tool}
+                  </span>
+                ))}
               </div>
             </motion.div>
 
-            {/* Mission */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-secondary/10 via-secondary/5 to-transparent p-8 border border-secondary/20"
-            >
-              <div className="absolute top-4 right-4 h-20 w-20 rounded-full bg-secondary/10 blur-2xl" />
-              <div className="relative">
-                <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-secondary/10">
-                  <Rocket className="h-7 w-7 text-secondary" />
-                </div>
-                <h3 className="font-display text-2xl font-bold text-foreground mb-3">
-                  Our Mission
-                </h3>
-                <p className="text-lg text-muted-foreground leading-relaxed">
-                  Helping users learn, grow, and earn with AI through premium tools, professional training, and reliable automation services that deliver real results.
-                </p>
+            {/* AI Capabilities */}
+            <motion.div {...fadeUp} transition={{ delay: 0.1 }} className="rounded-2xl bg-gradient-to-br from-blue-950/40 to-background p-6 border border-blue-500/15">
+              <h3 className="font-display text-xl font-bold text-foreground mb-4">AI Capabilities</h3>
+              <div className="space-y-3">
+                {aiCapabilities.map((cap) => (
+                  <div key={cap.label} className="flex items-center gap-3">
+                    <cap.icon className="h-5 w-5 text-blue-400 shrink-0" />
+                    <span className="text-sm text-muted-foreground">{cap.label}</span>
+                  </div>
+                ))}
               </div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* Business Infrastructure */}
       <section className="py-16 md:py-24 bg-muted/30">
         <div className="container px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center"
-          >
-            <h2 className="font-display text-3xl font-bold md:text-4xl mb-4">
-              Ready to <span className="gradient-text">Get Started?</span>
+          <motion.div {...fadeUp} className="text-center mb-12">
+            <h2 className="font-display text-3xl md:text-4xl font-bold">
+              Business <span className="bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">Infrastructure</span>
             </h2>
-            <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Explore our AI tools, courses, and services to transform your skills and business.
+          </motion.div>
+          <div className="grid gap-4 sm:grid-cols-2 max-w-3xl mx-auto">
+            {infraItems.map((item, i) => (
+              <motion.div
+                key={item.label}
+                {...fadeUp}
+                transition={{ duration: 0.4, delay: i * 0.06 }}
+                className="flex items-center gap-4 rounded-xl bg-background p-5 border border-border hover:border-blue-500/40 transition-colors"
+              >
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-blue-500/10">
+                  <item.icon className="h-5 w-5 text-blue-400" />
+                </div>
+                <span className="font-medium text-foreground text-sm">{item.label}</span>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Current Projects */}
+      <section className="py-16 md:py-24">
+        <div className="container px-4">
+          <motion.div {...fadeUp} className="text-center mb-12">
+            <h2 className="font-display text-3xl md:text-4xl font-bold">
+              Current <span className="bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">Projects</span>
+            </h2>
+            <p className="mt-3 text-muted-foreground max-w-2xl mx-auto">
+              The team is actively delivering multiple digital projects.
+            </p>
+          </motion.div>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 max-w-5xl mx-auto">
+            {currentProjects.map((project, i) => (
+              <motion.div
+                key={project}
+                {...fadeUp}
+                transition={{ duration: 0.4, delay: i * 0.05 }}
+                className="rounded-xl bg-gradient-to-br from-blue-950/30 to-background border border-blue-500/10 p-4 text-center"
+              >
+                <span className="text-sm font-medium text-foreground">{project}</span>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Vision */}
+      <section className="py-16 md:py-24 bg-muted/30">
+        <div className="container px-4 max-w-4xl">
+          <motion.div {...fadeUp} className="text-center">
+            <div className="mb-6 flex justify-center">
+              <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-500/10 border border-blue-500/20">
+                <Globe className="h-8 w-8 text-blue-400" />
+              </div>
+            </div>
+            <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
+              Vision for the <span className="bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">Future</span>
+            </h2>
+            <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+              To build <strong className="text-foreground">Lovable Men</strong> into a global platform focused on AI innovation, digital entrepreneurship, automation systems, and personal development for modern men.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Connect */}
+      <section className="py-16 md:py-24">
+        <div className="container px-4">
+          <motion.div {...fadeUp} className="text-center">
+            <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
+              Connect with the <span className="bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">Founder</span>
+            </h2>
+            <p className="text-muted-foreground mb-8 max-w-xl mx-auto">
+              Interested in collaboration, partnerships, or just want to connect? Reach out through the links below.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Link to="/courses">
-                <Button size="lg" className="gap-2">
-                  <GraduationCap className="h-5 w-5" />
-                  Explore Courses
-                </Button>
-              </Link>
-              <Link to="/#services">
-                <Button size="lg" variant="outline" className="gap-2">
-                  View AI Tools
+              <Button size="lg" className="gap-2 bg-[#0A66C2] hover:bg-[#0A66C2]/90 text-white" asChild>
+                <a href="https://www.linkedin.com/in/malik-amir-usman-71ab54397" target="_blank" rel="noopener noreferrer">
+                  <Linkedin className="h-5 w-5" />
+                  LinkedIn
+                </a>
+              </Button>
+              <Link to="/contact">
+                <Button size="lg" variant="outline" className="gap-2 border-blue-500/30 hover:border-blue-500/60">
+                  <MessageSquare className="h-5 w-5" />
+                  Get in Touch
                 </Button>
               </Link>
             </div>
