@@ -13,6 +13,8 @@ const fadeUp = {
   transition: { duration: 0.5 },
 };
 
+const gradientText = "bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-600 bg-clip-text text-transparent";
+
 const teamItems = [
   { icon: Palette, label: "Professional Editors Team" },
   { icon: Code, label: "Software Developers" },
@@ -60,7 +62,7 @@ export default function Founder() {
       {/* Hero */}
       <section className="relative pt-24 pb-20 md:pt-32 md:pb-28 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-[hsl(220,40%,8%)] via-background to-background" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,hsl(220,60%,20%,0.15),transparent_60%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,hsl(210,80%,20%,0.2),transparent_60%)]" />
 
         <div className="container relative px-4">
           <motion.div {...fadeUp} className="mb-8">
@@ -81,7 +83,7 @@ export default function Founder() {
               className="flex justify-center"
             >
               <div className="relative">
-                <div className="absolute -inset-1 rounded-2xl bg-gradient-to-br from-blue-500/30 to-blue-900/20 blur-2xl" />
+                <div className="absolute -inset-1 rounded-2xl bg-gradient-to-br from-cyan-500/30 via-blue-500/20 to-indigo-600/20 blur-2xl" />
                 <img
                   src={founderPhoto}
                   alt="Founder of Malik Data Centre"
@@ -92,12 +94,12 @@ export default function Founder() {
 
             {/* Hero Text */}
             <motion.div {...fadeUp} transition={{ duration: 0.5, delay: 0.15 }} className="text-center lg:text-left">
-              <span className="inline-block rounded-full bg-blue-500/10 border border-blue-500/20 px-4 py-1.5 text-sm font-medium text-blue-400 mb-5">
+              <span className="inline-block rounded-full bg-cyan-500/10 border border-cyan-500/20 px-4 py-1.5 text-sm font-medium text-cyan-400 mb-5">
                 Meet the Founder
               </span>
               <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight mb-4">
                 Meet the Founder of{" "}
-                <span className="bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
+                <span className={gradientText}>
                   Malik Data Centre
                 </span>
               </h1>
@@ -114,7 +116,7 @@ export default function Founder() {
         <div className="container px-4 max-w-4xl">
           <motion.div {...fadeUp} className="text-center mb-8">
             <h2 className="font-display text-3xl md:text-4xl font-bold mb-2">
-              About the <span className="bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">Founder</span>
+              About the <span className={gradientText}>Founder</span>
             </h2>
           </motion.div>
           <motion.p {...fadeUp} className="text-lg text-muted-foreground leading-relaxed text-center">
@@ -128,7 +130,7 @@ export default function Founder() {
         <div className="container px-4">
           <motion.div {...fadeUp} className="text-center mb-12">
             <h2 className="font-display text-3xl md:text-4xl font-bold">
-              Our Team & <span className="bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">Ecosystem</span>
+              Our Team & <span className={gradientText}>Ecosystem</span>
             </h2>
             <p className="mt-3 text-muted-foreground max-w-2xl mx-auto">
               Malik Data Centre operates with a growing team and digital ecosystem.
@@ -140,10 +142,10 @@ export default function Founder() {
                 key={item.label}
                 {...fadeUp}
                 transition={{ duration: 0.4, delay: i * 0.06 }}
-                className="flex items-center gap-4 rounded-xl bg-background p-5 border border-border hover:border-blue-500/40 transition-colors"
+                className="flex items-center gap-4 rounded-xl bg-background p-5 border border-border hover:border-cyan-500/40 transition-colors"
               >
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-blue-500/10">
-                  <item.icon className="h-5 w-5 text-blue-400" />
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-cyan-500/10">
+                  <item.icon className="h-5 w-5 text-cyan-400" />
                 </div>
                 <span className="font-medium text-foreground text-sm">{item.label}</span>
               </motion.div>
@@ -157,17 +159,17 @@ export default function Founder() {
         <div className="container px-4">
           <motion.div {...fadeUp} className="text-center mb-12">
             <h2 className="font-display text-3xl md:text-4xl font-bold">
-              Technology & <span className="bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">AI Infrastructure</span>
+              Technology & <span className={gradientText}>AI Infrastructure</span>
             </h2>
           </motion.div>
 
           <div className="grid gap-8 lg:grid-cols-2 max-w-5xl mx-auto">
             {/* Paid AI Tools */}
-            <motion.div {...fadeUp} className="rounded-2xl bg-gradient-to-br from-blue-950/40 to-background p-6 border border-blue-500/15">
+            <motion.div {...fadeUp} className="rounded-2xl bg-gradient-to-br from-blue-950/40 to-background p-6 border border-cyan-500/15">
               <h3 className="font-display text-xl font-bold text-foreground mb-4">Paid AI Tools</h3>
               <div className="flex flex-wrap gap-2">
                 {aiTools.map((tool) => (
-                  <span key={tool} className="rounded-full bg-blue-500/10 border border-blue-500/20 px-3 py-1.5 text-xs font-medium text-blue-300">
+                  <span key={tool} className="rounded-full bg-cyan-500/10 border border-cyan-500/20 px-3 py-1.5 text-xs font-medium text-cyan-300">
                     {tool}
                   </span>
                 ))}
@@ -175,12 +177,12 @@ export default function Founder() {
             </motion.div>
 
             {/* AI Capabilities */}
-            <motion.div {...fadeUp} transition={{ delay: 0.1 }} className="rounded-2xl bg-gradient-to-br from-blue-950/40 to-background p-6 border border-blue-500/15">
+            <motion.div {...fadeUp} transition={{ delay: 0.1 }} className="rounded-2xl bg-gradient-to-br from-blue-950/40 to-background p-6 border border-cyan-500/15">
               <h3 className="font-display text-xl font-bold text-foreground mb-4">AI Capabilities</h3>
               <div className="space-y-3">
                 {aiCapabilities.map((cap) => (
                   <div key={cap.label} className="flex items-center gap-3">
-                    <cap.icon className="h-5 w-5 text-blue-400 shrink-0" />
+                    <cap.icon className="h-5 w-5 text-cyan-400 shrink-0" />
                     <span className="text-sm text-muted-foreground">{cap.label}</span>
                   </div>
                 ))}
@@ -195,7 +197,7 @@ export default function Founder() {
         <div className="container px-4">
           <motion.div {...fadeUp} className="text-center mb-12">
             <h2 className="font-display text-3xl md:text-4xl font-bold">
-              Business <span className="bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">Infrastructure</span>
+              Business <span className={gradientText}>Infrastructure</span>
             </h2>
           </motion.div>
           <div className="grid gap-4 sm:grid-cols-2 max-w-3xl mx-auto">
@@ -204,10 +206,10 @@ export default function Founder() {
                 key={item.label}
                 {...fadeUp}
                 transition={{ duration: 0.4, delay: i * 0.06 }}
-                className="flex items-center gap-4 rounded-xl bg-background p-5 border border-border hover:border-blue-500/40 transition-colors"
+                className="flex items-center gap-4 rounded-xl bg-background p-5 border border-border hover:border-cyan-500/40 transition-colors"
               >
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-blue-500/10">
-                  <item.icon className="h-5 w-5 text-blue-400" />
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-cyan-500/10">
+                  <item.icon className="h-5 w-5 text-cyan-400" />
                 </div>
                 <span className="font-medium text-foreground text-sm">{item.label}</span>
               </motion.div>
@@ -221,7 +223,7 @@ export default function Founder() {
         <div className="container px-4">
           <motion.div {...fadeUp} className="text-center mb-12">
             <h2 className="font-display text-3xl md:text-4xl font-bold">
-              Current <span className="bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">Projects</span>
+              Current <span className={gradientText}>Projects</span>
             </h2>
             <p className="mt-3 text-muted-foreground max-w-2xl mx-auto">
               The team is actively delivering multiple digital projects.
@@ -233,7 +235,7 @@ export default function Founder() {
                 key={project}
                 {...fadeUp}
                 transition={{ duration: 0.4, delay: i * 0.05 }}
-                className="rounded-xl bg-gradient-to-br from-blue-950/30 to-background border border-blue-500/10 p-4 text-center"
+                className="rounded-xl bg-gradient-to-br from-blue-950/30 to-background border border-cyan-500/10 p-4 text-center"
               >
                 <span className="text-sm font-medium text-foreground">{project}</span>
               </motion.div>
@@ -247,12 +249,12 @@ export default function Founder() {
         <div className="container px-4 max-w-4xl">
           <motion.div {...fadeUp} className="text-center">
             <div className="mb-6 flex justify-center">
-              <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-500/10 border border-blue-500/20">
-                <Globe className="h-8 w-8 text-blue-400" />
+              <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-cyan-500/10 border border-cyan-500/20">
+                <Globe className="h-8 w-8 text-cyan-400" />
               </div>
             </div>
             <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
-              Vision for the <span className="bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">Future</span>
+              Vision for the <span className={gradientText}>Future</span>
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
               To build <strong className="text-foreground">Malik Data Centre</strong> into a global platform focused on AI innovation, digital entrepreneurship, automation systems, and personal development for modern men.
@@ -266,7 +268,7 @@ export default function Founder() {
         <div className="container px-4">
           <motion.div {...fadeUp} className="text-center">
             <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
-              Connect with the <span className="bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">Founder</span>
+              Connect with the <span className={gradientText}>Founder</span>
             </h2>
             <p className="text-muted-foreground mb-8 max-w-xl mx-auto">
               Interested in collaboration, partnerships, or just want to connect? Reach out through the links below.
@@ -279,7 +281,7 @@ export default function Founder() {
                 </a>
               </Button>
               <Link to="/contact">
-                <Button size="lg" variant="outline" className="gap-2 border-blue-500/30 hover:border-blue-500/60">
+                <Button size="lg" variant="outline" className="gap-2 border-cyan-500/30 hover:border-cyan-500/60">
                   <MessageSquare className="h-5 w-5" />
                   Get in Touch
                 </Button>
