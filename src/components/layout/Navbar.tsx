@@ -119,6 +119,12 @@ export const Navbar = () => {
           >
             Social Media Agency
           </Link>
+          <Link
+            to="/founder"
+            className={`text-sm font-medium transition-colors hover:text-primary px-3 py-2 rounded-md ${location.pathname === "/founder" ? "text-primary bg-primary/10" : "text-muted-foreground"}`}
+          >
+            Founder
+          </Link>
           <DropdownMenu name="tools" label="Tools" items={toolsDropdown} isActive={isToolsActive} ref={toolsRef} />
           <DropdownMenu name="services" label="Services" items={servicesDropdown} isActive={isServicesActive} ref={servicesRef} />
           <Link
@@ -182,6 +188,9 @@ export const Navbar = () => {
               </Link>
               <Link to="/social-media-agency" onClick={() => setIsMobileMenuOpen(false)} className={`text-lg font-medium transition-colors ${location.pathname === "/social-media-agency" ? "text-primary" : "text-muted-foreground"}`}>
                 Social Media Agency
+              </Link>
+              <Link to="/founder" onClick={() => setIsMobileMenuOpen(false)} className={`text-lg font-medium transition-colors ${location.pathname === "/founder" ? "text-primary" : "text-muted-foreground"}`}>
+                Founder
               </Link>
 
               {/* Mobile Tools */}
